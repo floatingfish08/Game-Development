@@ -1,0 +1,19 @@
+# Runtime / secrets
+data/sessions.json
+.env
+.env.*
+*.pem
+credentials.json
+
+# Dependencies
+node_modules/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Local dumps
+*.log
