@@ -9,6 +9,13 @@ import {
   expireIfNeeded,
   publicState,
 } from "../server/game-engine.js";
+import {
+  INFORMATION_JOINS,
+  INFORMATION_MATRIX,
+  PRIVATE_PHRASE_OWNERS,
+  roleCard,
+  roleIdsForCount,
+} from "../server/game-content.js";
 
 const facilitator = { kind: "facilitator" };
 const rolesByCount={
@@ -149,6 +156,90 @@ test("private state exposes only the authenticated role card", () => {
   assert.deepEqual(state.draft, {});
   assert.equal(JSON.stringify(state).includes(signal.token), false);
   assert.equal(JSON.stringify(state).includes(session.facilitatorToken), false);
+});
+
+test("recommendations route to the lead while preserving the submitter's editable copy", () => {
+  const session = createSession({ code: "REPORT", playerCount: 4 });
+  const signal = addPlayer(session, { name: "Sam", role: "signal" });
+  connectCrew(session);
+  startShift(session);
+  const signalViewer = authorize(session, signal.token);
+  const systemsViewer = authorize(session, session.players.systems.token);
+  const leadViewer = authorize(session, session.players.lead.token);
+
+  assert.throws(
+    () => applyAction(session, signalViewer, "REPORT", { note: "   " }),
+    /Enter a recommendation/,
+  );
+
+  applyAction(session, signalViewer, "REPORT", {
+    recommendation: "shared",
+    note: `  ${"s".repeat(200)}  `,
+  });
+  applyAction(session, systemsViewer, "REPORT", {
+    recommendation: "shared",
+    note: "Lock Control is a later dependency.",
+  });
+
+  const signalState = publicState(session, signalViewer);
+  assert.equal(signalState.reports.signal.note.length, 160);
+  assert.equal(signalState.reports.signal.note, "s".repeat(160));
+  assert.deepEqual(signalState.reports.systems, { submitted: true });
+
+  const systemsState = publicState(session, systemsViewer);
+  assert.equal(systemsState.reports.systems.note, "Lock Control is a later dependency.");
+  assert.deepEqual(systemsState.reports.signal, { submitted: true });
+
+  const leadState = publicState(session, leadViewer);
+  assert.equal(leadState.reports.signal.note, "s".repeat(160));
+  assert.equal(leadState.reports.systems.note, "Lock Control is a later dependency.");
+
+  const sharedState = publicState(session, { kind: "public" });
+  assert.deepEqual(sharedState.reports.signal, { submitted: true });
+  assert.deepEqual(sharedState.reports.systems, { submitted: true });
+});
+
+test("crew chat is synchronized for authenticated members and hidden from public views", () => {
+  const session = createSession({ code: "CHAT01", playerCount: 2 });
+  const lead = addPlayer(session, { name: "Avery", role: "lead" });
+  const signal = addPlayer(session, { name: "Noor", role: "signal" });
+  const leadViewer = authorize(session, lead.token);
+  const signalViewer = authorize(session, signal.token);
+  const historyLength = session.history.length;
+
+  applyAction(session, signalViewer, "CHAT_MESSAGE", { message: "  Preserve the voice fragment.  " });
+  applyAction(session, facilitator, "CHAT_MESSAGE", { message: "Cordon window is still open." });
+
+  assert.equal(session.chatMessages.length, 2);
+  assert.equal(session.chatMessages[0].text, "Preserve the voice fragment.");
+  assert.equal(session.chatMessages[0].senderName, "Noor");
+  assert.equal(session.chatMessages[0].senderRole, "signal");
+  assert.equal(session.chatMessages[1].senderKind, "facilitator");
+  assert.equal(session.history.length, historyLength, "chat must not flood the operational audit log");
+
+  const leadState = publicState(session, leadViewer);
+  const signalState = publicState(session, signalViewer);
+  assert.deepEqual(leadState.chatMessages, signalState.chatMessages);
+  assert.equal(leadState.chatMessages[1].text, "Cordon window is still open.");
+  assert.deepEqual(publicState(session, { kind: "public" }).chatMessages, []);
+
+  assert.throws(
+    () => applyAction(session, { kind: "public" }, "CHAT_MESSAGE", { message: "intrusion" }),
+    /Action is not available/,
+  );
+  assert.throws(
+    () => applyAction(session, signalViewer, "CHAT_MESSAGE", { message: "   " }),
+    /Enter a message/,
+  );
+
+  applyAction(session, leadViewer, "CHAT_MESSAGE", { message: "x".repeat(700) });
+  assert.equal(session.chatMessages.at(-1).text.length, 500);
+
+  for (let index = 0; index < 101; index++) {
+    applyAction(session, signalViewer, "CHAT_MESSAGE", { message: `bounded message ${index}` });
+  }
+  assert.equal(session.chatMessages.length, 100);
+  assert.equal(session.chatMessages.at(-1).text, "bounded message 100");
 });
 
 test("Station Lead can commit but another player cannot", () => {
@@ -396,4 +487,96 @@ test("contribution metrics record reports, role overrides, guidance, and field m
   assert.equal(session.metrics.contributions.lead.reports,1);
   assert.equal(session.metrics.contributions.lead.interventions,1);
   assert.deepEqual(session.metrics.contributions.lead.stages,[1]);
+});
+
+test("information matrix covers every stage and core role", () => {
+  for (let stage = 1; stage <= 7; stage++) {
+    assert.ok(INFORMATION_MATRIX[stage], `matrix missing stage ${stage}`);
+    for (const role of roleIdsForCount(7)) {
+      assert.match(INFORMATION_MATRIX[stage][role], /^[PSD]$/, `matrix ${stage}/${role}`);
+      const card = roleCard(stage, role, 7);
+      assert.ok(card.body.length > 20, `empty card ${stage}/${role}`);
+      assert.match(card.confidence, /CONFIRMED|LIKELY|STALE|UNKNOWN|CONTRADICTED/);
+      assert.ok(card.prompt, `missing speak prompt ${stage}/${role}`);
+    }
+  }
+  assert.equal(INFORMATION_JOINS.length >= 7, true);
+  assert.ok(INFORMATION_JOINS.some(join => join.id === "lower_route_beneath"));
+});
+
+test("private phrases stay with their owning role and do not appear on other terminals", () => {
+  const session = createSession({ code: "INFO01", playerCount: 7 });
+  connectCrew(session);
+  startShift(session);
+  update(session, { holds: ["mara", "voice", "road"] });
+  commitAndAdvance(session);
+  update(session, { powered: ["buffer", "military", "lock"] });
+  commitAndAdvance(session);
+  update(session, { voice: "preserve", bulletin: "quarantine", correction: "preserve", priority: "voice" });
+  commitAndAdvance(session);
+  assert.equal(session.stage, 4);
+
+  const bodies = Object.fromEntries(roleIdsForCount(7).map(role => {
+    const state = publicState(session, authorize(session, session.players[role].token));
+    return [role, state.privateCard.body];
+  }));
+  for (const [owner, patterns] of Object.entries(PRIVATE_PHRASE_OWNERS)) {
+    for (const pattern of patterns) {
+      const ownersWithPhrase = Object.entries(bodies).filter(([, body]) => pattern.test(body)).map(([role]) => role);
+      if (!ownersWithPhrase.length) continue;
+      assert.ok(ownersWithPhrase.includes(owner), `${pattern} should include owner ${owner}, got ${ownersWithPhrase}`);
+      for (const role of ownersWithPhrase) {
+        assert.equal(role, owner, `${pattern} leaked to ${role}`);
+      }
+    }
+  }
+});
+
+test("shared public intercept does not solo-solve Lower Route before buried station", () => {
+  const session = createSession({ code: "INFO02", playerCount: 7 });
+  connectCrew(session);
+  startShift(session);
+  update(session, { holds: ["mara", "voice", "road"] });
+  commitAndAdvance(session);
+  update(session, { powered: ["buffer", "military", "lock"] });
+  commitAndAdvance(session);
+  update(session, { voice: "replay", bulletin: "discard", correction: "preserve", priority: "voice" });
+  commitAndAdvance(session);
+  assert.equal(session.stage, 4);
+
+  const shared = publicState(session, { kind: "public" });
+  assert.equal(shared.privateCard, null);
+  assert.match(shared.signalTransmission.instruction, /PRIVATE ROLE RECONSTRUCTION|PUBLIC INTERCEPT/i);
+  assert.doesNotMatch(shared.signalTransmission.transcript, /not road/i);
+  assert.doesNotMatch(shared.signalTransmission.transcript, /beneath the cabin/i);
+
+  const signal = publicState(session, authorize(session, session.players.signal.token));
+  assert.equal(signal.signalTransmission.privateClarity, true);
+  assert.match(signal.privateCard.body, /foundations|phonemes|RX-04/i);
+});
+
+test("six-player mode redistributes critical Comms occupancy clue", () => {
+  const session = createSession({ code: "INFO03", playerCount: 6 });
+  connectCrew(session);
+  startShift(session);
+  for (let stage = 1; stage < 5; stage++) {
+    if (stage === 1) update(session, { holds: ["mara", "voice", "road"] });
+    if (stage === 2) update(session, { powered: ["buffer", "military", "lock"] });
+    if (stage === 3) update(session, { voice: "preserve", bulletin: "quarantine", correction: "preserve", priority: "voice" });
+    if (stage === 4) update(session, { runner: "operations", destination: "conduit", abort: "Abort at 18 ppm" });
+    commitAndAdvance(session);
+  }
+  assert.equal(session.stage, 5);
+  const systems = publicState(session, authorize(session, session.players.systems.token));
+  assert.match(systems.privateCard.body, /occupied-space pulse beneath the cabin/i);
+  assert.equal(Object.keys(session.players).includes("comms"), false);
+});
+
+test("Field stage 3 alone cannot name the buried route under the cabin", () => {
+  const field = roleCard(3, "field", 7);
+  assert.doesNotMatch(field.body, /beneath rack B|beneath the cabin/i);
+  const systems = roleCard(3, "systems", 7);
+  assert.match(systems.body, /LRR-2/);
+  const signal = roleCard(3, "signal", 7);
+  assert.match(signal.body, /lower.*route|route.*lower/i);
 });

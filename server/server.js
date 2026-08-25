@@ -39,6 +39,7 @@ function persist() {
 }
 
 function sendJson(res, status, body) {
+  if (res.headersSent || res.writableEnded) return;
   const value = JSON.stringify(body);
   res.writeHead(status, { "content-type": "application/json; charset=utf-8", "content-length": Buffer.byteLength(value), "cache-control": "no-store" });
   res.end(value);
@@ -50,7 +51,12 @@ async function readJson(req) {
     raw += chunk;
     if (raw.length > 1_000_000) throw new Error("Request is too large");
   }
-  return raw ? JSON.parse(raw) : {};
+  if (!raw.trim()) return {};
+  try {
+    return JSON.parse(raw);
+  } catch {
+    throw new Error("Request body was incomplete");
+  }
 }
 
 function suppliedToken(req, url, body = {}) {
@@ -60,14 +66,19 @@ function suppliedToken(req, url, body = {}) {
 
 function broadcast(session) {
   const clients = subscribers.get(session.code) || new Set();
-  for (const client of clients) {
-    const payload = publicState(session, authorize(session, client.token));
-    client.res.write(`id: ${session.revision}\nevent: state\ndata: ${JSON.stringify(payload)}\n\n`);
+  for (const client of [...clients]) {
+    try {
+      const payload = publicState(session, authorize(session, client.token));
+      client.res.write(`id: ${session.revision}\nevent: state\ndata: ${JSON.stringify(payload)}\n\n`);
+    } catch {
+      clients.delete(client);
+      try { client.res.end(); } catch {}
+    }
   }
 }
 
 function contentType(file) {
-  return ({ ".html":"text/html; charset=utf-8", ".js":"text/javascript; charset=utf-8", ".css":"text/css; charset=utf-8", ".png":"image/png", ".svg":"image/svg+xml", ".json":"application/json; charset=utf-8", ".mp4":"video/mp4", ".ico":"image/x-icon" })[path.extname(file)] || "application/octet-stream";
+  return ({ ".html":"text/html; charset=utf-8", ".js":"text/javascript; charset=utf-8", ".css":"text/css; charset=utf-8", ".webp":"image/webp", ".svg":"image/svg+xml", ".json":"application/json; charset=utf-8", ".mp4":"video/mp4", ".ico":"image/x-icon" })[path.extname(file)] || "application/octet-stream";
 }
 
 function serveStatic(url, res) {
@@ -105,10 +116,21 @@ export function createHttpServer() {
         if (operation === "state" && req.method === "GET") return sendJson(res, 200, publicState(session, authorize(session, suppliedToken(req, url))));
         if (operation === "events" && req.method === "GET") {
           const client = { token: suppliedToken(req, url), res };
+          req.setTimeout(0);
+          res.setTimeout(0);
           res.writeHead(200, { "content-type":"text/event-stream", "cache-control":"no-cache, no-transform", connection:"keep-alive", "x-accel-buffering":"no" });
+          res.write(": connected\n\n");
           res.write(`event: state\ndata: ${JSON.stringify(publicState(session, authorize(session, client.token)))}\n\n`);
           if (!subscribers.has(code)) subscribers.set(code, new Set()); subscribers.get(code).add(client);
-          req.on("close", () => subscribers.get(code)?.delete(client)); return;
+          const heartbeat = setInterval(() => {
+            try { res.write(`: ping ${Date.now()}\n\n`); }
+            catch { clearInterval(heartbeat); }
+          }, 15000);
+          req.on("close", () => {
+            clearInterval(heartbeat);
+            subscribers.get(code)?.delete(client);
+          });
+          return;
         }
         if (operation === "action" && req.method === "POST") {
           const body = await readJson(req), viewer = authorize(session, suppliedToken(req, url, body));

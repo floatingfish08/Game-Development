@@ -6,7 +6,7 @@ export const roles = {
     name: "Station Lead",
     lens: "Accountability",
     color: "amber",
-    visual: "relay-control-room.png",
+    visual: "relay-control-room.webp",
     evidence: {
       kicker: "AUTO-HANDOVER CONFLICT",
       title: "The discard order was automatic",
@@ -21,7 +21,7 @@ export const roles = {
     name: "Signal Analyst",
     lens: "Meaning & provenance",
     color: "cyan",
-    visual: "mara-venn-below.png",
+    visual: "mara-venn-below.webp",
     evidence: {
       kicker: "RX-04 / SUB-CARRIER",
       title: "The noise has a repeating voice shape",
@@ -36,7 +36,7 @@ export const roles = {
     name: "Systems Engineer",
     lens: "System boundaries",
     color: "violet",
-    visual: "containment-hatch.png",
+    visual: "containment-hatch.webp",
     evidence: {
       kicker: "FALLBACK CONTROLLER 4.2",
       title: "A legacy route is transmitting",
@@ -51,7 +51,7 @@ export const roles = {
     name: "Operations Officer",
     lens: "Bounded action",
     color: "green",
-    visual: "outside-run.png",
+    visual: "outside-run.webp",
     evidence: {
       kicker: "ROAD FEED / CAMERA 02",
       title: "The clean road image is stale",
@@ -66,7 +66,7 @@ export const roles = {
     name: "Field Liaison",
     lens: "People in the data",
     color: "rose",
-    visual: "mara-venn-below.png",
+    visual: "mara-venn-below.webp",
     evidence: {
       kicker: "MARA / SHIFT NOTE",
       title: "Mara challenged the station map",
@@ -81,7 +81,7 @@ export const roles = {
     name: "Protocol Officer",
     lens: "Risk & guardrails",
     color: "blue",
-    visual: "auxiliary-relay-hold.png",
+    visual: "auxiliary-relay-hold.webp",
     evidence: {
       kicker: "CLASSIFICATION RULE 8.12",
       title: "Silence cannot confirm safety",
@@ -96,7 +96,7 @@ export const roles = {
     name: "Comms Officer",
     lens: "Receiver trust",
     color: "orange",
-    visual: "calder-vale-cordon.png",
+    visual: "calder-vale-cordon.webp",
     evidence: {
       kicker: "CORDON CONTROL / FILTER NOTE",
       title: "Ridge traffic is being compressed",
@@ -109,14 +109,14 @@ export const roles = {
 };
 
 export const assetLibrary = [
-  { file: "station-exterior.png", title: "Blackout Ridge", use: "Opening cinematic · lobby · storm escalation" },
-  { file: "relay-control-room.png", title: "Surface relay room", use: "Shared console · handover · live circuit" },
-  { file: "outside-run.png", title: "Outside Run", use: "Bounded field test · flooded-road evidence" },
-  { file: "containment-hatch.png", title: "Containment interlock", use: "Hatch decision · lock-control finale" },
-  { file: "auxiliary-relay-hold.png", title: "Auxiliary Relay Hold", use: "Buried workplace reveal · Lark evidence" },
-  { file: "mara-venn-below.png", title: "Mara Venn below", use: "Signal reveal · rescue stake · finale" },
-  { file: "calder-vale-cordon.png", title: "Calder Vale cordon", use: "External authority · trust pressure" },
-  { file: "lark-shift-archive.png", title: "The Lark Shift", use: "Historical evidence card · debrief bridge" },
+  { file: "station-exterior.webp", title: "Blackout Ridge", use: "Opening cinematic · lobby · storm escalation" },
+  { file: "relay-control-room.webp", title: "Surface relay room", use: "Shared console · handover · live circuit" },
+  { file: "outside-run.webp", title: "Outside Run", use: "Bounded field test · flooded-road evidence" },
+  { file: "containment-hatch.webp", title: "Containment interlock", use: "Hatch decision · lock-control finale" },
+  { file: "auxiliary-relay-hold.webp", title: "Auxiliary Relay Hold", use: "Buried workplace reveal · Lark evidence" },
+  { file: "mara-venn-below.webp", title: "Mara Venn below", use: "Signal reveal · rescue stake · finale" },
+  { file: "calder-vale-cordon.webp", title: "Calder Vale cordon", use: "External authority · trust pressure" },
+  { file: "lark-shift-archive.webp", title: "The Lark Shift", use: "Historical evidence card · debrief bridge" },
 ];
 
 export const streams = {

@@ -1,3 +1,12 @@
+function parseJson(text, fallbackError) {
+  if (!text || !String(text).trim()) throw new Error(fallbackError);
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error(fallbackError);
+  }
+}
+
 export class GameClient {
   constructor({ code = "", token = "" } = {}) {
     this.code = code.toUpperCase();
@@ -8,12 +17,12 @@ export class GameClient {
   }
 
   async request(path, options = {}) {
-    const response = await fetch(path, {
-      ...options,
-      headers: { "content-type": "application/json", ...(this.token ? { authorization: `Bearer ${this.token}` } : {}), ...options.headers },
-    });
-    const body = await response.json();
-    if (!response.ok) throw new Error(body.error || "Request failed");
+    const headers = { ...(this.token ? { authorization: `Bearer ${this.token}` } : {}), ...options.headers };
+    if (options.body && !headers["content-type"]) headers["content-type"] = "application/json";
+    const response = await fetch(path, { ...options, headers });
+    const text = await response.text();
+    const body = text.trim() ? parseJson(text, response.ok ? "Station returned an incomplete update. Retry the last action." : `Request failed (${response.status})`) : {};
+    if (!response.ok) throw new Error(body.error || `Request failed (${response.status})`);
     return body;
   }
 
@@ -34,7 +43,15 @@ export class GameClient {
     this.events?.close();
     const query = this.token ? `?token=${encodeURIComponent(this.token)}` : "";
     this.events = new EventSource(`/api/sessions/${this.code}/events${query}`);
-    this.events.addEventListener("state", (event) => { this.state = JSON.parse(event.data); this.emit(); });
+    this.events.addEventListener("state", (event) => {
+      if (!event.data?.trim()) return;
+      try {
+        this.state = JSON.parse(event.data);
+        this.emit();
+      } catch {
+        // Incomplete SSE frames happen on reconnect; keep the last good state.
+      }
+    });
     this.events.onerror = () => document.body.classList.add("connection-lost");
     this.events.onopen = () => document.body.classList.remove("connection-lost");
   }
@@ -50,6 +67,7 @@ export class GameClient {
 
 export async function getContent() {
   const response = await fetch("/api/content");
+  const text = await response.text();
   if (!response.ok) throw new Error("Game content unavailable");
-  return response.json();
+  return parseJson(text, "Game content unavailable");
 }

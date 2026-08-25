@@ -71,11 +71,11 @@ assets or runtime dependencies, which makes it quick to review and revise.
 
 ## Review captures
 
-- [Lobby](screenshots/blackout-ridge-lobby.png)
-- [Shared station console](screenshots/blackout-ridge-shared.png)
-- [Signal Analyst terminal](screenshots/blackout-ridge-player.png)
-- [Facilitator dashboard](screenshots/blackout-ridge-facilitator.png)
-- [Mobile-width Field Liaison terminal](screenshots/blackout-ridge-mobile.png)
+- [Lobby](screenshots/blackout-ridge-lobby.webp)
+- [Shared station console](screenshots/blackout-ridge-shared.webp)
+- [Signal Analyst terminal](screenshots/blackout-ridge-player.webp)
+- [Facilitator dashboard](screenshots/blackout-ridge-facilitator.webp)
+- [Mobile-width Field Liaison terminal](screenshots/blackout-ridge-mobile.webp)
 
 ## Acceptance mapping
 

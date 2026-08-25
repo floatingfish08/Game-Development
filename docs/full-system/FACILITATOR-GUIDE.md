@@ -11,6 +11,13 @@ Allow 70 minutes: roughly 43 minutes for the seven-stage game and 20–25 minute
 for the debrief. Use one facilitator, one shared room display, and one private
 browser per participant. Headphones are optional; station audio is opt-in.
 
+Every authenticated player terminal and the facilitator console includes Crew
+Chat in the lower-right corner. Use it as a supplement or fallback for voice
+discussion, especially in remote and accessibility workflows. The room-facing
+shared display has no chat access. Chat is retained with the local session and
+included in the facilitator's exported session record, so apply the same
+retention and privacy policy used for debrief notes.
+
 ## Before participants arrive
 
 1. Run `npm run dev` and open `http://localhost:4173`.

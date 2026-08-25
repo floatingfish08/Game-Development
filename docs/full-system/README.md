@@ -12,6 +12,11 @@ The build has four modes:
 4. **Facilitator control** — stage decisions, live reports, timers, prompts,
    safety pause, station state, and event history.
 
+Authenticated player and facilitator views also include a persistent Crew Chat
+channel for typed discussion. New messages use the same live synchronization as
+game state and raise an unread alert on other member terminals. The public room
+display cannot read or post chat messages.
+
 All modes consume the same authoritative session state. A player never receives
 another role’s private evidence.
 
@@ -32,9 +37,9 @@ they know. All seven stages use the same decisions and consequences as full-crew
 play. During the finale, both operators must own at least one of the three lanes;
 one operator necessarily carries a second lane.
 
-Duo validation captures: [role selection](screenshots/duo-join.png),
-[Command & Field terminal](screenshots/duo-command.png), and
-[Signal & Systems terminal](screenshots/duo-technical.png).
+Duo validation captures: [role selection](screenshots/duo-join.webp),
+[Command & Field terminal](screenshots/duo-command.webp), and
+[Signal & Systems terminal](screenshots/duo-technical.webp).
 
 ## Seven-stage runtime
 
@@ -83,7 +88,11 @@ as a text file for remote or accessibility workflows.
 3. In the assembly screen, copy the crew link and open the shared display.
 4. Players claim roles. Read the participant-care statement and confirm it in
    the facilitator console; the shift cannot start until this is done.
-5. Players discuss their private evidence and submit short assessments.
+5. Players discuss their private evidence by voice and submit short written
+   recommendations to the Station Lead. The facilitator can also see these
+   reports; other role terminals see readiness, not the private report text.
+   Crew Chat is available as a typed discussion channel for remote sessions or
+   accessibility needs.
 6. The Station Lead or facilitator commits each decision.
 7. During Stage 4, the named runner completes three field moves while the crew
    uses its three guidance bursts.
@@ -105,24 +114,24 @@ high-quality and fail-forward paths plus access-control and timing rules. The
 runtime has also been visually checked at 1440×900 for the shared, facilitator,
 and private-player modes.
 
-Validation captures: [cinematic video startup and station lever](screenshots/video-boot-background.png),
-[mobile station boot](screenshots/realistic-boot-terminal-mobile.png),
-[borderless authority controls](screenshots/icon-first-authority.png),
-[icon-first terminal configuration](screenshots/icon-first-host-setup.png),
-[secure code hardware](screenshots/hardware-code-auth.png),
-[borderless role instruments](screenshots/icon-first-role-join.png),
-[icon-first host assembly](screenshots/icon-first-host-lobby.png),
-[physical shared-station runtime](screenshots/runtime-hardware-shared.png),
-[mechanical facilitator controls](screenshots/runtime-hardware-facilitator.png),
-[private field instrument](screenshots/runtime-hardware-player.png),
-[mobile player instrument](screenshots/runtime-hardware-player-mobile.png),
-[physical consequence reveal](screenshots/runtime-hardware-consequence.png),
-[stage-specific cinematic consequence](screenshots/runtime-realistic-modal.png),
-[collision-free short-screen telemetry](screenshots/runtime-readable-telemetry.png),
-[prominent live-stage HUD](screenshots/runtime-stage-header.png),
-[playable Outside Run](screenshots/game-logic-outside-run.png),
-[mobile Outside Run](screenshots/game-logic-outside-run-mobile.png),
-[facilitator game controls](screenshots/game-logic-facilitator.png),
-[cinematic Clean Rescue](screenshots/clean-rescue-final.png),
-[short-screen Clean Rescue](screenshots/clean-rescue-short.png),
-and [mobile Clean Rescue](screenshots/clean-rescue-mobile.png).
+Validation captures: [cinematic video startup and station lever](screenshots/video-boot-background.webp),
+[mobile station boot](screenshots/realistic-boot-terminal-mobile.webp),
+[borderless authority controls](screenshots/icon-first-authority.webp),
+[icon-first terminal configuration](screenshots/icon-first-host-setup.webp),
+[secure code hardware](screenshots/hardware-code-auth.webp),
+[borderless role instruments](screenshots/icon-first-role-join.webp),
+[icon-first host assembly](screenshots/icon-first-host-lobby.webp),
+[physical shared-station runtime](screenshots/runtime-hardware-shared.webp),
+[mechanical facilitator controls](screenshots/runtime-hardware-facilitator.webp),
+[private field instrument](screenshots/runtime-hardware-player.webp),
+[mobile player instrument](screenshots/runtime-hardware-player-mobile.webp),
+[physical consequence reveal](screenshots/runtime-hardware-consequence.webp),
+[stage-specific cinematic consequence](screenshots/runtime-realistic-modal.webp),
+[collision-free short-screen telemetry](screenshots/runtime-readable-telemetry.webp),
+[prominent live-stage HUD](screenshots/runtime-stage-header.webp),
+[playable Outside Run](screenshots/game-logic-outside-run.webp),
+[mobile Outside Run](screenshots/game-logic-outside-run-mobile.webp),
+[facilitator game controls](screenshots/game-logic-facilitator.webp),
+[cinematic Clean Rescue](screenshots/clean-rescue-final.webp),
+[short-screen Clean Rescue](screenshots/clean-rescue-short.webp),
+and [mobile Clean Rescue](screenshots/clean-rescue-mobile.webp).

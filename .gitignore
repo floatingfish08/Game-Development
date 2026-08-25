@@ -17,3 +17,8 @@ Thumbs.db
 
 # Local dumps
 *.log
+/*-debug.png
+
+# Python build caches
+__pycache__/
+*.py[cod]

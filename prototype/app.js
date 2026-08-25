@@ -184,7 +184,7 @@ function renderLobby(state) {
             </div>
           </div>
           <div class="ridge-visual" aria-label="Blackout Ridge relay station in a storm">
-            <img src="./assets/images/station-exterior.png" alt="Remote relay station on Blackout Ridge during a violent night storm">
+            <img src="./assets/images/station-exterior.webp" alt="Remote relay station on Blackout Ridge during a violent night storm">
             <div class="scene-shade"></div>
             <span class="map-label ridge-label">BLACKOUT RIDGE / 821M</span>
             <span class="map-label vale-label">CALDER VALE / CORDON ACTIVE</span>
@@ -224,7 +224,7 @@ function renderShared(state) {
       ${topbar(state, "SHARED STATION CONSOLE")}
       <main class="console-main">
         <div class="shared-scene">
-          <img src="./assets/images/relay-control-room.png" alt="The empty Blackout Ridge relay control room during the storm">
+          <img src="./assets/images/relay-control-room.webp" alt="The empty Blackout Ridge relay control room during the storm">
           <div class="shared-scene-shade"></div>
           ${stageHeader(state)}
           <span class="scene-id">CAM 01 / SURFACE RELAY / 21:14</span>
@@ -373,7 +373,7 @@ function renderGallery(state) {
         </section>
         <section class="asset-grid">
           ${assetLibrary.map((asset, index) => `
-            <figure class="asset-card ${asset.file === "lark-shift-archive.png" ? "archive" : ""}">
+            <figure class="asset-card ${asset.file === "lark-shift-archive.webp" ? "archive" : ""}">
               <img src="./assets/images/${asset.file}" alt="${asset.title}" loading="${index > 2 ? "lazy" : "eager"}">
               <figcaption><span>${String(index + 1).padStart(2, "0")}</span><div><h2>${asset.title}</h2><p>${asset.use}</p></div></figcaption>
             </figure>`).join("")}

@@ -1237,7 +1237,7 @@ input {
 .role-heading { margin:14px 0;padding:17px 20px;display:flex;align-items:center;gap:16px;border:1px solid var(--line);background:var(--panel); }.role-heading p{margin:0 0 3px;color:var(--cyan);font:600 8px/1 var(--mono);letter-spacing:.1em}.role-heading h2{margin:0;font:560 24px/1.1 var(--display)}.role-heading>div>span{color:var(--muted);font-size:10px}
 .player-grid { display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:14px; }.player-grid>aside{display:grid;align-content:start;gap:14px}
 .private-brief { position:relative;min-height:520px;overflow:hidden;border:1px solid var(--line);background:#071013; }.private-brief>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.72) brightness(.72)}.private-brief::after{position:absolute;inset:0;content:"";background:linear-gradient(0deg,rgba(3,8,10,.96) 0%,rgba(3,8,10,.6) 48%,rgba(3,8,10,.08) 78%)}.private-copy{position:absolute;left:clamp(22px,4vw,45px);right:clamp(22px,4vw,45px);bottom:38px;z-index:1}.private-copy>span{color:var(--cyan);font:650 9px/1 var(--mono);letter-spacing:.13em}.private-copy h2{max-width:750px;margin:16px 0 12px;font:620 clamp(32px,4.2vw,52px)/1.02 var(--display);letter-spacing:-.03em}.private-copy p{max-width:700px;margin:0;color:#d0d9d7;font-size:15px;line-height:1.65}
-.role-report textarea{margin-top:8px}.closed-copy{color:var(--faint);font-size:11px}.intervention h3{margin:0 0 8px;font:560 21px/1.2 var(--display)}.intervention p{color:var(--muted);font-size:11px;line-height:1.5}
+.role-report label>span,.role-report label>small{display:block}.role-report label>small{margin-top:6px;color:#ff746d;font:700 10px/1.3 var(--mono);letter-spacing:.08em}.role-report textarea{margin-top:8px}.report-confirm,.report-error{margin:10px 0 0;padding:10px 11px;border-left:2px solid var(--green);background:rgba(126,201,156,.08);font-family:var(--mono)}.report-confirm b,.report-confirm span{display:block}.report-confirm b{color:#9ce2b7;font-size:12px;letter-spacing:.06em}.report-confirm span{margin-top:5px;color:#b2c2bf;font-size:11px;line-height:1.4}.report-error{border-color:var(--danger);color:#ff8f88;background:rgba(228,102,95,.08);font-size:12px;line-height:1.4}.closed-copy{color:var(--faint);font-size:11px}.intervention h3{margin:0 0 8px;font:560 21px/1.2 var(--display)}.intervention p{color:var(--muted);font-size:11px;line-height:1.5}
 .decision-console { margin-top:14px; }.decision-console>.button,.fac-full-grid .system-panel>.button{width:100%;margin-top:18px}
 .decision-checks { display:grid;grid-template-columns:repeat(2,1fr);gap:8px; }.decision-checks label{cursor:pointer}.decision-checks input{position:absolute;opacity:0}.decision-checks span{min-height:54px;padding:12px;display:flex;align-items:center;gap:11px;border:1px solid var(--line);color:#bccbc8;background:rgba(255,255,255,.014);font:600 10px/1.3 var(--mono)}.decision-checks span i{width:14px;height:14px;flex:0 0 auto;border:1px solid var(--faint)}.decision-checks input:checked+span{border-color:var(--cyan);color:var(--ink);background:rgba(114,213,207,.06)}.decision-checks input:checked+span i{background:var(--cyan);box-shadow:inset 0 0 0 3px #0a1719}.decision-limit{color:var(--amber);font:650 9px/1 var(--mono);letter-spacing:.1em}
 .decision-selects { display:grid;grid-template-columns:repeat(3,1fr);gap:8px; }.decision-selects label,.correction-builder label,.finale-lanes label{padding:12px;border:1px solid var(--line);background:rgba(255,255,255,.014)}.decision-selects label>span,.correction-builder label>span,.finale-lanes label>span{margin-bottom:9px;display:block;color:var(--cyan);font:650 9px/1 var(--mono);letter-spacing:.08em}.decision-selects input{margin-top:0}
@@ -1324,7 +1324,7 @@ input {
 .director-runtime .runtime-world>img{filter:saturate(.45) brightness(.34) blur(1px)}.director-runtime .runtime-grade{background:rgba(1,7,8,.38)}.director-left,.director-right,.director-center{position:absolute;top:86px;bottom:24px;z-index:3}.director-left{left:22px;width:270px;padding:16px;overflow:auto;border:1px solid var(--line-bright);background:rgba(3,11,13,.91)}.director-right{right:22px;width:292px;padding:16px;overflow:auto;border:1px solid var(--line-bright);background:rgba(3,11,13,.91)}.director-center{left:306px;right:328px;display:grid;grid-template-rows:minmax(160px,.65fr) minmax(270px,1.35fr);gap:12px}.director-mission,.director-decision{padding:22px;border:1px solid var(--line-bright);background:rgba(3,11,13,.9);backdrop-filter:blur(10px);overflow:auto}.director-mission>span{color:var(--cyan);font:650 8px/1 var(--mono);letter-spacing:.13em}.director-mission h1{margin:12px 0 7px;font:620 clamp(32px,4vw,58px)/.93 var(--display);letter-spacing:-.04em}.director-mission p{margin:0;color:var(--muted);font-size:11px;line-height:1.5}.director-buttons{display:grid;grid-template-columns:1fr 1fr;gap:6px}.director-buttons .button{min-height:38px;padding:0 8px;font-size:7px}.director-reports{margin-top:20px;padding-top:15px;border-top:1px solid var(--line)}.director-reports>span{margin-bottom:10px;display:block;color:var(--cyan);font:650 7px/1 var(--mono);letter-spacing:.12em}.director-reports .fac-full-reports{grid-template-columns:1fr}.director-reports .fac-full-reports>div{min-height:46px}.director-decision>header b{color:var(--cyan)}.director-decision>h2{margin:35px 0 10px;font:620 40px/.98 var(--display)}.director-decision>p{color:var(--muted);line-height:1.5}.director-decision>.button{width:100%;margin-top:12px}.director-right .full-track{margin-bottom:17px}.director-evidence,.director-log{margin-top:20px;padding-top:15px;border-top:1px solid var(--line)}.director-log p{margin:0;padding:7px 0;border-bottom:1px solid rgba(135,169,164,.08);color:var(--muted);font-size:8px;line-height:1.35}.director-log p b{margin-right:8px;color:var(--cyan);font-family:var(--mono)}
 
 .sound-toggle.active{border-color:rgba(114,213,207,.55);color:var(--cyan);background:rgba(114,213,207,.08)}.sound-toggle.active span{animation:audio-pulse 1.8s ease-in-out infinite}@keyframes audio-pulse{50%{opacity:.34;transform:scale(.7)}}
-@media(max-width:1000px){.hud-stage{display:none}.mission-plate{width:calc(100% - 390px)}.director-left{width:230px}.director-right{width:245px}.director-center{left:265px;right:281px}.start-console form{grid-template-columns:1fr 150px}.start-console form button{grid-column:1/-1}.role-instrument{width:calc(100% - 390px)}}
+@media(max-width:1000px){.hud-stage>div{display:none}.mission-plate{width:calc(100% - 390px)}.director-left{width:230px}.director-right{width:245px}.director-center{left:265px;right:281px}.start-console form{grid-template-columns:1fr 150px}.start-console form button{grid-column:1/-1}.role-instrument{width:calc(100% - 390px)}}
 @media(max-width:720px){.runtime-hud{left:8px;right:8px;top:8px}.hud-brand{min-width:0}.hud-brand>span:last-child small,.hud-brand>span:last-child b,.hud-role,.sound-toggle{display:none}.hud-clock{margin-left:auto}.hud-session{font-size:8px}.mission-plate{left:14px;right:14px;bottom:170px;width:auto}.mission-plate h1{font-size:42px}.telemetry-rack{left:14px;right:14px;top:78px;width:auto}.telemetry-rack .telemetry-evidence{display:none}.crew-rack{display:none}.system-broadcast{left:14px;right:14px;bottom:14px}.system-broadcast i{display:none}.consequence-inner{width:calc(100% - 28px);padding:26px}.consequence-inner h2{font-size:43px}.consequence-telemetry .full-tracks{grid-template-columns:1fr}.start-title{left:25px;right:25px;top:34%;transform:none}.start-title h1{font-size:59px}.start-console{left:18px;right:18px;bottom:18px;display:grid;grid-template-columns:1fr;max-height:42vh;overflow:auto}.start-console form{padding:13px;grid-template-columns:1fr 1fr}.start-console>i{display:none}.start-ident{left:22px;top:20px}.start-coordinates,.start-archive{display:none}.role-instrument{left:10px;right:10px;top:72px;bottom:43%;width:auto}.role-instrument h1{font-size:42px}.role-instrument>p{font-size:12px}.role-actions{left:10px;right:10px;top:59%;bottom:10px;width:auto;grid-template-columns:1fr 1fr}.lead-command{left:10px;right:10px;bottom:10px;max-height:55vh}.player-runtime:has(.lead-command) .role-instrument{bottom:58%}.player-runtime:has(.lead-command) .role-actions{display:none}.director-left{left:8px;top:72px;bottom:auto;width:calc(45% - 12px);height:31vh}.director-right{right:8px;top:72px;bottom:auto;width:calc(55% - 12px);height:31vh}.director-center{left:8px;right:8px;top:calc(31vh + 80px);bottom:8px;grid-template-rows:110px 1fr}.director-mission{padding:14px}.director-mission h1{font-size:28px}.director-mission p{display:none}}
 @media(max-width:720px){.join-terminal{left:10px;right:10px;top:79px;bottom:10px;width:auto;max-height:none;padding:20px;transform:none}.join-terminal h1{font-size:39px}.join-terminal .role-choice-grid{grid-template-columns:1fr}.join-transmission{display:none}.assembly-header{left:16px;right:16px;top:18px}.assembly-header>div small{display:none}.assembly-header>strong{font-size:8px}.assembly-console{left:10px;right:10px;top:80px;bottom:10px;width:auto;max-height:none;padding:20px;transform:none}.assembly-console h1{font-size:43px}}
 
@@ -1481,7 +1481,10 @@ input {
 .hud-logo{width:104px;height:53px;margin:-5px 0;transform:scale(1.08);transform-origin:left center}
 .assembly-logo{width:128px;height:72px;margin:-15px 0 -11px;transform:scale(1.08);transform-origin:left center}
 .start-main-logo{width:min(640px,51vw);height:auto;margin:-18px 0 -28px;filter:drop-shadow(0 12px 24px rgba(0,0,0,.68)) drop-shadow(0 0 18px rgba(255,42,32,.12))}
-.start-ident{gap:11px}.start-ident>i{width:8px;height:8px;border-radius:50%;background:var(--alarm-red);box-shadow:0 0 7px var(--alarm-red),0 0 22px rgba(255,45,37,.8);animation:beacon 1.9s ease-in-out infinite}.start-ident>div>b{color:#e8eef0;text-shadow:none;font:700 9px/1 var(--mono);letter-spacing:.15em}.start-ident>div>small{color:#9eafb4}
+.start-ident{gap:10px;padding:10px 14px;border:1px solid rgba(255,84,74,.18);background:linear-gradient(90deg,rgba(3,8,11,.84),rgba(3,8,11,.54));box-shadow:inset 0 1px rgba(255,255,255,.03)}
+.start-ident>i{width:8px;height:8px;border-radius:50%;background:var(--alarm-red);box-shadow:0 0 7px var(--alarm-red),0 0 22px rgba(255,45,37,.8);animation:beacon 1.9s ease-in-out infinite}
+.start-ident>div>b{color:#edf2f3;text-shadow:none;font:700 9px/1 var(--mono);letter-spacing:.15em}
+.start-ident>div>small{margin-top:6px;color:#93a4aa;font:600 7px/1 var(--mono);letter-spacing:.16em}
 @keyframes beacon{50%{opacity:.4;box-shadow:0 0 3px var(--alarm-red)}}
 
 .game-start-grade{background:radial-gradient(circle at 70% 24%,rgba(255,40,31,.11),transparent 15rem),linear-gradient(90deg,rgba(1,4,6,.96),rgba(2,6,9,.45) 52%,rgba(1,4,6,.24)),linear-gradient(0deg,rgba(1,4,6,.9),transparent 62%)}
@@ -1618,7 +1621,7 @@ input {
 
 .authority-select{padding:8px}.authority-select>button{min-height:112px;grid-template-columns:94px 1fr auto;clip-path:polygon(0 0,calc(100% - 9px) 0,100% 9px,100% 100%,9px 100%,0 calc(100% - 9px));background:radial-gradient(circle at 14% 50%,rgba(255,45,37,.13),transparent 27%),linear-gradient(135deg,rgba(18,26,30,.96),rgba(5,9,12,.96))}.authority-select>button .authority-icon{width:92px;height:92px;transform:none;filter:drop-shadow(0 0 13px rgba(255,45,37,.3))}.authority-select>button>span{padding-left:4px}.authority-select>button>span b{font-size:10px}.authority-select>button::after{position:absolute;right:7px;bottom:7px;width:4px;height:4px;content:"";border-radius:50%;background:#78878b;box-shadow:0 0 0 2px #080d10}
 
-.configure-entry{width:min(760px,calc(100vw - 84px))}.crew-selector{padding:10px 12px;grid-template-columns:112px 1fr}.crew-selector>div{gap:7px}.crew-selector button{position:relative;height:106px;padding:0;display:block;overflow:hidden;border-color:rgba(175,198,204,.32);background:radial-gradient(circle at 50% 40%,rgba(255,45,37,.1),transparent 48%),#071014;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%)}.crew-selector button>.game-icon{position:absolute;inset:-5px 0 17px;width:100%;height:94px;opacity:.73;filter:drop-shadow(0 0 9px rgba(255,45,37,.24))}.crew-selector button>span{position:absolute;left:0;right:0;bottom:0;height:31px;padding:0 8px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(182,204,210,.23);background:rgba(2,7,9,.86)}.crew-selector button>span i{font-size:16px}.crew-selector button>span small{font-size:6px}.crew-selector button.active{border-color:#ff4b43;background:radial-gradient(circle at 50% 36%,rgba(255,45,37,.29),transparent 55%),#0b1114;box-shadow:inset 0 -3px var(--alarm-red),0 0 18px rgba(255,45,37,.15)}.crew-selector button.active>.game-icon{opacity:1;transform:scale(1.05)}
+.configure-entry{width:min(760px,calc(100vw - 84px))}
 .configure-entry>.station-confirm{height:68px}.station-confirm.illustrated-control{padding:0 17px;display:grid;grid-template-columns:62px 1fr 8px;align-items:center;text-align:left;background:radial-gradient(circle at 10% 50%,rgba(255,45,37,.26),transparent 27%),linear-gradient(135deg,#35100f,#a91915)}.station-confirm.illustrated-control>.game-icon{width:62px;height:62px}.station-confirm.illustrated-control>span{text-align:left}.station-confirm.illustrated-control>span small{color:#ffc2be}
 
 .join-entry{width:min(820px,calc(100vw - 84px))}.join-entry form{padding:10px 12px 0;grid-template-columns:76px 1fr 260px;gap:9px}.join-entry .code-auth-icon{width:70px;height:70px;align-self:end}.join-entry form label{align-self:center}.join-entry form input{height:62px;background:repeating-linear-gradient(90deg,rgba(255,45,37,.045) 0 16.6%,transparent 16.6% 33.2%),#061014;box-shadow:inset 0 0 20px rgba(255,45,37,.08)}.join-entry form .station-confirm{height:62px;margin:0;grid-template-columns:55px 1fr 8px}.join-entry form .station-confirm>.game-icon{width:55px;height:55px}
@@ -1643,7 +1646,7 @@ input {
 }
 @media(max-width:720px){
   .authority-select>button{min-height:79px;grid-template-columns:65px 1fr auto}.authority-select>button .authority-icon{width:63px;height:63px}
-  .configure-entry{width:auto}.crew-selector{grid-template-columns:1fr}.crew-selector>span{display:none}.crew-selector button{height:83px}.crew-selector button>.game-icon{height:71px}.configure-entry>.station-confirm{height:58px}.station-confirm.illustrated-control{grid-template-columns:51px 1fr 7px}.station-confirm.illustrated-control>.game-icon{width:50px;height:50px}
+  .configure-entry{width:auto}.configure-entry .crew-selector{grid-template-columns:1fr}.configure-entry .crew-selector>span{display:none}.configure-entry .crew-selector button{height:83px}.configure-entry .crew-selector button>.game-icon{height:71px}.configure-entry>.station-confirm{height:58px}.station-confirm.illustrated-control{grid-template-columns:51px 1fr 7px}.station-confirm.illustrated-control>.game-icon{width:50px;height:50px}
   .join-entry form{grid-template-columns:52px 1fr;padding:8px}.join-entry .code-auth-icon{width:50px;height:50px}.join-entry form .station-confirm{grid-column:1/-1;height:56px;grid-template-columns:49px 1fr 7px}.join-entry form .station-confirm>.game-icon{width:48px;height:48px}
   .join-terminal.join-hardware,.assembly-console.assembly-machine{top:74px;bottom:auto;max-height:calc(100vh - 82px);overflow:auto}
   .join-hardware>header{height:74px;grid-template-columns:62px 1fr}.join-hardware>header>.game-icon{width:60px;height:60px}.join-hardware>header>i,.join-hardware>header div small{display:none}.join-hardware>header h1{font-size:19px}.callsign-control{grid-template-columns:90px 1fr;padding:8px}.join-hardware .role-choice-grid{grid-template-columns:repeat(2,1fr)}.role-pod{min-height:94px;display:block;padding-top:51px}.role-pod>.role-art{position:absolute!important;left:0;right:0;top:0;height:52px;border-right:0;border-bottom:1px solid rgba(177,199,205,.2)}.role-pod>.role-art .game-icon{width:54px;height:54px}.role-pod>.role-data{padding:7px!important;text-align:center}.role-pod .role-data b{font-size:8px}.role-pod .role-data small{display:none}.role-connect{grid-template-columns:54px 1fr 7px}.role-connect>.game-icon{width:52px;height:52px}
@@ -1663,7 +1666,7 @@ input {
 
 .authority-select{padding:5px 0;gap:22px;background:transparent}.authority-select>button{min-height:142px;padding:4px 12px 4px 2px;grid-template-columns:136px 1fr auto;border:0;clip-path:none;background:transparent;box-shadow:none}.authority-select>button::before{position:absolute;left:114px;bottom:17px;width:0;height:2px;content:"";background:var(--alarm-red);box-shadow:0 0 10px rgba(255,45,37,.6);transition:width .2s ease}.authority-select>button:hover::before{width:calc(100% - 132px)}.authority-select>button::after{right:4px;bottom:15px}.authority-select>button .authority-icon{width:132px;height:132px;transform:scale(1.03);filter:drop-shadow(0 0 18px rgba(255,45,37,.38))}.authority-select>button>span b{font-size:13px}.authority-select>button>span small{margin-top:8px;font-size:9px}.authority-select>button em{font-size:8px}
 
-.crew-selector{padding:7px 0;grid-template-columns:108px 1fr;gap:4px}.crew-selector>div{gap:12px}.crew-selector button{height:124px;border:0;clip-path:none;background:transparent;box-shadow:none}.crew-selector button::after{position:absolute;left:12%;right:12%;bottom:0;height:2px;content:"";background:rgba(138,154,159,.25)}.crew-selector button>.game-icon{inset:-3px 0 23px;height:110px;opacity:.68;filter:drop-shadow(0 0 14px rgba(255,45,37,.28))}.crew-selector button>span{height:35px;border-top:0;background:linear-gradient(90deg,transparent,rgba(3,8,11,.82) 20% 80%,transparent)}.crew-selector button.active{border:0;background:radial-gradient(circle at 50% 40%,rgba(255,45,37,.22),transparent 62%);box-shadow:none}.crew-selector button.active::after{background:var(--alarm-red);box-shadow:0 0 12px rgba(255,45,37,.8)}.crew-selector button.active>.game-icon{transform:scale(1.12);filter:drop-shadow(0 0 18px rgba(255,45,37,.55))}.crew-selector button>span i{font-size:20px}.crew-selector button>span small{font-size:7px}
+.configure-entry .crew-selector{padding:7px 0;grid-template-columns:108px 1fr;gap:4px}.configure-entry .crew-selector>div{gap:12px}.configure-entry .crew-selector button{height:124px !important;border:0 !important;clip-path:none !important;background:transparent;box-shadow:none;position:relative !important;display:block !important;overflow:hidden !important;padding:0 !important}.configure-entry .crew-selector button::after{position:absolute;left:12%;right:12%;bottom:0;height:2px;content:"";background:rgba(138,154,159,.25)}.configure-entry .crew-selector button>.game-icon{position:absolute !important;inset:-3px 0 23px !important;width:100% !important;height:110px !important;opacity:.68 !important;filter:drop-shadow(0 0 14px rgba(255,45,37,.28)) !important;display:block !important;object-fit:contain !important}.configure-entry .crew-selector button>span{position:absolute !important;left:0 !important;right:0 !important;bottom:0 !important;height:35px !important;border-top:0 !important;background:linear-gradient(90deg,transparent,rgba(3,8,11,.82) 20% 80%,transparent) !important;display:flex !important;align-items:center !important;justify-content:space-between !important;padding:0 8px !important}.configure-entry .crew-selector button.active{border:0;background:radial-gradient(circle at 50% 40%,rgba(255,45,37,.22),transparent 62%);box-shadow:none}.configure-entry .crew-selector button.active::after{background:var(--alarm-red);box-shadow:0 0 12px rgba(255,45,37,.8)}.configure-entry .crew-selector button.active>.game-icon{transform:scale(1.12);filter:drop-shadow(0 0 18px rgba(255,45,37,.55))}.configure-entry .crew-selector button>span i{font-size:20px}.configure-entry .crew-selector button>span small{font-size:7px}
 .configure-entry>.station-confirm{height:75px;margin-top:3px}.station-confirm.illustrated-control{grid-template-columns:78px 1fr 8px;background:radial-gradient(circle at 9% 50%,rgba(255,45,37,.28),transparent 24%),linear-gradient(90deg,rgba(139,20,17,.9),rgba(66,11,10,.68) 72%,transparent)}.station-confirm.illustrated-control>.game-icon{width:77px;height:77px;transform:scale(1.08)}
 
 .join-entry form{grid-template-columns:105px 1fr 285px;padding:5px 0 0}.join-entry .code-auth-icon{width:100px;height:100px;filter:drop-shadow(0 0 17px rgba(255,45,37,.42))}.join-entry form label{padding-bottom:7px}.join-entry form input{height:67px;border:0;border-bottom:2px solid rgba(255,68,59,.7);box-shadow:none;background:repeating-linear-gradient(90deg,rgba(255,45,37,.04) 0 16.6%,transparent 16.6% 33.2%)}.join-entry form .station-confirm{height:72px;grid-template-columns:74px 1fr 8px}.join-entry form .station-confirm>.game-icon{width:72px;height:72px}
@@ -1679,7 +1682,7 @@ input {
   .station-entry,.join-terminal.join-hardware,.assembly-console.assembly-machine{background:linear-gradient(90deg,rgba(3,8,11,.97),rgba(3,8,11,.86) 86%,transparent)}
   .join-terminal.join-hardware,.assembly-console.assembly-machine{left:12px;right:12px;width:auto}
   .authority-select{gap:5px}.authority-select>button{min-height:105px;grid-template-columns:93px 1fr auto;padding:0}.authority-select>button .authority-icon{width:92px;height:92px}.authority-select>button>span b{font-size:9px}.authority-select>button>span small{font-size:7px}.authority-select>button::before{left:88px}
-  .crew-selector{padding:3px 0}.crew-selector>div{gap:3px}.crew-selector button{height:99px}.crew-selector button>.game-icon{height:87px;transform:scale(1.38)}.crew-selector button.active>.game-icon{transform:scale(1.52)}.crew-selector button>span{height:30px}.crew-selector button>span i{font-size:15px}.crew-selector button>span small{font-size:5px}.configure-entry>.station-confirm{height:64px}.station-confirm.illustrated-control{grid-template-columns:61px 1fr 7px}.station-confirm.illustrated-control>.game-icon{width:61px;height:61px}
+  .configure-entry .crew-selector{padding:3px 0}.configure-entry .crew-selector>div{gap:3px}.configure-entry .crew-selector button{height:99px}.configure-entry .crew-selector button>.game-icon{height:87px;transform:scale(1.38)}.configure-entry .crew-selector button.active>.game-icon{transform:scale(1.52)}.configure-entry .crew-selector button>span{height:30px}.configure-entry .crew-selector button>span i{font-size:15px}.configure-entry .crew-selector button>span small{font-size:5px}.configure-entry>.station-confirm{height:64px}.station-confirm.illustrated-control{grid-template-columns:61px 1fr 7px}.station-confirm.illustrated-control>.game-icon{width:61px;height:61px}
   .join-entry form{grid-template-columns:66px 1fr;padding:3px 0}.join-entry .code-auth-icon{width:64px;height:64px}.join-entry form input{height:54px}.join-entry form .station-confirm{height:64px;grid-template-columns:61px 1fr 7px}.join-entry form .station-confirm>.game-icon{width:60px;height:60px}
   .join-hardware>header{height:82px;grid-template-columns:78px 1fr}.join-hardware>header>.game-icon{width:76px;height:76px}.join-hardware>header h1{font-size:20px}.callsign-control{grid-template-columns:90px 1fr}.join-hardware .role-choice-grid{gap:4px 7px}.role-pod{min-height:123px;padding-top:72px}.role-pod>.role-art{height:73px}.role-pod>.role-art .game-icon{width:78px;height:78px}.role-pod>.role-data{padding:6px!important}.role-pod .role-data b{font-size:9px}.role-pod::before{left:20%;right:20%;bottom:3px}.role-pod:hover::before,.role-pod:has(input:checked)::before{width:60%}.role-connect{min-height:78px;grid-template-columns:75px 1fr 7px}.role-connect>.game-icon{width:74px;height:74px}
   .assembly-machine>header{min-height:105px;grid-template-columns:100px 1fr 6px}.assembly-machine>header>.game-icon{width:97px;height:97px}.assembly-machine>header h1{font-size:25px}.assembly-roster{gap:0 7px}.assembly-roster article{min-height:76px;padding-left:68px}.assembly-roster article>.game-icon{width:68px;height:68px}.assembly-roster article::after{left:65px}.assembly-roster article span b{font-size:8px}.assembly-tools{gap:7px}.assembly-tools>*{min-height:77px;padding-left:76px}.assembly-tools .game-icon{width:74px;height:74px}.assembly-tools span b{font-size:8px}.assembly-start{min-height:82px;padding-left:86px}.assembly-start>.game-icon{width:84px;height:84px}.assembly-start span b{font-size:10px}
@@ -1740,7 +1743,7 @@ input {
 .shared-runtime .challenge-stack>div.active{background:transparent;color:#fff;text-shadow:0 0 8px rgba(255,45,37,.34)}.shared-runtime .challenge-stack>div.active>i{background:var(--alarm-red);box-shadow:0 0 14px rgba(255,45,37,.72)}
 
 .shared-runtime .station-feed{left:285px;top:82px;width:min(470px,34vw);height:314px;padding:0;overflow:visible}
-.shared-runtime .station-feed::before{position:absolute;inset:0;content:"";background:url("./assets/images/runtime-radio-console.png") center/contain no-repeat;filter:drop-shadow(0 18px 25px rgba(0,0,0,.65));opacity:.88;pointer-events:none}
+.shared-runtime .station-feed::before{position:absolute;inset:0;content:"";background:url("./assets/images/runtime-radio-console.webp") center/contain no-repeat;filter:drop-shadow(0 18px 25px rgba(0,0,0,.65));opacity:.88;pointer-events:none}
 .shared-runtime .station-feed>header{position:absolute;left:39%;right:18%;top:35%;z-index:1;font-size:6px}.shared-runtime .station-feed>.signal-wave{position:absolute;left:39%;top:39%;z-index:1;width:42%;height:35px;margin:0}.shared-runtime .station-feed>div{position:absolute;left:39%;right:18%;top:53%;z-index:1;height:58px}.shared-runtime .station-feed p{font-size:5.5px;line-height:1.45}
 
 .shared-runtime .mission-plate{left:46px;bottom:92px;width:min(690px,52vw);padding:0;background:linear-gradient(90deg,rgba(2,7,9,.88),rgba(2,7,9,.4) 70%,transparent)}
@@ -1748,7 +1751,7 @@ input {
 .shared-runtime .mission-plate h1{margin:10px 0 7px;font-size:clamp(42px,5.2vw,76px)}.shared-runtime .mission-plate strong{border:0;padding:0;background:none;color:#dce5e7}
 
 .shared-runtime .telemetry-rack{right:18px;top:79px;width:290px;height:515px;padding:145px 37px 22px;overflow:visible}
-.shared-runtime .telemetry-rack::before,.director-runtime .director-right::before{position:absolute;inset:0;width:100%;height:100%;content:"";background:url("./assets/images/runtime-telemetry-rack.png") top center/contain no-repeat;filter:drop-shadow(0 20px 27px rgba(0,0,0,.7));opacity:.92;pointer-events:none}
+.shared-runtime .telemetry-rack::before,.director-runtime .director-right::before{position:absolute;inset:0;width:100%;height:100%;content:"";background:url("./assets/images/runtime-telemetry-rack.webp") top center/contain no-repeat;filter:drop-shadow(0 20px 27px rgba(0,0,0,.7));opacity:.92;pointer-events:none}
 .shared-runtime .telemetry-rack>header{position:relative;z-index:1;margin:0 0 16px;font-size:6px}.shared-runtime .telemetry-rack .full-tracks{position:relative;z-index:1;gap:25px}.shared-runtime .telemetry-rack .full-track>div:first-child{font-size:6px}.shared-runtime .telemetry-rack .full-track>div:last-child{margin-top:5px}.shared-runtime .telemetry-rack .telemetry-evidence{position:relative;z-index:1;margin-top:24px;border:0;padding:0}.shared-runtime .telemetry-rack .evidence-ledger{max-height:70px;overflow:hidden}
 .evidence-ledger span{position:relative;padding:5px 7px 5px 12px;border:0;background:none;color:#b9c9cc}.evidence-ledger span::before{position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;content:"";background:var(--alarm-red);box-shadow:0 0 7px var(--alarm-red)}
 
@@ -1757,24 +1760,24 @@ input {
 
 /* Player: evidence and actions live on distinct physical terminals */
 .player-runtime .role-instrument{left:28px;top:84px;bottom:25px;width:min(800px,61vw);padding:34px 30px;overflow:hidden;isolation:isolate;background:linear-gradient(0deg,rgba(2,7,9,.94),rgba(2,7,9,.55) 50%,transparent 78%)}
-.player-runtime .role-instrument::before{left:auto;right:-4%;top:-5%;width:76%;height:58%;background:url("./assets/images/device-mission-terminal.png") top right/contain no-repeat;filter:drop-shadow(0 20px 30px rgba(0,0,0,.72));opacity:.63}
+.player-runtime .role-instrument::before{left:auto;right:-4%;top:-5%;width:76%;height:58%;background:url("./assets/images/device-mission-terminal.webp") top right/contain no-repeat;filter:drop-shadow(0 20px 30px rgba(0,0,0,.72));opacity:.63}
 .player-runtime .role-instrument>header{border:0}.player-runtime .role-instrument h1{position:relative;z-index:1}.player-runtime .role-instrument>p{position:relative;z-index:1}.player-runtime .instrument-prompt{position:relative;z-index:1;border:0;background:none;padding:9px 0}.player-runtime .instrument-prompt::before{display:inline-block;width:24px;height:2px;margin:0 9px 3px 0;content:"";background:var(--alarm-red)}
 .player-runtime .role-actions{right:20px;top:90px;bottom:24px;width:min(370px,31vw);gap:6px}.player-runtime .role-actions section{position:relative;min-height:280px;padding:106px 25px 22px;overflow:hidden;isolation:isolate}
-.player-runtime .role-actions section::before{position:absolute;left:0;right:0;top:-18px;height:180px;z-index:-1;content:"";background:url("./assets/images/runtime-radio-console.png") top center/contain no-repeat;filter:drop-shadow(0 14px 20px rgba(0,0,0,.65));opacity:.82}
-.player-runtime .role-actions section:nth-child(2)::before{top:-7px;height:135px;background-image:url("./assets/images/runtime-selector-module.png")}
+.player-runtime .role-actions section::before{position:absolute;left:0;right:0;top:-18px;height:180px;z-index:-1;content:"";background:url("./assets/images/runtime-radio-console.webp") top center/contain no-repeat;filter:drop-shadow(0 14px 20px rgba(0,0,0,.65));opacity:.82}
+.player-runtime .role-actions section:nth-child(2)::before{top:-7px;height:135px;background-image:url("./assets/images/runtime-selector-module.webp")}
 .player-runtime .role-actions section>header{border:0;margin-bottom:11px}.player-runtime .role-actions textarea{min-height:70px;border:0;border-bottom:1px solid rgba(255,67,58,.55);background:rgba(1,6,8,.52);box-shadow:inset 0 0 20px rgba(0,0,0,.48)}
 
 /* Native controls remain functional, but the visible controls are mechanical */
-.decision-checks{gap:5px 18px}.decision-checks label{position:relative;min-height:94px;overflow:visible}.decision-checks input{position:absolute;opacity:0}.decision-checks span{position:relative;min-height:94px;padding:10px 12px 10px 108px;border:0;background:none;color:#a9b8bc;font-size:9px;transition:filter .18s ease,color .18s ease}.decision-checks span::before{position:absolute;left:0;top:50%;width:116px;height:78px;content:"";background:url("./assets/images/runtime-selector-module.png") center/contain no-repeat;filter:grayscale(.28) brightness(.72) drop-shadow(0 9px 12px rgba(0,0,0,.58));transform:translateY(-50%);transition:transform .18s ease,filter .18s ease}.decision-checks span i{display:none}.decision-checks input:checked+span{border:0;background:none;color:#fff;text-shadow:0 0 8px rgba(255,45,37,.4)}.decision-checks input:checked+span::before{filter:brightness(1.18) saturate(1.15) drop-shadow(0 0 13px rgba(255,45,37,.65));transform:translateY(-50%) scale(1.09)}.decision-checks label:hover span::before{filter:brightness(1.08) drop-shadow(0 0 10px rgba(255,45,37,.48))}
+.decision-checks{gap:5px 18px}.decision-checks label{position:relative;min-height:94px;overflow:visible}.decision-checks input{position:absolute;opacity:0}.decision-checks span{position:relative;min-height:94px;padding:10px 12px 10px 108px;border:0;background:none;color:#a9b8bc;font-size:9px;transition:filter .18s ease,color .18s ease}.decision-checks span::before{position:absolute;left:0;top:50%;width:116px;height:78px;content:"";background:url("./assets/images/runtime-selector-module.webp") center/contain no-repeat;filter:grayscale(.28) brightness(.72) drop-shadow(0 9px 12px rgba(0,0,0,.58));transform:translateY(-50%);transition:transform .18s ease,filter .18s ease}.decision-checks span i{display:none}.decision-checks input:checked+span{border:0;background:none;color:#fff;text-shadow:0 0 8px rgba(255,45,37,.4)}.decision-checks input:checked+span::before{filter:brightness(1.18) saturate(1.15) drop-shadow(0 0 13px rgba(255,45,37,.65));transform:translateY(-50%) scale(1.09)}.decision-checks label:hover span::before{filter:brightness(1.08) drop-shadow(0 0 10px rgba(255,45,37,.48))}
 
-.decision-selects,.correction-builder,.finale-lanes{gap:7px 17px}.decision-selects label,.correction-builder label,.finale-lanes label{position:relative;min-height:120px;padding:54px 10px 8px;border:0!important;background:url("./assets/images/runtime-selector-module.png") top center/100% auto no-repeat;filter:drop-shadow(0 9px 12px rgba(0,0,0,.5))}.decision-selects label>span,.correction-builder label>span,.finale-lanes label>span{color:#eef3f4;text-shadow:0 1px 4px #000}.decision-selects select,.correction-builder select,.finale-lanes select,.decision-selects input{height:34px;border:0;border-bottom:1px solid rgba(255,69,60,.65);color:#e4ecee;background:rgba(1,6,8,.72);box-shadow:none}.correction-builder label{grid-template-columns:25px 1fr;padding-top:47px}.correction-builder label>i{border:0;color:#ff6d65;background:rgba(0,0,0,.45)}.finale-lanes label{min-height:190px;padding-top:70px}.finale-lanes small{color:#9facb0}.decision-limit{padding-left:7px;color:#ff716a}
+.decision-selects,.correction-builder,.finale-lanes{gap:7px 17px}.decision-selects label,.correction-builder label,.finale-lanes label{position:relative;min-height:120px;padding:54px 10px 8px;border:0!important;background:url("./assets/images/runtime-selector-module.webp") top center/100% auto no-repeat;filter:drop-shadow(0 9px 12px rgba(0,0,0,.5))}.decision-selects label>span,.correction-builder label>span,.finale-lanes label>span{color:#eef3f4;text-shadow:0 1px 4px #000}.decision-selects select,.correction-builder select,.finale-lanes select,.decision-selects input{height:34px;border:0;border-bottom:1px solid rgba(255,69,60,.65);color:#e4ecee;background:rgba(1,6,8,.72);box-shadow:none}.correction-builder label{grid-template-columns:25px 1fr;padding-top:47px}.correction-builder label>i{border:0;color:#ff6d65;background:rgba(0,0,0,.45)}.finale-lanes label{min-height:190px;padding-top:70px}.finale-lanes small{color:#9facb0}.decision-limit{padding-left:7px;color:#ff716a}
 
-.game-runtime .button:not(.sound-toggle){position:relative;min-height:86px;padding:0 18px 0 128px;border:0!important;color:#eef3f4;background:none!important;box-shadow:none!important;overflow:visible;text-align:left;font-size:9px;text-shadow:0 2px 4px #000}.game-runtime .button:not(.sound-toggle)::before{position:absolute;left:0;top:50%;width:145px;height:86px;content:"";background:url("./assets/images/runtime-commit-lever.png") center/contain no-repeat;filter:brightness(.82) drop-shadow(0 12px 13px rgba(0,0,0,.62));transform:translateY(-50%);transition:filter .18s ease,transform .18s ease}.game-runtime .button:not(.sound-toggle):hover::before{filter:brightness(1.2) drop-shadow(0 0 14px rgba(255,45,37,.62));transform:translateY(-50%) scale(1.06)}.game-runtime .button:not(.sound-toggle):disabled::before{filter:grayscale(.8) brightness(.42)}
+.game-runtime .button:not(.sound-toggle){position:relative;min-height:86px;padding:0 18px 0 128px;border:0!important;color:#eef3f4;background:none!important;box-shadow:none!important;overflow:visible;text-align:left;font-size:9px;text-shadow:0 2px 4px #000}.game-runtime .button:not(.sound-toggle)::before{position:absolute;left:0;top:50%;width:145px;height:86px;content:"";background:url("./assets/images/runtime-commit-lever.webp") center/contain no-repeat;filter:brightness(.82) drop-shadow(0 12px 13px rgba(0,0,0,.62));transform:translateY(-50%);transition:filter .18s ease,transform .18s ease}.game-runtime .button:not(.sound-toggle):hover::before{filter:brightness(1.2) drop-shadow(0 0 14px rgba(255,45,37,.62));transform:translateY(-50%) scale(1.06)}.game-runtime .button:not(.sound-toggle):disabled::before{filter:grayscale(.8) brightness(.42)}
 .player-runtime .role-report .button,.player-runtime .role-actions section>.button{width:100%;margin-top:2px}.player-runtime .lead-command{left:24px;right:400px;bottom:22px;padding:14px 18px;background:linear-gradient(90deg,rgba(2,7,9,.96),rgba(2,7,9,.64),transparent)}.player-runtime .lead-command>header{border:0}.player-runtime .lead-command>.button{width:330px;margin-left:auto}
 
 /* Facilitator: one physical command desk, not three website columns */
 .director-runtime .runtime-world>img{filter:saturate(.55) brightness(.48)}.director-runtime .director-left{left:18px;top:84px;width:265px;padding:8px 10px;background:linear-gradient(90deg,rgba(2,7,9,.85),transparent)}
-.director-runtime .director-left>header{margin:0 0 8px}.director-runtime .director-buttons{gap:3px 7px}.director-runtime .director-buttons .button{min-height:72px;padding:0 5px 0 54px;font-size:6px}.director-runtime .director-buttons .button::before{width:73px;height:58px;background-image:url("./assets/images/runtime-selector-module.png")}.director-runtime .director-reports{border:0;margin-top:10px;padding-top:5px}.director-runtime .fac-full-reports{gap:0}.director-runtime .fac-full-reports>div{min-height:43px;padding:4px;border:0;background:none}.director-runtime .fac-full-reports>div::after{position:absolute;left:42px;right:8px;bottom:2px;height:1px;content:"";background:linear-gradient(90deg,rgba(255,45,37,.22),transparent)}
+.director-runtime .director-left>header{margin:0 0 8px}.director-runtime .director-buttons{gap:3px 7px}.director-runtime .director-buttons .button{min-height:72px;padding:0 5px 0 54px;font-size:6px}.director-runtime .director-buttons .button::before{width:73px;height:58px;background-image:url("./assets/images/runtime-selector-module.webp")}.director-runtime .director-reports{border:0;margin-top:10px;padding-top:5px}.director-runtime .fac-full-reports{gap:0}.director-runtime .fac-full-reports>div{min-height:43px;padding:4px;border:0;background:none}.director-runtime .fac-full-reports>div::after{position:absolute;left:42px;right:8px;bottom:2px;height:1px;content:"";background:linear-gradient(90deg,rgba(255,45,37,.22),transparent)}
 .director-runtime .director-center{left:292px;right:315px;top:84px;bottom:20px;grid-template-rows:minmax(150px,.55fr) minmax(330px,1.45fr);gap:2px}.director-runtime .director-mission{padding:18px 24px;background:linear-gradient(90deg,rgba(2,7,9,.86),rgba(2,7,9,.35),transparent)}.director-runtime .director-mission h1{font-size:clamp(38px,4.5vw,68px)}.director-runtime .director-decision{padding:18px 24px;overflow:auto;background:linear-gradient(90deg,rgba(2,7,9,.92),rgba(2,7,9,.5) 72%,transparent)}.director-runtime .director-decision::before{left:0;right:auto;top:0;width:3px;height:72px;background:var(--alarm-red);box-shadow:0 0 12px var(--alarm-red)}.director-runtime .director-decision>header{border:0;margin-bottom:8px}.director-runtime .director-decision>.button{width:350px;margin-left:auto}
 .director-runtime .director-right{right:9px;top:80px;width:310px;padding:155px 38px 20px;overflow:hidden}.director-runtime .director-right>header{position:relative;z-index:1}.director-runtime .director-right .full-tracks,.director-runtime .director-evidence,.director-runtime .director-log{position:relative;z-index:1}.director-runtime .director-right .full-tracks{gap:24px}.director-runtime .director-evidence,.director-runtime .director-log{border:0;margin-top:16px;padding-top:0}.director-runtime .director-log p{border:0;padding:4px 0;font-size:6px}
 
@@ -1816,7 +1819,7 @@ input {
 /* Consequence reveal is a cinematic instrument state, never a modal card */
 .consequence-overlay{background:rgba(1,4,6,.74);backdrop-filter:blur(11px)}
 .consequence-inner{min-height:500px;width:min(1100px,88vw);padding:72px 360px 55px 54px;border:0!important;outline:0!important;background:linear-gradient(90deg,rgba(2,7,9,.94),rgba(2,7,9,.68) 62%,transparent)!important;box-shadow:none!important;isolation:isolate}
-.consequence-inner::before{position:absolute;right:15px;top:50%;z-index:-1;width:310px;height:465px;content:"";background:url("./assets/images/runtime-telemetry-rack.png") center/contain no-repeat;filter:drop-shadow(0 20px 28px rgba(0,0,0,.7));transform:translateY(-50%);opacity:.9}
+.consequence-inner::before{position:absolute;right:15px;top:50%;z-index:-1;width:310px;height:465px;content:"";background:url("./assets/images/runtime-telemetry-rack.webp") center/contain no-repeat;filter:drop-shadow(0 20px 28px rgba(0,0,0,.7));transform:translateY(-50%);opacity:.9}
 .consequence-inner::after{position:absolute;left:0;top:64px;width:4px;height:112px;content:"";background:var(--alarm-red);box-shadow:0 0 16px rgba(255,45,37,.72)}
 .consequence-inner h2{max-width:680px}.consequence-inner>p{max-width:650px}.consequence-telemetry{max-width:650px}.consequence-inner>.button{width:360px}
 @media(max-width:720px){
@@ -1851,11 +1854,11 @@ input {
 /* Complete gameplay instruments: Outside Run, retry state, and intervention feedback */
 .correction-attempt{margin:0 0 8px;color:#ff6b64;font:700 7px/1 var(--mono);letter-spacing:.14em}
 .field-run-state{position:relative;min-height:225px;padding:19px 12px 12px 118px;background:linear-gradient(90deg,rgba(3,10,12,.88),rgba(3,10,12,.42),transparent)}
-.field-run-state::before{position:absolute;left:-18px;top:-21px;width:142px;height:142px;content:"";background:url("./assets/images/runtime-radio-console.png") center/contain no-repeat;filter:drop-shadow(0 15px 19px rgba(0,0,0,.7))}
+.field-run-state::before{position:absolute;left:-18px;top:-21px;width:142px;height:142px;content:"";background:url("./assets/images/runtime-radio-console.webp") center/contain no-repeat;filter:drop-shadow(0 15px 19px rgba(0,0,0,.7))}
 .field-run-state>span,.field-run-state>b,.field-run-state>small{position:relative;z-index:1;display:block;font-family:var(--mono)}.field-run-state>span{color:#ff6d66;font-size:7px;letter-spacing:.13em}.field-run-state>b{margin:8px 0;color:#eef3f4;font-size:10px}.field-run-state>p{position:relative;z-index:1;min-height:30px;margin:0;color:#9fb0b4;font-size:8px;line-height:1.45}.field-run-state>small{margin-top:7px;color:#75878c;font-size:6px;letter-spacing:.08em}
-.field-move-controls{position:relative;z-index:2;margin-top:9px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.field-move-controls button,.field-player-control form button{min-height:50px;padding:6px;border:0;color:#e7eef0;background:linear-gradient(180deg,rgba(27,39,43,.82),rgba(5,11,14,.92));font:700 6px/1.25 var(--mono);letter-spacing:.07em;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(255,73,64,.28)}.field-move-controls button::before{width:28px;height:28px;margin:0 auto 4px;display:block;content:"";background:url("./assets/images/runtime-selector-module.png") center/contain no-repeat}.field-move-controls button:hover{color:#fff;box-shadow:inset 0 0 0 1px #ff5d55,0 0 14px rgba(255,45,37,.15)}
+.field-move-controls{position:relative;z-index:2;margin-top:9px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.field-move-controls button,.field-player-control form button{min-height:50px;padding:6px;border:0;color:#e7eef0;background:linear-gradient(180deg,rgba(27,39,43,.82),rgba(5,11,14,.92));font:700 6px/1.25 var(--mono);letter-spacing:.07em;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(255,73,64,.28)}.field-move-controls button::before{width:28px;height:28px;margin:0 auto 4px;display:block;content:"";background:url("./assets/images/runtime-selector-module.webp") center/contain no-repeat}.field-move-controls button:hover{color:#fff;box-shadow:inset 0 0 0 1px #ff5d55,0 0 14px rgba(255,45,37,.15)}
 .field-player-control{position:absolute;left:24px;right:390px;bottom:22px;z-index:7;min-height:225px;padding:15px 18px 14px 142px;background:linear-gradient(90deg,rgba(2,7,9,.97),rgba(2,7,9,.77) 70%,transparent)}
-.field-player-control::before{position:absolute;left:4px;top:-8px;width:145px;height:145px;content:"";background:url("./assets/images/runtime-radio-console.png") center/contain no-repeat;filter:drop-shadow(0 15px 20px rgba(0,0,0,.72))}
+.field-player-control::before{position:absolute;left:4px;top:-8px;width:145px;height:145px;content:"";background:url("./assets/images/runtime-radio-console.webp") center/contain no-repeat;filter:drop-shadow(0 15px 20px rgba(0,0,0,.72))}
 .player-runtime:has(.field-player-control) .role-instrument{bottom:46%}
 .field-player-control>header{position:relative;z-index:1;display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid rgba(255,71,62,.28);color:#ff7068;font:700 7px/1 var(--mono);letter-spacing:.11em}.field-player-control>header b{color:#dbe5e7}.field-findings{position:relative;z-index:1;min-height:35px;padding:8px 0;display:flex;flex-wrap:wrap;gap:5px}.field-findings i{padding:4px 6px;color:#a9babd;background:rgba(143,168,174,.08);font:600 6px/1 var(--mono);font-style:normal}.field-player-control>.field-move-controls{grid-template-columns:repeat(3,1fr)}.field-player-control>small{position:relative;z-index:1;margin-top:7px;display:block;color:#7f9297;font:650 5.5px/1.3 var(--mono);letter-spacing:.08em}
 .field-player-control form{position:relative;z-index:1;display:grid;grid-template-columns:1fr 130px;gap:8px;align-items:end}.field-player-control form label{color:#819398;font:650 6px/1 var(--mono);letter-spacing:.09em}.field-player-control form input{height:42px;margin-top:5px;border:0;border-bottom:1px solid rgba(255,74,65,.55);background:rgba(2,8,10,.76);color:#eef3f4;font-size:9px}.field-player-control form button{height:42px;min-height:42px}
@@ -1905,7 +1908,7 @@ input {
 .ending-verdict{margin-top:20px;gap:22px}.ending-verdict i{position:relative;padding:8px 0 8px 31px;border:0!important;background:transparent!important;color:#c9d5d7!important;font-size:7px}.ending-verdict i::after{position:absolute;left:31px;right:0;bottom:0;height:1px;content:"";background:linear-gradient(90deg,rgba(183,204,209,.5),transparent)}.ending-verdict i b{position:absolute;left:0;top:50%;width:23px;height:23px;display:grid;place-items:center;transform:translateY(-50%);border:1px solid currentColor;border-radius:50%;font:800 12px/1 var(--mono)}.ending-verdict i.confirmed b{color:#7bea9a;box-shadow:0 0 11px rgba(77,238,122,.3)}.ending-verdict i.failed b{color:#ff625a}
 
 .ending-truth{right:3vw;top:236px;width:315px;padding:4px 0 0 64px;border:0!important;background:linear-gradient(90deg,rgba(2,8,10,.2),rgba(2,8,10,.74))!important;box-shadow:none!important;backdrop-filter:none}
-.ending-truth::before{position:absolute;left:-76px;top:-31px;width:103px;height:103px;content:"";background:url("./assets/images/runtime-radio-console.png") center/contain no-repeat;filter:drop-shadow(0 12px 18px rgba(0,0,0,.72));opacity:.92}
+.ending-truth::before{position:absolute;left:-76px;top:-31px;width:103px;height:103px;content:"";background:url("./assets/images/runtime-radio-console.webp") center/contain no-repeat;filter:drop-shadow(0 12px 18px rgba(0,0,0,.72));opacity:.92}
 .ending-truth>header{position:relative;z-index:1;margin:0 0 9px!important;padding-bottom:7px;display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,82,73,.36);color:#e8eff0!important;font-size:6px!important}.ending-truth>header i{color:#79e797;font-style:normal}
 .ending-truth>div{position:relative;z-index:1;padding:9px 0;border:0!important}.ending-truth>div+div{border-top:1px solid rgba(181,201,206,.13)!important}.ending-truth span{margin-bottom:5px;font-size:5.5px}.ending-truth b{font-size:11px}.ending-truth small{font:600 6px/1.3 var(--mono);letter-spacing:.05em}
 .ending-truth footer{position:relative;z-index:1;padding-top:7px;display:flex;align-items:center;gap:7px;color:#7bea9a;font:700 5.5px/1 var(--mono);letter-spacing:.11em}.ending-truth footer i{width:5px;height:5px;border-radius:50%;background:#65eb8c;box-shadow:0 0 9px #65eb8c;animation:beacon 1.6s infinite}
@@ -2052,7 +2055,7 @@ input {
   .join-hardware .role-choice-grid{flex:1 1 auto;min-height:0;grid-template-columns:repeat(2,1fr);gap:2px 10px;padding:2px 0;overflow-y:auto}
   .join-hardware .role-pod{min-height:61px;grid-template-columns:66px 1fr;padding:0}
   .join-hardware .role-pod>.role-art{position:relative!important;height:60px;border-bottom:0;background-position:center;background-size:62px 62px;background-repeat:no-repeat}.join-hardware .role-pod>.role-art .game-icon{width:62px;height:62px}
-  .join-hardware .role-pod:has(input[value="lead"])>.role-art{background-image:url("./assets/images/role-lead.png")}.join-hardware .role-pod:has(input[value="signal"])>.role-art{background-image:url("./assets/images/role-signal.png")}.join-hardware .role-pod:has(input[value="systems"])>.role-art{background-image:url("./assets/images/role-systems.png")}.join-hardware .role-pod:has(input[value="operations"])>.role-art{background-image:url("./assets/images/role-operations.png")}.join-hardware .role-pod:has(input[value="field"])>.role-art{background-image:url("./assets/images/role-field.png")}.join-hardware .role-pod:has(input[value="protocol"])>.role-art{background-image:url("./assets/images/role-protocol.png")}.join-hardware .role-pod:has(input[value="comms"])>.role-art{background-image:url("./assets/images/role-comms.png")}
+  .join-hardware .role-pod:has(input[value="lead"])>.role-art{background-image:url("./assets/images/role-lead.webp")}.join-hardware .role-pod:has(input[value="signal"])>.role-art{background-image:url("./assets/images/role-signal.webp")}.join-hardware .role-pod:has(input[value="systems"])>.role-art{background-image:url("./assets/images/role-systems.webp")}.join-hardware .role-pod:has(input[value="operations"])>.role-art{background-image:url("./assets/images/role-operations.webp")}.join-hardware .role-pod:has(input[value="field"])>.role-art{background-image:url("./assets/images/role-field.webp")}.join-hardware .role-pod:has(input[value="protocol"])>.role-art{background-image:url("./assets/images/role-protocol.webp")}.join-hardware .role-pod:has(input[value="comms"])>.role-art{background-image:url("./assets/images/role-comms.webp")}
   .join-hardware .role-pod>.role-data{padding:4px!important;text-align:left}.join-hardware .role-pod .role-data em{font-size:6px}.join-hardware .role-pod .role-data b{margin-top:3px;font-size:8px}.join-hardware .role-pod .role-data small{display:none}
   .join-hardware .role-connect{flex:0 0 54px;min-height:54px;margin:2px 0 0;grid-template-columns:54px 1fr 7px}.join-hardware .role-connect>.game-icon{width:52px;height:52px}
 
@@ -2061,8 +2064,8 @@ input {
   .player-runtime:has(.lead-command) .lead-command{left:35.5vw;right:7px;top:61px;bottom:6px;max-height:none;padding:8px 10px;overflow-y:auto;background:linear-gradient(90deg,rgba(2,7,9,.98),rgba(2,7,9,.82))}
   .player-runtime:has(.lead-command) .lead-command>header{margin-bottom:3px;font-size:6px}.player-runtime:has(.lead-command) .lead-command>header b{font-size:5.5px}
   .player-runtime:has(.lead-command) .decision-checks{grid-template-columns:1fr 1fr;gap:1px 7px}.player-runtime:has(.lead-command) .decision-checks label,.player-runtime:has(.lead-command) .decision-checks span{min-height:61px}.player-runtime:has(.lead-command) .decision-checks span{padding:4px 2px 4px 72px;font-size:5.5px}.player-runtime:has(.lead-command) .decision-checks span::before{width:68px;height:49px}
-  .player-runtime:has(.lead-command) .decision-checks label{background:url("./assets/images/runtime-selector-module.png") left center/72px 53px no-repeat;filter:drop-shadow(0 5px 7px rgba(0,0,0,.7))}.player-runtime:has(.lead-command) .decision-checks span{color:#c1cdcf;font-size:6px}.player-runtime:has(.lead-command) .decision-checks span::before{display:none}.player-runtime:has(.lead-command) .decision-checks label:has(input:checked){filter:brightness(1.25) drop-shadow(0 0 9px rgba(255,45,37,.55))}
-  .player-runtime:has(.lead-command) .lead-command>.button{width:100%;min-height:58px;margin-top:3px;padding-left:94px;font-size:6px;background:url("./assets/images/control-start-emergency.png") left center/91px 58px no-repeat,linear-gradient(90deg,rgba(44,9,8,.52),rgba(4,10,12,.74))}.player-runtime:has(.lead-command) .lead-command>.button::before{display:none}
+  .player-runtime:has(.lead-command) .decision-checks label{background:url("./assets/images/runtime-selector-module.webp") left center/72px 53px no-repeat;filter:drop-shadow(0 5px 7px rgba(0,0,0,.7))}.player-runtime:has(.lead-command) .decision-checks span{color:#c1cdcf;font-size:6px}.player-runtime:has(.lead-command) .decision-checks span::before{display:none}.player-runtime:has(.lead-command) .decision-checks label:has(input:checked){filter:brightness(1.25) drop-shadow(0 0 9px rgba(255,45,37,.55))}
+  .player-runtime:has(.lead-command) .lead-command>.button{width:100%;min-height:58px;margin-top:3px;padding-left:94px;font-size:6px;background:url("./assets/images/control-start-emergency.webp") left center/91px 58px no-repeat,linear-gradient(90deg,rgba(44,9,8,.52),rgba(4,10,12,.74))}.player-runtime:has(.lead-command) .lead-command>.button::before{display:none}
 
   .director-runtime .director-left{left:5px;right:auto;top:60px;bottom:5px;width:22vw;height:auto;padding:7px;overflow-y:auto}
   .director-runtime .director-center{left:23vw;right:27vw;top:60px;bottom:5px;display:grid;grid-template-rows:88px 1fr;gap:3px}
@@ -2071,8 +2074,8 @@ input {
   .director-runtime .director-mission{min-height:0;padding:7px 10px;overflow:hidden}.director-runtime .director-mission h1{margin:4px 0 2px;font-size:25px}.director-runtime .director-mission p{display:none}
   .director-runtime .director-decision{min-height:0;padding:7px 9px;overflow-y:auto}.director-runtime .director-decision>header{margin-bottom:2px}.director-runtime .director-decision>h2{margin:5px 0;font-size:21px}.director-runtime .director-decision>p{margin:0 0 4px;font-size:6px}
   .director-runtime .decision-checks{grid-template-columns:1fr 1fr;gap:1px 3px}.director-runtime .decision-checks label,.director-runtime .decision-checks span{min-height:53px}.director-runtime .decision-checks span{padding:3px 1px 3px 58px;font-size:5px}.director-runtime .decision-checks span::before{width:55px;height:42px}
-  .director-runtime .decision-checks label{background:url("./assets/images/runtime-selector-module.png") left center/58px 44px no-repeat;filter:drop-shadow(0 4px 6px rgba(0,0,0,.68))}.director-runtime .decision-checks span{color:#c1cdcf;font-size:5.5px}.director-runtime .decision-checks span::before{display:none}.director-runtime .decision-checks label:has(input:checked){filter:brightness(1.25) drop-shadow(0 0 8px rgba(255,45,37,.52))}
-  .director-runtime .director-decision>.button{width:100%;min-height:51px;margin:2px 0 0;padding-left:75px;font-size:5.5px;background:url("./assets/images/control-start-emergency.png") left center/73px 51px no-repeat,linear-gradient(90deg,rgba(44,9,8,.5),rgba(4,10,12,.7))}.director-runtime .director-decision>.button::before{display:none}
+  .director-runtime .decision-checks label{background:url("./assets/images/runtime-selector-module.webp") left center/58px 44px no-repeat;filter:drop-shadow(0 4px 6px rgba(0,0,0,.68))}.director-runtime .decision-checks span{color:#c1cdcf;font-size:5.5px}.director-runtime .decision-checks span::before{display:none}.director-runtime .decision-checks label:has(input:checked){filter:brightness(1.25) drop-shadow(0 0 8px rgba(255,45,37,.52))}
+  .director-runtime .director-decision>.button{width:100%;min-height:51px;margin:2px 0 0;padding-left:75px;font-size:5.5px;background:url("./assets/images/control-start-emergency.webp") left center/73px 51px no-repeat,linear-gradient(90deg,rgba(44,9,8,.5),rgba(4,10,12,.7))}.director-runtime .director-decision>.button::before{display:none}
   .director-runtime .director-buttons{grid-template-columns:1fr 1fr;gap:2px}.director-runtime .director-buttons .button{min-height:48px;padding-left:40px;font-size:4.5px}.director-runtime .director-buttons .button::before{width:38px;height:34px}
   .director-runtime .director-reports{margin-top:3px}.director-runtime .fac-full-reports>div{min-height:29px}.director-runtime .fac-role-tools{display:none}
   .director-runtime .director-right>header,.director-runtime .director-right .full-track>div:first-child,.director-runtime .director-log p{font-size:4.5px}
@@ -2178,3 +2181,2839 @@ input {
 }
 
 @media(min-width:721px) and (max-height:500px){.shared-runtime>.environment-strip{display:none}.debrief-context{display:none}}
+
+/* Live-play type scale — in-game copy must stay readable at a glance */
+.game-runtime{
+  --read-label: 12px;
+  --read-body: 16px;
+  --read-strong: 15px;
+  --read-control: 14px;
+}
+.game-runtime .runtime-hud{height:68px;gap:16px}
+.game-runtime .hud-brand small,
+.game-runtime .hud-role span,
+.game-runtime .hud-clock span,
+.game-runtime .hud-session,
+.game-runtime .hud-stage-counter small,
+.game-runtime .hud-stage>b small,
+.game-runtime .sound-toggle{
+  font-size:12px !important;
+  letter-spacing:.08em !important;
+  line-height:1.2 !important;
+}
+.game-runtime .hud-brand b,
+.game-runtime .hud-role b{font-size:15px !important;letter-spacing:.06em !important}
+.game-runtime .hud-clock b{font-size:26px !important}
+.game-runtime .hud-stage>b{font-size:13px !important;line-height:1.25 !important}
+.game-runtime .hud-stage-counter strong{font-size:28px !important}
+.game-runtime .hud-stage-counter em{font-size:13px !important}
+.game-runtime .hud-session>span{font-size:11px !important;padding:4px 7px}
+
+.game-runtime .mission-plate>span,
+.game-runtime .director-mission>span,
+.game-runtime .challenge-stack>header,
+.game-runtime .telemetry-rack>header,
+.game-runtime .crew-rack>header,
+.game-runtime .role-actions section>header,
+.game-runtime .director-left>header,
+.game-runtime .director-right>header,
+.game-runtime .director-decision>header,
+.game-runtime .lead-command>header,
+.game-runtime .role-instrument>header,
+.game-runtime .instrument-signal,
+.game-runtime .system-broadcast span,
+.game-runtime .system-broadcast i,
+.game-runtime .station-feed>header,
+.game-runtime .telemetry-evidence>span,
+.game-runtime .director-evidence>span,
+.game-runtime .director-log>span,
+.game-runtime .finale-round,
+.game-runtime .correction-attempt,
+.game-runtime .decision-limit,
+.game-runtime .decision-selects label>span,
+.game-runtime .correction-builder label>span,
+.game-runtime .finale-lanes label>span,
+.game-runtime .role-report label{
+  font-size:13px !important;
+  line-height:1.3 !important;
+  letter-spacing:.06em !important;
+}
+
+.game-runtime .mission-plate p,
+.game-runtime .director-mission p,
+.game-runtime .role-instrument>p,
+.game-runtime .private-copy p,
+.game-runtime .consequence-inner>p,
+.game-runtime .director-decision>p{
+  font-size:17px !important;
+  line-height:1.5 !important;
+}
+.game-runtime .mission-plate strong,
+.game-runtime .instrument-prompt,
+.game-runtime .instrument-prompt>span{
+  font-size:15px !important;
+  line-height:1.45 !important;
+  letter-spacing:.03em !important;
+}
+.game-runtime .instrument-prompt>button,
+.game-runtime .role-brief-export{
+  min-height:36px !important;
+  font-size:12px !important;
+  letter-spacing:.04em !important;
+}
+
+.game-runtime .full-track>div:first-child,
+.game-runtime .full-track>div:first-child span,
+.game-runtime .full-track>div:first-child b,
+.game-runtime .director-right .full-track>div:first-child,
+.game-runtime .shared-runtime .telemetry-rack>header,
+.game-runtime .shared-runtime .telemetry-rack .full-track>div:first-child,
+.game-runtime .director-runtime .director-right>header,
+.game-runtime .director-runtime .director-right .full-track>div:first-child{
+  font-size:13px !important;
+  line-height:1.25 !important;
+}
+.game-runtime .evidence-ledger span,
+.game-runtime .evidence-ledger p{
+  font-size:13px !important;
+  line-height:1.35 !important;
+}
+.game-runtime .full-roster b{font-size:15px !important}
+.game-runtime .full-roster small{font-size:12px !important}
+.game-runtime .fac-full-reports b{font-size:14px !important}
+.game-runtime .fac-full-reports small{font-size:12px !important;line-height:1.35 !important}
+
+.game-runtime .challenge-stack>div>span{font-size:13px !important;line-height:1.3 !important}
+.game-runtime .challenge-stack>div>b,
+.game-runtime .challenge-stack>div>i{font-size:12px !important}
+.game-runtime .station-feed p{font-size:13px !important;line-height:1.4 !important;white-space:normal !important}
+.game-runtime .system-broadcast strong{font-size:16px !important}
+.game-runtime .runtime-alert{font-size:14px !important;line-height:1.4 !important;min-width:min(640px,90vw)}
+
+.game-runtime .decision-checks span{
+  font-size:15px !important;
+  line-height:1.35 !important;
+  padding-top:14px !important;
+  padding-bottom:14px !important;
+}
+.game-runtime .decision-selects select,
+.game-runtime .correction-builder select,
+.game-runtime .finale-lanes select,
+.game-runtime .decision-selects input,
+.game-runtime select,
+.game-runtime textarea,
+.game-runtime input{
+  font-size:15px !important;
+  line-height:1.35 !important;
+  min-height:42px;
+}
+.game-runtime .finale-lanes small{font-size:13px !important;line-height:1.35 !important}
+.game-runtime .correction-builder label>i{font-size:14px !important;width:34px;height:34px}
+.game-runtime .button:not(.sound-toggle),
+.game-runtime .director-buttons .button,
+.game-runtime .director-decision>.button,
+.game-runtime .lead-command>.button{
+  font-size:15px !important;
+  line-height:1.3 !important;
+  letter-spacing:.04em !important;
+}
+
+.game-runtime .role-actions h2,
+.game-runtime .intervention h3{font-size:22px !important}
+.game-runtime .role-actions p,
+.game-runtime .intervention p,
+.game-runtime .closed-copy{font-size:15px !important;line-height:1.45 !important}
+.game-runtime .intervention-feedback{font-size:14px !important;line-height:1.4 !important}
+
+.game-runtime .field-run-state>span,
+.game-runtime .field-player-control>header,
+.game-runtime .field-player-control form label{font-size:13px !important}
+.game-runtime .field-run-state>b{font-size:16px !important}
+.game-runtime .field-run-state>p,
+.game-runtime .field-run-state>small,
+.game-runtime .field-player-control>small,
+.game-runtime .field-air-meter span,
+.game-runtime .field-air-meter i{font-size:13px !important;line-height:1.4 !important}
+.game-runtime .field-air-meter b{font-size:20px !important}
+.game-runtime .field-findings i{font-size:13px !important;padding:6px 8px}
+.game-runtime .field-move-controls button,
+.game-runtime .field-player-control form button{font-size:13px !important;min-height:48px}
+.game-runtime .field-player-control form input{font-size:15px !important}
+
+.game-runtime .signal-intercept header,
+.game-runtime .signal-intercept small{font-size:13px !important;line-height:1.35 !important}
+.game-runtime .signal-intercept p,
+.game-runtime .signal-intercept.compact p{font-size:16px !important;line-height:1.45 !important}
+.game-runtime .environment-strip>header,
+.game-runtime .environment-strip>header b,
+.game-runtime .environment-strip small{font-size:12px !important}
+.game-runtime .environment-strip strong,
+.game-runtime .environment-strip.compact strong{font-size:14px !important;line-height:1.3 !important}
+.game-runtime .fixed-circuit span{font-size:15px !important}
+.game-runtime .fixed-circuit b,
+.game-runtime .fixed-circuit i{font-size:13px !important}
+
+.game-runtime .director-log p,
+.game-runtime .fac-history>div:not(.section-title),
+.game-runtime .fac-role-tools>span,
+.game-runtime .fac-role-tools>div b,
+.game-runtime .fac-role-tools button,
+.game-runtime .fac-role-tools form select,
+.game-runtime .director-resources span,
+.game-runtime .director-resources b{
+  font-size:13px !important;
+  line-height:1.4 !important;
+}
+.game-runtime .fac-role-tools button{min-height:32px !important}
+.game-runtime .fac-role-tools form select{height:34px !important}
+
+.game-runtime .consequence-inner>span,
+.game-runtime .consequence-inner>small{font-size:14px !important}
+.game-runtime .consequence-inner>p{font-size:18px !important;line-height:1.5 !important}
+
+.game-runtime .ending-transmission>span,
+.game-runtime .ending-truth>header,
+.game-runtime .ending-debrief>header,
+.game-runtime .ending-log>header,
+.game-runtime .ending-verdict i,
+.game-runtime .ending-truth span,
+.game-runtime .ending-truth small,
+.game-runtime .ending-truth footer,
+.game-runtime .ending-stage-seal span,
+.game-runtime .ending-stage-seal b,
+.game-runtime .ending-stage-seal i{font-size:13px !important;letter-spacing:.06em !important}
+.game-runtime .ending-transmission>p{font-size:17px !important;line-height:1.5 !important}
+.game-runtime .ending-truth b{font-size:16px !important;line-height:1.35 !important}
+.game-runtime .ending-debrief article b,
+.game-runtime .ending-debrief article p,
+.game-runtime .ending-log p,
+.game-runtime .debrief-current-prompt,
+.game-runtime .debrief-step-rail i,
+.game-runtime .debrief-step-rail i b,
+.game-runtime .fac-debrief-prompt,
+.game-runtime .debrief-facilitator>strong,
+.game-runtime .status-failure-map b,
+.game-runtime .status-failure-map span,
+.game-runtime .ai-bridge b,
+.game-runtime .ai-bridge span,
+.game-runtime .role-map-grid header b,
+.game-runtime .role-map-grid header i,
+.game-runtime .role-map-grid strong,
+.game-runtime .role-map-grid p,
+.game-runtime .readiness-grid b,
+.game-runtime .readiness-grid span,
+.game-runtime .readiness-grid small,
+.game-runtime .playtest-record summary,
+.game-runtime .playtest-record label,
+.game-runtime .playtest-record label small,
+.game-runtime .reframe-alert{
+  font-size:14px !important;
+  line-height:1.4 !important;
+}
+.game-runtime .first-step-form label,
+.game-runtime .first-step-form button,
+.game-runtime .debrief-facilitator button,
+.game-runtime .playtest-record button{font-size:13px !important;min-height:36px}
+.game-runtime .first-step-form textarea,
+.game-runtime .debrief-facilitator form textarea,
+.game-runtime .playtest-record textarea,
+.game-runtime .playtest-record select{font-size:15px !important}
+
+@media(max-width:720px){
+  .game-runtime .mission-plate p,
+  .game-runtime .role-instrument>p,
+  .game-runtime .director-mission p,
+  .game-runtime .consequence-inner>p{font-size:15px !important}
+  .game-runtime .decision-checks span,
+  .game-runtime .button:not(.sound-toggle),
+  .game-runtime .director-buttons .button{font-size:13px !important}
+  .game-runtime .hud-clock b{font-size:20px !important}
+  .game-runtime .hud-stage-counter small,
+  .game-runtime .hud-stage-counter em{font-size:12px !important}
+}
+
+@media(min-width:721px) and (max-height:500px){
+  .game-runtime .role-instrument>p,
+  .game-runtime .director-mission p,
+  .game-runtime .director-decision>p{font-size:14px !important}
+  .game-runtime .decision-checks span,
+  .game-runtime .button:not(.sound-toggle){font-size:13px !important}
+}
+
+/* Pre-game, lobby, join, and remaining micro-labels — readable on projector and laptop */
+.assembly-header>div>small,
+.assembly-header>strong,
+.assembly-machine>header span,
+.assembly-care>span,
+.assembly-care>b,
+.assembly-wait>span,
+.join-hardware>header span,
+.join-hardware>header small,
+.join-hardware>header i,
+.join-transmission>span,
+.participant-care-mini b,
+.station-entry>header span,
+.station-entry .engage-state small,
+.station-entry .engage-command small,
+.start-title>strong,
+.start-title>small,
+.start-title>p,
+.mission-dossier>header span,
+.callsign-control>span,
+.crew-selector>span{
+  font-size:13px !important;
+  letter-spacing:.1em !important;
+  line-height:1.3 !important;
+}
+
+.assembly-machine>header p{
+  font-size:15px !important;
+  letter-spacing:.08em !important;
+  line-height:1.35 !important;
+}
+.assembly-machine>header p b{font-size:18px !important}
+
+.assembly-roster article span em,
+.role-pod .role-data em,
+.authority-select>button em{
+  font-size:13px !important;
+  letter-spacing:.12em !important;
+  line-height:1.2 !important;
+}
+
+.assembly-roster article span b,
+.role-pod .role-data b,
+.authority-select>button>span b,
+.illustrated-control span b,
+.role-connect span b,
+.assembly-tools span b,
+.assembly-start span b,
+.assembly-wait span b,
+.station-confirm span b,
+.engage-command b,
+.engage-state b,
+.station-entry>header b,
+.crew-selector button>span i{
+  font-size:16px !important;
+  line-height:1.2 !important;
+  letter-spacing:.04em !important;
+}
+
+.assembly-roster article span small,
+.role-pod .role-data small,
+.illustrated-control span small,
+.role-connect span small,
+.assembly-tools span small,
+.assembly-start span small,
+.assembly-wait span small,
+.station-confirm span small,
+.authority-select>button>span small,
+.crew-selector button>span small,
+.join-transmission small,
+.join-transmission b{
+  display:block !important;
+  font-size:13px !important;
+  letter-spacing:.06em !important;
+  line-height:1.35 !important;
+}
+
+.assembly-care p,
+.participant-care-mini span,
+.join-terminal>p,
+.station-entry p,
+.mission-dossier p,
+.dossier-story p{
+  font-size:16px !important;
+  line-height:1.5 !important;
+  letter-spacing:.01em !important;
+}
+
+.assembly-care>button,
+.illustrated-control,
+.role-connect,
+.assembly-start,
+.station-confirm,
+.authority-select>button,
+.engage-device{
+  font-size:15px !important;
+}
+
+.assembly-roster article{min-height:92px !important}
+.assembly-care{min-height:88px !important}
+.assembly-care>button{min-height:44px !important;padding:0 16px !important}
+.participant-care-mini{padding:12px 14px !important}
+.role-pod .role-data small,
+.assembly-roster article span small,
+.assembly-tools span small,
+.join-hardware>header div small,
+.assembly-header>div small{
+  display:block !important;
+}
+
+.station-entry>header span,
+.station-entry>header b{
+  font-size:14px !important;
+}
+.station-entry>header b{font-size:22px !important;letter-spacing:.04em !important}
+
+.callsign-control input,
+.join-entry form input{
+  font-size:22px !important;
+}
+
+.crew-size-grid button,
+.setup-panel label,
+.setup-panel p,
+.session-created p,
+.session-created b,
+.session-created small{
+  font-size:15px !important;
+  line-height:1.4 !important;
+}
+
+@media(max-width:720px){
+  .assembly-care{display:block !important}
+  .assembly-roster article span small,
+  .assembly-tools span small,
+  .role-pod .role-data small,
+  .join-hardware>header div small,
+  .assembly-header>div small{
+    display:block !important;
+  }
+}
+
+@media(min-width:721px) and (max-height:500px){
+  .assembly-care{display:block !important}
+}
+
+.dossier-grid article b,
+.mission-dossier>header span,
+.mission-dossier>header b,
+.mission-dossier>footer span,
+.mission-dossier>footer strong,
+.station-error{
+  font-size:13px !important;
+  line-height:1.35 !important;
+}
+.dossier-grid article small{
+  display:block !important;
+  font-size:13px !important;
+  line-height:1.35 !important;
+}
+.start-title>strong,
+.start-title>small,
+.start-title>p{
+  font-size:14px !important;
+}
+
+.game-runtime .challenge-stack>div>span,
+.game-runtime .challenge-stack>div>b,
+.game-runtime .station-feed p,
+.game-runtime .system-broadcast strong{
+  font-size:13px !important;
+  line-height:1.35 !important;
+}
+
+/* Fit icons to readable type. Never clip or hide player-facing copy. */
+.start-title>p,
+.start-title>strong,
+.start-title>small,
+.game-start:has(.boot-entry) .start-title>p,
+.game-start:has(.boot-entry) .start-title>strong,
+.game-start:has(.boot-entry) .start-title>small,
+.game-start:has(.configure-entry) .start-title>small,
+.assembly-header>div small,
+.assembly-header>strong,
+.assembly-roster article span em,
+.assembly-roster article span b,
+.assembly-roster article span small,
+.assembly-tools span b,
+.assembly-tools span small,
+.assembly-start span b,
+.assembly-start span small,
+.assembly-wait span b,
+.assembly-wait span small,
+.assembly-care,
+.assembly-care p,
+.join-hardware>header div small,
+.role-pod .role-data em,
+.role-pod .role-data b,
+.role-pod .role-data small,
+.crew-selector>span,
+.participant-care-mini,
+.mission-dossier>header,
+.dossier-story,
+.mission-dossier>footer,
+.dossier-grid article b,
+.dossier-grid article small,
+.director-runtime .director-mission p,
+.debrief-step-rail i b{
+  display:block !important;
+}
+.mission-dossier>header{display:flex !important;height:auto !important;min-height:44px !important;padding:10px 13px !important}
+.mission-dossier>footer{display:grid !important}
+.start-ident,
+.join-transmission,
+.hud-session{
+  display:flex !important;
+}
+.game-start .start-ident>div>b{
+  font-size:9px !important;
+  line-height:1.05 !important;
+  letter-spacing:.15em !important;
+}
+.game-start .start-ident>div>small{
+  font-size:7px !important;
+  line-height:1.1 !important;
+  letter-spacing:.16em !important;
+}
+.join-hardware>header>i,
+.crew-selector button>span small,
+.sound-toggle,
+.hud-brand>span,
+.hud-role,
+.hud-stage>b{
+  display:block !important;
+}
+
+.assembly-console.assembly-machine,
+.join-terminal.join-hardware{
+  overflow:auto !important;
+  max-height:calc(100vh - 96px) !important;
+}
+
+.assembly-machine>header,
+.join-hardware>header{
+  height:auto !important;
+  min-height:84px !important;
+  grid-template-columns:72px minmax(0,1fr) auto !important;
+  gap:12px !important;
+  padding:10px 8px !important;
+  overflow:visible !important;
+}
+.assembly-machine>header>.game-icon,
+.join-hardware>header>.game-icon{
+  width:64px !important;
+  height:64px !important;
+  transform:none !important;
+}
+.assembly-machine>header h1,
+.join-hardware>header h1{
+  font-size:clamp(20px, 2.6vw, 32px) !important;
+  line-height:1.15 !important;
+  white-space:normal !important;
+}
+
+.assembly-roster article,
+.role-pod,
+.illustrated-control,
+.role-connect,
+.assembly-tools>*,
+.assembly-start,
+.assembly-wait{
+  overflow:visible !important;
+}
+
+.assembly-roster article{
+  min-height:80px !important;
+  padding:10px 16px 10px 80px !important;
+  align-items:center !important;
+}
+.assembly-roster article>.game-icon{
+  left:6px !important;
+  width:64px !important;
+  height:64px !important;
+  transform:translateY(-50%) !important;
+}
+.assembly-roster article.connected>.game-icon{
+  transform:translateY(-50%) !important;
+}
+
+.assembly-tools>*,
+.assembly-start,
+.assembly-wait{
+  min-height:76px !important;
+  padding:10px 18px 10px 84px !important;
+  align-items:center !important;
+}
+.role-connect,
+.illustrated-control,
+.station-confirm.illustrated-control{
+  min-height:76px !important;
+  align-items:center !important;
+  overflow:visible !important;
+}
+.assembly-tools .game-icon,
+.assembly-start>.game-icon,
+.assembly-wait>.game-icon,
+.role-connect>.game-icon,
+.illustrated-control>.game-icon,
+.station-confirm.illustrated-control>.game-icon{
+  left:8px !important;
+  width:64px !important;
+  height:64px !important;
+  transform:none !important;
+}
+.assembly-start span,
+.assembly-tools span,
+.assembly-wait span,
+.role-connect span,
+.illustrated-control span{
+  min-width:0;
+  white-space:normal !important;
+}
+
+.assembly-care{
+  display:block !important;
+  min-height:0 !important;
+  padding:14px 16px 14px 56px !important;
+  overflow:visible !important;
+}
+.assembly-care p,
+.participant-care-mini span{
+  white-space:normal !important;
+  overflow:visible !important;
+  max-height:none !important;
+}
+
+.role-pod{
+  min-height:84px !important;
+  grid-template-columns:72px minmax(0,1fr) !important;
+  display:grid !important;
+  padding-top:0 !important;
+}
+.role-pod>.role-art{
+  position:relative !important;
+  left:auto !important;
+  right:auto !important;
+  top:auto !important;
+  height:72px !important;
+  width:72px !important;
+}
+.role-pod>.role-art .game-icon{
+  width:64px !important;
+  height:64px !important;
+  transform:none !important;
+}
+.role-pod .role-data{
+  padding:8px 12px 8px 8px !important;
+  text-align:left !important;
+  overflow:visible !important;
+}
+
+.authority-select>button{
+  min-height:88px !important;
+  grid-template-columns:72px minmax(0,1fr) auto !important;
+  padding:8px 12px !important;
+  overflow:visible !important;
+}
+.authority-select>button .authority-icon{
+  width:64px !important;
+  height:64px !important;
+  transform:none !important;
+}
+.authority-select>button::before{left:80px !important}
+
+.crew-selector>span{display:block !important}
+.crew-selector button{
+  height:118px !important;
+  overflow:hidden !important;
+}
+.crew-selector button>.game-icon{
+  inset:4px 4px 46px !important;
+  height:auto !important;
+  width:auto !important;
+  transform:none !important;
+}
+.crew-selector button.active>.game-icon{transform:none !important}
+.crew-selector button>span{
+  height:44px !important;
+  padding:0 10px !important;
+}
+.crew-selector button>span small{display:inline !important}
+
+.station-confirm.illustrated-control,
+.join-entry form .station-confirm{
+  grid-template-columns:72px minmax(0,1fr) 8px !important;
+  padding-left:8px !important;
+}
+
+.engage-device{
+  overflow:visible !important;
+  min-height:88px !important;
+}
+.engage-state,
+.engage-command{
+  white-space:normal !important;
+}
+
+.game-runtime .hud-stage{display:grid !important}
+.game-runtime .runtime-hud{
+  height:auto !important;
+  min-height:68px !important;
+  flex-wrap:wrap;
+  overflow:visible !important;
+}
+
+.player-runtime .role-instrument,
+.player-runtime .role-actions section,
+.director-runtime .director-mission,
+.director-runtime .director-decision,
+.lead-command{
+  overflow:auto !important;
+}
+
+.game-runtime .decision-checks label,
+.game-runtime .decision-checks span{
+  min-height:72px !important;
+  overflow:visible !important;
+}
+.game-runtime .decision-checks span{
+  padding:8px 10px 8px 80px !important;
+  font-size:14px !important;
+  line-height:1.35 !important;
+  white-space:normal !important;
+  overflow-wrap:anywhere !important;
+}
+.game-runtime .decision-checks span::before{
+  width:64px !important;
+  height:48px !important;
+}
+
+.game-runtime .button:not(.sound-toggle){
+  min-height:56px !important;
+  padding:10px 16px 10px 88px !important;
+  font-size:14px !important;
+  line-height:1.3 !important;
+  white-space:normal !important;
+  overflow:visible !important;
+}
+.game-runtime .button:not(.sound-toggle)::before{
+  width:72px !important;
+  height:48px !important;
+}
+
+.game-runtime .director-buttons .button{
+  min-height:52px !important;
+  padding:8px 8px 8px 64px !important;
+  font-size:12px !important;
+}
+.game-runtime .director-buttons .button::before{
+  width:52px !important;
+  height:40px !important;
+}
+
+.decision-selects label,
+.correction-builder label,
+.finale-lanes label{
+  overflow:visible !important;
+  padding-top:48px !important;
+}
+.decision-selects label>span,
+.correction-builder label>span,
+.finale-lanes label>span,
+.finale-lanes small{
+  white-space:normal !important;
+  overflow:visible !important;
+  font-size:13px !important;
+  line-height:1.35 !important;
+}
+
+.mission-dossier{
+  overflow:auto !important;
+  max-height:calc(100vh - 120px);
+}
+.dossier-grid article{
+  min-height:88px !important;
+  padding:10px 10px 10px 76px !important;
+  overflow:visible !important;
+}
+.dossier-grid article .game-icon{
+  width:56px !important;
+  height:56px !important;
+}
+
+@media(max-width:720px){
+  .start-ident,
+  .join-transmission,
+  .hud-session{display:flex !important}
+  .start-title>p,
+  .start-title>strong,
+  .start-title>small,
+  .assembly-header>div small,
+  .assembly-roster article span small,
+  .assembly-tools span small,
+  .role-pod .role-data small,
+  .join-hardware>header div small,
+  .crew-selector>span,
+  .crew-selector button>span small,
+  .hud-stage>b,
+  .hud-role,
+  .assembly-care,
+  .director-runtime .director-mission p,
+  .mission-dossier>header,
+  .dossier-story,
+  .mission-dossier>footer,
+  .dossier-grid article small{
+    display:block !important;
+  }
+  .hud-stage,
+  .sound-toggle{display:grid !important}
+  .sound-toggle{display:block !important}
+  .mission-dossier>header{display:flex !important}
+  .mission-dossier>footer{display:grid !important}
+  .assembly-roster,
+  .join-hardware .role-choice-grid,
+  .authority-select,
+  .decision-checks{
+    grid-template-columns:1fr !important;
+  }
+  .role-pod{
+    display:grid !important;
+    grid-template-columns:64px minmax(0,1fr) !important;
+    padding-top:0 !important;
+  }
+}
+
+/* Live Stage screens — keep copy clear of device art and stop clipping */
+.game-runtime .runtime-hud{
+  height:68px !important;
+  flex-wrap:nowrap !important;
+  overflow:hidden !important;
+}
+.game-runtime .hud-stage{
+  min-width:0 !important;
+  grid-template-columns:auto minmax(80px,1fr) minmax(0,auto) !important;
+}
+.game-runtime .hud-stage>b{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.player-runtime .role-instrument{
+  overflow:visible !important;
+  padding:58px 24px 20px 24px !important;
+}
+.player-runtime .role-instrument::before{
+  width:36% !important;
+  height:34% !important;
+  top:12% !important;
+  right:0 !important;
+  opacity:.38 !important;
+  pointer-events:none;
+}
+.player-runtime .role-instrument>header{
+  position:relative !important;
+  top:auto !important;
+  left:auto !important;
+  right:auto !important;
+  margin:0 0 10px !important;
+  display:flex !important;
+  justify-content:space-between !important;
+  gap:12px !important;
+  max-width:68% !important;
+  z-index:3 !important;
+}
+.player-runtime .instrument-signal{
+  margin:0 0 8px !important;
+  max-width:68% !important;
+}
+.player-runtime .role-instrument h1{margin-top:8px !important;max-width:68% !important;z-index:2 !important}
+.player-runtime .role-instrument>p,
+.player-runtime .instrument-prompt{
+  position:relative !important;
+  z-index:2 !important;
+  max-width:68% !important;
+}
+
+.correction-builder{
+  grid-template-columns:1fr !important;
+  gap:8px !important;
+}
+.correction-builder label{
+  min-height:58px !important;
+  padding:8px 12px 8px 72px !important;
+  background-size:56px auto !important;
+  background-position:12px center !important;
+  overflow:visible !important;
+}
+.correction-builder label>span,
+.correction-builder label>span select{
+  font-size:15px !important;
+  line-height:1.3 !important;
+  white-space:normal !important;
+}
+.player-runtime .role-instrument>p{
+  font-size:16px !important;
+  line-height:1.5 !important;
+  white-space:pre-line !important;
+}
+
+.player-runtime .role-actions{
+  overflow:auto !important;
+}
+.player-runtime .role-actions section{
+  min-height:0 !important;
+  padding:72px 16px 16px !important;
+  overflow:visible !important;
+}
+.player-runtime .role-actions section::before{
+  height:88px !important;
+  top:-10px !important;
+  opacity:.42 !important;
+}
+.player-runtime .role-report .button,
+.player-runtime .role-actions section>.button{
+  min-height:48px !important;
+  padding:8px 12px 8px 64px !important;
+  font-size:13px !important;
+}
+.player-runtime .role-report .button::before,
+.player-runtime .role-actions section>.button::before{
+  width:52px !important;
+  height:36px !important;
+}
+
+.field-player-control{
+  left:24px !important;
+  right:390px !important;
+  min-height:0 !important;
+  padding:16px 18px 16px 88px !important;
+  overflow:visible !important;
+}
+.field-player-control::before{
+  left:8px !important;
+  top:12px !important;
+  width:68px !important;
+  height:68px !important;
+}
+.player-runtime:has(.field-player-control) .role-instrument{
+  bottom:36% !important;
+}
+.player-runtime:has(.field-player-control) .role-actions{
+  bottom:36% !important;
+  display:grid !important;
+}
+.field-move-controls button,
+.field-player-control form button{
+  font-size:14px !important;
+  line-height:1.25 !important;
+  min-height:52px !important;
+  padding:8px 10px !important;
+  white-space:normal !important;
+}
+.field-move-controls button::before{
+  width:22px !important;
+  height:22px !important;
+  margin-bottom:6px !important;
+}
+.field-player-control>header,
+.field-player-control form label,
+.field-player-control>small,
+.field-air-meter span,
+.field-air-meter i,
+.field-findings i{
+  font-size:13px !important;
+  letter-spacing:.04em !important;
+}
+.field-air-meter b{font-size:22px !important}
+
+.director-runtime .director-left{
+  width:280px !important;
+  padding:12px 14px !important;
+  overflow:auto !important;
+}
+.director-runtime .director-buttons{
+  grid-template-columns:1fr 1fr !important;
+  gap:8px !important;
+}
+.director-runtime .director-buttons .button,
+.game-runtime .director-buttons .button{
+  min-height:44px !important;
+  padding:8px 10px 8px 44px !important;
+  font-size:12px !important;
+  line-height:1.2 !important;
+  white-space:normal !important;
+  overflow:visible !important;
+}
+.director-runtime .director-buttons .button::before,
+.game-runtime .director-buttons .button::before{
+  width:32px !important;
+  height:32px !important;
+  background-image:url("./assets/images/runtime-selector-module.webp") !important;
+}
+.director-runtime .fac-role-tools>div{
+  grid-template-columns:48px 1fr 1fr !important;
+  gap:6px !important;
+  min-height:36px !important;
+}
+.director-runtime .fac-role-tools button{
+  font-size:12px !important;
+  min-height:36px !important;
+  padding:6px 8px !important;
+  white-space:normal !important;
+}
+
+.director-runtime .director-right{
+  position:absolute !important;
+  top:86px !important;
+  right:64px !important;
+  bottom:16px !important;
+  left:auto !important;
+  width:328px !important;
+  padding:0 8px 12px 0 !important;
+  overflow:auto !important;
+}
+.director-runtime .director-right::before{
+  display:none !important;
+  content:none !important;
+  background:none !important;
+  width:0 !important;
+  height:0 !important;
+}
+.director-runtime .station-state-head{
+  display:grid !important;
+  grid-template-columns:96px minmax(0,1fr) !important;
+  gap:4px 12px !important;
+  align-items:start !important;
+  margin:0 0 12px !important;
+}
+.director-runtime img.game-icon.station-state-icon{
+  position:relative !important;
+  display:block !important;
+  width:96px !important;
+  height:144px !important;
+  max-width:96px !important;
+  margin:0 !important;
+  object-fit:contain !important;
+  object-position:center top !important;
+  transform:none !important;
+  flex-shrink:0 !important;
+  filter:drop-shadow(0 10px 16px rgba(0,0,0,.7)) drop-shadow(0 0 12px rgba(255,45,37,.32)) !important;
+}
+.director-runtime .station-state-head header{
+  display:block !important;
+  margin:0 0 10px !important;
+  font-size:13px !important;
+  letter-spacing:.12em !important;
+  white-space:nowrap !important;
+}
+.director-runtime .station-state-head .full-tracks{gap:10px !important}
+.director-runtime .station-state-head .full-track>div:first-child,
+.director-runtime .station-state-head .full-track>div:first-child span,
+.director-runtime .station-state-head .full-track>div:first-child b{
+  font-size:12px !important;
+  line-height:1.2 !important;
+  white-space:nowrap !important;
+}
+.director-runtime .director-center{
+  top:86px !important;
+  right:404px !important;
+  left:300px !important;
+}
+.director-runtime .director-resources{
+  grid-template-columns:1fr !important;
+  gap:8px !important;
+}
+.director-runtime .director-resources span{
+  display:flex !important;
+  justify-content:space-between !important;
+  gap:12px !important;
+  font-size:13px !important;
+  white-space:normal !important;
+}
+.director-runtime .environment-strip.compact>div,
+.director-runtime .environment-strip>div{
+  grid-template-columns:1fr 1fr !important;
+  gap:10px 14px !important;
+}
+.director-runtime .environment-strip small,
+.director-runtime .environment-strip strong{
+  white-space:normal !important;
+  overflow-wrap:anywhere !important;
+}
+.director-runtime .director-mission p{
+  display:block !important;
+  font-size:16px !important;
+  line-height:1.45 !important;
+  max-width:none !important;
+}
+.director-runtime .field-run-state{
+  overflow:visible !important;
+}
+.director-runtime .field-run-state>small{
+  font-size:13px !important;
+  line-height:1.4 !important;
+  white-space:normal !important;
+}
+
+@media(max-width:1100px){
+  .player-runtime .role-instrument>header,
+  .player-runtime .role-instrument h1,
+  .player-runtime .role-instrument>p,
+  .player-runtime .instrument-prompt{max-width:100% !important}
+  .player-runtime .role-instrument::before{width:28% !important;opacity:.28 !important}
+  .field-player-control{left:12px !important;right:calc(34vw + 20px) !important}
+  .player-runtime:has(.field-player-control) .role-actions{display:grid !important}
+  .director-runtime .director-right{
+    top:86px !important;
+    right:36px !important;
+    width:300px !important;
+  }
+  .director-runtime .director-center{right:348px !important;left:250px !important}
+  .director-runtime .station-state-head{grid-template-columns:80px minmax(0,1fr) !important}
+  .director-runtime img.game-icon.station-state-icon{
+    width:80px !important;
+    max-width:80px !important;
+    height:120px !important;
+  }
+}
+
+@media(max-width:720px){
+  .director-runtime .director-right,
+  .director-runtime .director-center,
+  .director-runtime .director-left{
+    position:relative !important;
+    top:auto !important;
+    right:auto !important;
+    bottom:auto !important;
+    left:auto !important;
+    width:auto !important;
+    inset:auto !important;
+  }
+  .director-runtime .station-state-head{
+    grid-template-columns:72px minmax(0,1fr) !important;
+  }
+  .director-runtime img.game-icon.station-state-icon{
+    width:72px !important;
+    max-width:72px !important;
+    height:108px !important;
+  }
+}
+
+/* Ending debrief: stop tab cards and circle-badge styles from overlapping copy */
+.ending-runtime .ending-debrief{
+  max-height:44vh !important;
+  overflow:auto !important;
+  z-index:6 !important;
+}
+.ending-runtime .debrief-current-prompt{
+  max-width:none !important;
+  margin:0 0 12px !important;
+  font-size:15px !important;
+  line-height:1.45 !important;
+  white-space:normal !important;
+}
+.ending-runtime .debrief-step-rail{
+  display:grid !important;
+  grid-template-columns:repeat(6,minmax(0,1fr)) !important;
+  gap:8px 12px !important;
+  margin:0 0 14px !important;
+  background:none !important;
+}
+.ending-runtime .debrief-step-rail i{
+  min-height:58px !important;
+  padding:6px 8px 10px 36px !important;
+  overflow:visible !important;
+}
+.ending-runtime .debrief-step-rail i::before{
+  width:24px !important;
+  height:24px !important;
+  top:6px !important;
+  font-size:12px !important;
+}
+.ending-runtime .debrief-step-rail i b{
+  display:block !important;
+  font-size:12px !important;
+  line-height:1.25 !important;
+  white-space:normal !important;
+  overflow:visible !important;
+}
+.ending-runtime .debrief-context{
+  max-height:none !important;
+  overflow:visible !important;
+  display:grid !important;
+  gap:12px 16px !important;
+}
+.ending-runtime .status-failure-map,
+.ending-runtime .ai-bridge,
+.ending-runtime .role-map-grid,
+.ending-runtime .readiness-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:12px 16px !important;
+}
+.ending-runtime .readiness-grid>header{
+  grid-column:1/-1 !important;
+  margin:0 !important;
+  font-size:12px !important;
+  letter-spacing:.08em !important;
+}
+.ending-runtime .debrief-context article,
+.ending-runtime .debrief-context button{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+  gap:6px !important;
+  min-width:0 !important;
+  min-height:0 !important;
+  padding:10px 12px !important;
+  overflow:visible !important;
+  float:none !important;
+}
+.ending-runtime .ending-debrief .debrief-context article span,
+.ending-runtime .ending-debrief .debrief-context article small,
+.ending-runtime .ending-debrief .debrief-context button span,
+.ending-runtime .ending-debrief .debrief-context button small{
+  display:block !important;
+  float:none !important;
+  position:static !important;
+  width:auto !important;
+  height:auto !important;
+  min-height:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:none !important;
+  box-shadow:none !important;
+  white-space:normal !important;
+  overflow:visible !important;
+  text-align:left !important;
+  font-size:14px !important;
+  line-height:1.4 !important;
+  color:#c5d2d5 !important;
+}
+.ending-runtime .ending-debrief .debrief-context article b,
+.ending-runtime .ending-debrief .debrief-context button b{
+  display:block !important;
+  font-size:14px !important;
+  line-height:1.3 !important;
+  color:#eef3f4 !important;
+}
+.ending-runtime .role-map-grid article header{
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  width:100% !important;
+}
+.ending-runtime .first-step-form{
+  grid-template-columns:minmax(0,1fr) 200px !important;
+  gap:12px !important;
+  align-items:end !important;
+}
+
+@media(max-width:1100px){
+  .ending-runtime .debrief-step-rail{
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  }
+  .ending-runtime .status-failure-map,
+  .ending-runtime .ai-bridge,
+  .ending-runtime .role-map-grid,
+  .ending-runtime .readiness-grid{
+    grid-template-columns:1fr !important;
+  }
+}
+
+/* Facilitator/player ending right column: seal, stakes, debrief stacked — no overlay */
+.ending-runtime .ending-right-stack{
+  position:absolute !important;
+  top:86px !important;
+  right:22px !important;
+  bottom:16px !important;
+  width:360px !important;
+  z-index:7 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  gap:12px !important;
+  overflow:hidden !important;
+}
+.ending-runtime .ending-right-stack .ending-stage-seal{
+  position:relative !important;
+  top:auto !important;
+  right:auto !important;
+  left:auto !important;
+  width:92px !important;
+  height:92px !important;
+  flex:0 0 auto !important;
+  align-self:flex-end !important;
+}
+.ending-runtime .ending-right-stack .ending-stage-seal strong{font-size:28px !important}
+.ending-runtime .ending-right-stack .ending-truth{
+  position:relative !important;
+  top:auto !important;
+  right:auto !important;
+  left:auto !important;
+  width:auto !important;
+  padding:8px 8px 10px 0 !important;
+  flex:0 0 auto !important;
+  overflow:visible !important;
+}
+.ending-runtime .ending-right-stack .ending-truth::before{
+  display:none !important;
+  content:none !important;
+}
+.ending-runtime .ending-right-stack .ending-truth>header,
+.ending-runtime .ending-right-stack .ending-truth>div,
+.ending-runtime .ending-right-stack .ending-truth footer{
+  position:relative !important;
+  z-index:1 !important;
+}
+.ending-runtime .ending-right-stack .debrief-facilitator,
+.ending-runtime .ending-right-stack .ending-log{
+  position:relative !important;
+  top:auto !important;
+  right:auto !important;
+  left:auto !important;
+  bottom:auto !important;
+  width:auto !important;
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  overflow:auto !important;
+  padding:10px 8px 12px 0 !important;
+  border-left:1px solid rgba(255,78,69,.3) !important;
+  background:linear-gradient(90deg,rgba(3,10,12,.78),transparent) !important;
+}
+.ending-runtime .ending-right-stack .debrief-facilitator nav{
+  display:grid !important;
+  grid-template-columns:repeat(6,minmax(0,1fr)) !important;
+  gap:4px !important;
+  margin:10px 0 12px !important;
+}
+.ending-runtime .ending-right-stack .debrief-facilitator nav button{
+  min-height:36px !important;
+  font-size:13px !important;
+}
+.ending-runtime .ending-right-stack .debrief-facilitator>strong,
+.ending-runtime .ending-right-stack .fac-debrief-prompt,
+.ending-runtime .ending-right-stack .debrief-facilitator>section,
+.ending-runtime .ending-right-stack .debrief-facilitator form{
+  position:relative !important;
+  z-index:1 !important;
+}
+.ending-runtime .ending-debrief{
+  right:400px !important;
+}
+.ending-runtime.facilitator-ending .ending-transmission{
+  right:400px !important;
+}
+
+@media(max-width:1000px){
+  .ending-runtime .ending-right-stack{
+    width:300px !important;
+    right:14px !important;
+  }
+  .ending-runtime .ending-debrief,
+  .ending-runtime.facilitator-ending .ending-transmission{
+    right:328px !important;
+  }
+}
+@media(max-width:720px){
+  .ending-runtime .ending-right-stack{
+    position:relative !important;
+    inset:auto !important;
+    top:auto !important;
+    right:auto !important;
+    bottom:auto !important;
+    width:auto !important;
+    margin:12px !important;
+    height:auto !important;
+    overflow:visible !important;
+  }
+  .ending-runtime .ending-debrief,
+  .ending-runtime.facilitator-ending .ending-transmission{
+    right:12px !important;
+    left:12px !important;
+  }
+}
+
+/* ===== Mobile responsive fix — authoritative final layer (Aug 2026) ===== */
+@media (max-width: 720px) {
+  html,
+  body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  .game-start,
+  .game-runtime,
+  .join-runtime,
+  .assembly-runtime {
+    width: 100%;
+    max-width: 100vw;
+    min-height: 100dvh;
+    height: auto;
+    overflow-x: hidden;
+  }
+
+  /* ---- HUD: compact but keep stage counter ---- */
+  .game-runtime .runtime-hud {
+    position: fixed !important;
+    left: max(6px, env(safe-area-inset-left)) !important;
+    right: max(6px, env(safe-area-inset-right)) !important;
+    top: max(6px, env(safe-area-inset-top)) !important;
+    z-index: 30 !important;
+    height: 52px !important;
+    gap: 8px !important;
+    padding: 0 8px !important;
+  }
+
+  .game-runtime .hud-brand {
+    min-width: 0 !important;
+    flex: 0 1 auto;
+  }
+
+  .game-runtime .hud-logo {
+    width: 54px !important;
+  }
+
+  .game-runtime .hud-brand > span {
+    display: none !important;
+  }
+
+  .game-runtime .hud-stage {
+    display: grid !important;
+    grid-template-columns: 72px minmax(0, 1fr) !important;
+    min-width: 0 !important;
+    gap: 6px !important;
+  }
+
+  .game-runtime .hud-stage > div {
+    display: none !important;
+  }
+
+  .game-runtime .hud-stage > b {
+    display: none !important;
+  }
+
+  .game-runtime .hud-stage-counter strong {
+    font-size: 18px !important;
+  }
+
+  .game-runtime .hud-stage-counter small,
+  .game-runtime .hud-stage-counter em {
+    font-size: 9px !important;
+  }
+
+  .game-runtime .hud-role {
+    display: none !important;
+  }
+
+  .game-runtime .hud-clock {
+    margin-left: auto !important;
+    padding: 0 4px !important;
+    border: 0 !important;
+  }
+
+  .game-runtime .hud-clock b {
+    font-size: 17px !important;
+  }
+
+  .game-runtime .hud-clock span {
+    font-size: 9px !important;
+  }
+
+  .game-runtime .sound-toggle {
+    display: inline-flex !important;
+    align-items: center;
+    min-height: 28px !important;
+    padding: 0 6px !important;
+    font-size: 8px !important;
+  }
+
+  .game-runtime .hud-session {
+    display: none !important;
+  }
+
+  /* ---- Start / host / boot ---- */
+  .game-start:has(.boot-entry) .start-title {
+    top: 12% !important;
+    left: max(14px, env(safe-area-inset-left)) !important;
+    right: max(14px, env(safe-area-inset-right)) !important;
+  }
+
+  .game-start:has(.boot-entry) .start-main-logo {
+    width: min(88vw, 420px) !important;
+    margin: 0 auto !important;
+  }
+
+  .game-start:has(.boot-entry) .start-title h2 {
+    font-size: 15px !important;
+    line-height: 1.15 !important;
+  }
+
+  .game-start:has(.access-entry) .start-title,
+  .game-start:has(.configure-entry) .start-title {
+    top: 8% !important;
+    filter: brightness(0.55);
+  }
+
+  .game-start:has(.configure-entry) .start-title h2,
+  .game-start:has(.access-entry) .start-title h2 {
+    font-size: 14px !important;
+  }
+
+  .game-start:has(.configure-entry) .start-title > strong,
+  .game-start:has(.configure-entry) .start-title > small,
+  .game-start:has(.access-entry) .start-title > strong,
+  .game-start:has(.access-entry) .start-title > small {
+    display: none !important;
+  }
+
+  .mission-dossier {
+    display: none !important;
+  }
+
+  .station-entry.boot-entry {
+    left: max(8px, env(safe-area-inset-left)) !important;
+    right: max(8px, env(safe-area-inset-right)) !important;
+    bottom: max(10px, env(safe-area-inset-bottom)) !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 168px;
+  }
+
+  .engage-device > img {
+    width: 52% !important;
+  }
+
+  .engage-state,
+  .engage-command,
+  .engage-cursor {
+    left: auto !important;
+    right: max(8px, env(safe-area-inset-right)) !important;
+    max-width: 46% !important;
+  }
+
+  .engage-state {
+    top: 28% !important;
+    padding-left: 0 !important;
+  }
+
+  .engage-state::before {
+    display: none !important;
+  }
+
+  .engage-command {
+    top: 52% !important;
+    padding: 6px 8px !important;
+  }
+
+  .engage-command b,
+  .engage-command small {
+    white-space: normal !important;
+  }
+
+  .engage-cursor {
+    top: 78% !important;
+  }
+
+  .configure-entry .crew-selector > div {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    overflow: visible !important;
+  }
+
+  .configure-entry .crew-selector button {
+    height: 96px !important;
+    min-width: 0 !important;
+  }
+
+  .configure-entry .crew-selector button > .game-icon {
+    height: 72px !important;
+    transform: none !important;
+  }
+
+  .configure-entry .crew-selector button > span i {
+    font-size: 16px !important;
+  }
+
+  .configure-entry .crew-selector button > span small {
+    display: block !important;
+    font-size: 6px !important;
+  }
+
+  /* ---- Join + assembly lobby ---- */
+  .join-runtime,
+  .assembly-runtime {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100dvh !important;
+    padding: 58px max(8px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+  }
+
+  .join-runtime .runtime-world,
+  .assembly-runtime .runtime-world {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+  }
+
+  .assembly-header {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    z-index: 2 !important;
+    margin: 0 0 8px !important;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .join-terminal.join-hardware,
+  .assembly-console.assembly-machine {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+    flex: 0 0 auto;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: visible !important;
+    z-index: 2 !important;
+  }
+
+  .join-hardware > header {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 8px 10px 10px !important;
+    grid-template-columns: 52px minmax(0, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .join-hardware > header > .game-icon {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .join-hardware > header h1 {
+    margin: 4px 0 !important;
+    font-size: 17px !important;
+    line-height: 1.05 !important;
+  }
+
+  .join-hardware > header div small,
+  .join-hardware > header i {
+    display: none !important;
+  }
+
+  .callsign-control {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    padding: 8px 10px !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .callsign-control > span {
+    font-size: 10px !important;
+  }
+
+  .callsign-control input {
+    width: 100% !important;
+    height: 44px !important;
+    font-size: 16px !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  .participant-care-mini {
+    margin: 0 10px 8px !important;
+    padding: 8px !important;
+  }
+
+  .participant-care-mini span {
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+  }
+
+  .join-hardware .role-choice-grid {
+    flex: 0 0 auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 4px 8px 8px !important;
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+    overflow: visible !important;
+  }
+
+  .role-pod {
+    min-height: 72px !important;
+    padding: 8px 10px 8px 64px !important;
+    display: block !important;
+  }
+
+  .role-pod > .role-art {
+    position: absolute !important;
+    left: 6px !important;
+    top: 50% !important;
+    right: auto !important;
+    width: 56px !important;
+    height: 56px !important;
+    transform: translateY(-50%) !important;
+    border: 0 !important;
+  }
+
+  .role-pod > .role-art .game-icon {
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  .role-pod > .role-data {
+    padding: 0 !important;
+    text-align: left !important;
+  }
+
+  .role-pod .role-data b {
+    font-size: 11px !important;
+  }
+
+  .role-pod .role-data small {
+    display: block !important;
+    font-size: 9px !important;
+    line-height: 1.25 !important;
+  }
+
+  .role-connect {
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 3 !important;
+    min-height: 64px !important;
+    margin: 8px 8px 0 !important;
+    width: calc(100% - 16px) !important;
+  }
+
+  .join-transmission {
+    display: none !important;
+  }
+
+  .assembly-machine > header {
+    min-height: 0 !important;
+    padding: 8px 10px !important;
+    grid-template-columns: 64px minmax(0, 1fr) !important;
+  }
+
+  .assembly-machine > header > .game-icon {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .assembly-machine > header h1 {
+    font-size: 20px !important;
+    line-height: 1 !important;
+  }
+
+  .assembly-roster {
+    grid-template-columns: 1fr !important;
+    gap: 5px !important;
+    padding: 6px 8px !important;
+  }
+
+  .assembly-roster article {
+    min-height: 58px !important;
+    padding-left: 54px !important;
+  }
+
+  .assembly-roster article > .game-icon {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .assembly-roster article span b {
+    font-size: 11px !important;
+  }
+
+  .assembly-roster article span small {
+    display: block !important;
+    font-size: 9px !important;
+  }
+
+  .assembly-care {
+    margin: 6px 8px !important;
+    padding: 10px 10px 10px 46px !important;
+  }
+
+  .assembly-care p {
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+  }
+
+  .assembly-tools {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+    padding: 0 8px 6px !important;
+  }
+
+  .assembly-tools > * {
+    min-height: 58px !important;
+    padding-left: 58px !important;
+  }
+
+  .assembly-start,
+  .assembly-wait {
+    margin: 0 8px 8px !important;
+    min-height: 62px !important;
+  }
+
+  /* ---- Shared station: vertical scroll stack ---- */
+  .shared-runtime {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    min-height: 100dvh !important;
+    padding: 58px max(8px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)) !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+  }
+
+  .shared-runtime .runtime-world,
+  .shared-runtime .runtime-grade,
+  .shared-runtime .storm-flash,
+  .shared-runtime .scan-sweep {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+  }
+
+  .shared-runtime .runtime-hud {
+    z-index: 20 !important;
+  }
+
+  .shared-runtime .challenge-stack,
+  .shared-runtime .station-feed,
+  .shared-runtime .crew-rack {
+    display: none !important;
+  }
+
+  .shared-runtime .mission-plate,
+  .shared-runtime .system-broadcast,
+  .shared-runtime .telemetry-rack,
+  .shared-runtime > .environment-strip,
+  .shared-runtime > .signal-intercept,
+  .shared-runtime .consequence-overlay {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: auto !important;
+    z-index: 2 !important;
+    flex: 0 0 auto;
+  }
+
+  .shared-runtime .mission-plate {
+    order: 1;
+    padding: 12px 0 12px 12px !important;
+  }
+
+  .shared-runtime .mission-plate h1 {
+    font-size: clamp(28px, 9vw, 38px) !important;
+    line-height: 0.95 !important;
+  }
+
+  .shared-runtime .mission-plate p,
+  .shared-runtime .mission-plate strong {
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+  }
+
+  .shared-runtime > .environment-strip {
+    order: 2;
+    padding: 8px 10px !important;
+  }
+
+  .shared-runtime > .signal-intercept {
+    order: 3;
+    padding: 8px 10px !important;
+  }
+
+  .shared-runtime .telemetry-rack {
+    order: 4;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 8px 8px 8px 96px !important;
+    margin: 0 !important;
+  }
+
+  .shared-runtime .telemetry-rack::before {
+    left: 0 !important;
+    top: 0 !important;
+    width: 88px !important;
+    height: 120px !important;
+    opacity: 0.75 !important;
+  }
+
+  .shared-runtime .telemetry-rack .telemetry-evidence {
+    display: block !important;
+    margin-top: 8px !important;
+  }
+
+  .shared-runtime .telemetry-rack .evidence-ledger {
+    max-height: 88px !important;
+  }
+
+  .shared-runtime .system-broadcast {
+    order: 5;
+    height: auto !important;
+    min-height: 40px !important;
+    padding: 8px 10px !important;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .shared-runtime .system-broadcast i {
+    display: block !important;
+    margin-left: 0 !important;
+    width: 100%;
+  }
+
+  /* ---- Player terminal: stacked panels ---- */
+  .player-runtime:not(:has(.field-player-control)) {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    min-height: 100dvh !important;
+    padding: 58px max(8px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)) !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+  }
+
+  .player-runtime:not(:has(.field-player-control)) .runtime-world,
+  .player-runtime:not(:has(.field-player-control)) .runtime-grade {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+  }
+
+  .player-runtime:not(:has(.field-player-control)) .role-instrument,
+  .player-runtime:not(:has(.field-player-control)) .role-actions,
+  .player-runtime:not(:has(.field-player-control)) .lead-command,
+  .player-runtime:not(:has(.field-player-control)) .runtime-alert,
+  .player-runtime:not(:has(.field-player-control)) .consequence-overlay {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: auto !important;
+    z-index: 2 !important;
+    flex: 0 0 auto;
+  }
+
+  .player-runtime:not(:has(.field-player-control)) .role-instrument {
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 14px 12px 16px !important;
+    justify-content: flex-start !important;
+    overflow: visible !important;
+  }
+
+  .player-runtime:not(:has(.field-player-control)) .role-instrument::before {
+    width: 70% !important;
+    height: 38% !important;
+    opacity: 0.35 !important;
+  }
+
+  .player-runtime:not(:has(.field-player-control)) .role-instrument > header {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    margin-bottom: 8px !important;
+  }
+
+  .player-runtime:not(:has(.field-player-control)) .role-instrument h1 {
+    font-size: clamp(26px, 8vw, 34px) !important;
+    line-height: 0.95 !important;
+    margin: 8px 0 !important;
+  }
+
+  .player-runtime:not(:has(.field-player-control)) .role-instrument > p {
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+  }
+
+  .player-runtime:not(:has(.field-player-control)) .instrument-prompt {
+    margin-top: 10px !important;
+    padding: 8px 0 !important;
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+  }
+
+  .player-runtime:not(:has(.field-player-control)) .role-actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+
+  .player-runtime:not(:has(.field-player-control)) .role-actions section {
+    min-height: 0 !important;
+    padding: 52px 12px 12px !important;
+    overflow: visible !important;
+  }
+
+  .player-runtime:not(:has(.field-player-control)) .role-actions section::before {
+    height: 72px !important;
+    top: -8px !important;
+  }
+
+  .player-runtime:not(:has(.field-player-control)) .role-actions textarea {
+    min-height: 72px !important;
+    font-size: 16px !important;
+  }
+
+  .player-runtime:not(:has(.field-player-control)) .role-actions h2 {
+    font-size: 18px !important;
+  }
+
+  .player-runtime:has(.lead-command) {
+    padding-bottom: max(10px, env(safe-area-inset-bottom)) !important;
+  }
+
+  .player-runtime:has(.lead-command) .role-instrument {
+    flex: 0 0 auto !important;
+    max-height: none !important;
+    height: auto !important;
+  }
+
+  .player-runtime:has(.lead-command) .lead-command {
+    flex: 1 1 auto !important;
+    max-height: none !important;
+    margin-top: 0 !important;
+    overflow-y: auto !important;
+  }
+
+  .player-runtime:has(.lead-command) .role-actions {
+    display: none !important;
+  }
+
+  .player-runtime:has(.field-player-control) .role-instrument {
+    position: relative !important;
+    inset: auto !important;
+    width: auto !important;
+    margin: 0 0 8px !important;
+    padding: 12px !important;
+    max-height: 42vh !important;
+    overflow-y: auto !important;
+  }
+
+  .player-runtime:has(.field-player-control) .field-player-control {
+    position: relative !important;
+    inset: auto !important;
+    width: auto !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+    padding: 12px 12px 12px 72px !important;
+  }
+
+  .player-runtime:has(.field-player-control) .field-player-control::before {
+    width: 64px !important;
+    height: 64px !important;
+    left: 0 !important;
+    top: 8px !important;
+    transform: none !important;
+  }
+
+  .player-runtime:has(.field-player-control) .role-actions {
+    display: none !important;
+  }
+
+  /* ---- Facilitator: scrollable command deck ---- */
+  .director-runtime {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    min-height: 100dvh !important;
+    height: auto !important;
+    padding: 58px max(8px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)) !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+  }
+
+  .director-runtime .runtime-world,
+  .director-runtime .runtime-grade {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+  }
+
+  .director-runtime .runtime-hud {
+    z-index: 20 !important;
+  }
+
+  .director-runtime .director-left,
+  .director-runtime .director-center,
+  .director-runtime .director-right,
+  .director-runtime .consequence-overlay {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    flex: 0 0 auto;
+    z-index: 2 !important;
+    overflow: visible !important;
+  }
+
+  .director-runtime .director-center {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .director-runtime .director-mission,
+  .director-runtime .director-decision {
+    min-height: 0 !important;
+    overflow: visible !important;
+    padding: 12px !important;
+  }
+
+  .director-runtime .director-mission h1 {
+    font-size: clamp(24px, 7vw, 32px) !important;
+    line-height: 0.95 !important;
+  }
+
+  .director-runtime .director-mission p {
+    display: block !important;
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+  }
+
+  .director-runtime .director-decision > h2 {
+    font-size: 24px !important;
+    margin: 8px 0 !important;
+  }
+
+  .director-runtime .director-right {
+    min-height: 0 !important;
+    padding: 72px 8px 10px 92px !important;
+  }
+
+  .director-runtime .director-right::before {
+    width: 84px !important;
+    height: 130px !important;
+    opacity: 0.8 !important;
+  }
+
+  .director-runtime .decision-checks {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+
+  .director-runtime .decision-checks label,
+  .director-runtime .decision-checks span {
+    min-height: 64px !important;
+  }
+
+  .director-runtime .decision-checks span {
+    padding: 8px 6px 8px 72px !important;
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+  }
+
+  .director-runtime .decision-checks span::before {
+    width: 66px !important;
+    height: 50px !important;
+  }
+
+  .director-runtime .decision-selects,
+  .director-runtime .correction-builder,
+  .director-runtime .finale-lanes {
+    grid-template-columns: 1fr !important;
+  }
+
+  .director-runtime .director-decision > .button,
+  .director-runtime .lead-command > .button,
+  .game-runtime .button:not(.sound-toggle) {
+    width: 100% !important;
+    min-height: 58px !important;
+    padding-left: 72px !important;
+    font-size: 11px !important;
+  }
+
+  .director-runtime .director-decision > .button::before,
+  .game-runtime .button:not(.sound-toggle)::before {
+    width: 64px !important;
+    height: 52px !important;
+  }
+
+  .director-runtime .director-buttons {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px !important;
+  }
+
+  .director-runtime .director-buttons .button {
+    min-height: 52px !important;
+    padding-left: 44px !important;
+    font-size: 9px !important;
+  }
+
+  .director-runtime .fac-full-reports {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ---- Ending + debrief: single-column flow ---- */
+  .ending-runtime {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    min-height: 100dvh !important;
+    height: auto !important;
+    padding: 58px max(10px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left)) !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+  }
+
+  .ending-runtime .runtime-world,
+  .ending-runtime .runtime-grade,
+  .ending-runtime .scan-sweep {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+  }
+
+  .ending-runtime .runtime-world > img {
+    object-position: center 30% !important;
+    opacity: 0.45 !important;
+  }
+
+  .ending-runtime .runtime-hud {
+    z-index: 20 !important;
+  }
+
+  .ending-runtime .ending-stage-seal,
+  .ending-runtime .ending-log {
+    display: none !important;
+  }
+
+  .ending-runtime .ending-transmission,
+  .ending-runtime .ending-truth,
+  .ending-runtime .ending-debrief,
+  .ending-runtime .ending-right-stack,
+  .ending-runtime .ending-right-stack .debrief-facilitator {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: auto !important;
+    margin: 0 !important;
+    z-index: 2 !important;
+    flex: 0 0 auto;
+  }
+
+  .ending-runtime .ending-right-stack {
+    display: contents !important;
+  }
+
+  .ending-runtime .ending-transmission {
+    order: 1;
+    padding-top: 4px !important;
+  }
+
+  .ending-runtime .ending-transmission::before {
+    display: none !important;
+  }
+
+  .ending-runtime .ending-transmission h1 {
+    font-size: clamp(32px, 11vw, 44px) !important;
+    line-height: 0.92 !important;
+    margin: 8px 0 !important;
+    text-shadow: 0 2px 16px #000 !important;
+  }
+
+  .ending-runtime .ending-transmission > p {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+
+  .ending-runtime .ending-verdict {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 6px !important;
+    margin-top: 10px !important;
+  }
+
+  .ending-runtime .ending-verdict i {
+    font-size: 10px !important;
+  }
+
+  .ending-runtime .ending-truth {
+    order: 2;
+    padding: 10px 0 10px 56px !important;
+    background: linear-gradient(90deg, rgba(2, 8, 10, 0.88), transparent) !important;
+  }
+
+  .ending-runtime .ending-truth::before {
+    left: -4px !important;
+    top: -6px !important;
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  .ending-runtime .ending-debrief {
+    order: 3;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    background: linear-gradient(90deg, rgba(2, 8, 10, 0.92), rgba(2, 8, 10, 0.55), transparent) !important;
+  }
+
+  .ending-runtime .ending-debrief h2 {
+    font-size: 16px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .ending-runtime .debrief-current-prompt {
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .ending-runtime .debrief-step-rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+  }
+
+  .ending-runtime .debrief-step-rail i {
+    min-height: 34px !important;
+    padding-left: 24px !important;
+    font-size: 9px !important;
+  }
+
+  .ending-runtime .debrief-step-rail i::before {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .ending-runtime .debrief-step-rail i b {
+    font-size: 8px !important;
+  }
+
+  .ending-runtime .first-step-form {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .ending-runtime .first-step-form textarea {
+    min-height: 88px !important;
+    font-size: 16px !important;
+  }
+
+  .ending-runtime .first-step-form button {
+    min-height: 44px !important;
+    font-size: 11px !important;
+  }
+
+  .ending-runtime.facilitator-ending .debrief-facilitator {
+    order: 4;
+    position: relative !important;
+    inset: auto !important;
+    display: block !important;
+    padding: 0 !important;
+    background: transparent !important;
+    overflow: visible !important;
+  }
+
+  .ending-runtime .debrief-context {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .ending-runtime .status-failure-map,
+  .ending-runtime .ai-bridge,
+  .ending-runtime .role-map-grid,
+  .ending-runtime .readiness-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ---- Consequences + safety overlays ---- */
+  .consequence-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 40 !important;
+    padding: 58px 8px max(8px, env(safe-area-inset-bottom)) !important;
+    overflow-y: auto !important;
+  }
+
+  .consequence-inner {
+    width: 100% !important;
+    min-height: 0 !important;
+    padding: 20px 14px 120px !important;
+  }
+
+  .consequence-inner h2 {
+    font-size: clamp(28px, 9vw, 36px) !important;
+  }
+
+  .consequence-inner > .button {
+    width: 100% !important;
+  }
+
+  .runtime-alert {
+    position: fixed !important;
+    left: 8px !important;
+    right: 8px !important;
+    top: 58px !important;
+    transform: none !important;
+    min-width: 0 !important;
+    z-index: 25 !important;
+    font-size: 10px !important;
+  }
+
+  .safety-screen,
+  .observer-screen {
+    padding: 20px !important;
+  }
+}
+
+/* Mobile polish — resolve ending/debrief conflicts from earlier layers */
+@media (max-width: 720px) {
+  .ending-runtime {
+    padding-top: max(72px, calc(env(safe-area-inset-top) + 58px)) !important;
+  }
+
+  .ending-runtime .ending-transmission {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: auto !important;
+    padding-top: 0 !important;
+  }
+
+  .ending-runtime .ending-transmission > span {
+    display: block !important;
+    margin-bottom: 6px !important;
+    font-size: 7px !important;
+    line-height: 1.35 !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  .ending-runtime .ending-transmission h1 {
+    margin-top: 0 !important;
+  }
+
+  .ending-runtime .ending-truth {
+    position: relative !important;
+    top: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: auto !important;
+  }
+
+  .ending-runtime .ending-debrief {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .ending-runtime .debrief-step-rail {
+    grid-template-columns: 1fr !important;
+    gap: 4px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .ending-runtime .debrief-step-rail i {
+    min-height: 44px !important;
+    padding: 8px 8px 8px 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    font-size: 10px !important;
+  }
+
+  .ending-runtime .debrief-step-rail i::before {
+    left: 8px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 11px !important;
+  }
+
+  .ending-runtime .debrief-step-rail i b {
+    display: block !important;
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+  }
+
+  .ending-runtime .debrief-step-rail i.active::after {
+    left: 8px !important;
+    right: auto !important;
+    width: 22px !important;
+    height: 2px !important;
+    bottom: 6px !important;
+  }
+
+  .ending-runtime .debrief-current-prompt {
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+  }
+
+  .ending-runtime .first-step-form {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ending-runtime.facilitator-ending .ending-debrief {
+    display: none !important;
+  }
+
+  .ending-runtime.facilitator-ending .debrief-facilitator {
+    position: fixed !important;
+    inset: max(58px, calc(env(safe-area-inset-top) + 52px)) max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)) !important;
+    z-index: 35 !important;
+    display: block !important;
+    overflow-y: auto !important;
+    padding: 14px !important;
+    border: 1px solid rgba(255, 78, 69, 0.28) !important;
+    background: rgba(2, 7, 9, 0.97) !important;
+    backdrop-filter: blur(8px);
+  }
+
+  .ending-runtime.facilitator-ending .debrief-facilitator nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+  }
+
+  .ending-runtime.facilitator-ending .debrief-facilitator nav button {
+    min-height: 44px !important;
+    font-size: 12px !important;
+  }
+
+  .ending-runtime.facilitator-ending .debrief-facilitator form textarea {
+    min-height: 96px !important;
+    font-size: 16px !important;
+  }
+
+  .ending-runtime.facilitator-ending .debrief-facilitator > strong {
+    font-size: 14px !important;
+  }
+
+  .ending-runtime.facilitator-ending .fac-debrief-prompt {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Boot engage lever: grid stack instead of overlapping absolute labels */
+  .station-entry.boot-entry {
+    min-height: 210px !important;
+  }
+
+  .boot-entry .engage-device {
+    display: grid !important;
+    grid-template-columns: minmax(0, 48%) minmax(0, 1fr) !important;
+    grid-template-rows: auto auto auto !important;
+    align-items: start !important;
+    gap: 0 10px !important;
+    min-height: 200px !important;
+    padding: 8px 10px 10px 0 !important;
+  }
+
+  .boot-entry .engage-device > img {
+    grid-column: 1 !important;
+    grid-row: 1 / -1 !important;
+    width: 100% !important;
+    max-height: 190px !important;
+    object-fit: contain !important;
+    align-self: end !important;
+  }
+
+  .boot-entry .engage-state,
+  .boot-entry .engage-command,
+  .boot-entry .engage-cursor {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    max-width: none !important;
+    grid-column: 2 !important;
+  }
+
+  .boot-entry .engage-state {
+    padding: 0 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .boot-entry .engage-state b {
+    font-size: 10px !important;
+    margin: 5px 0 !important;
+  }
+
+  .boot-entry .engage-state small,
+  .boot-entry .engage-state em {
+    font-size: 6px !important;
+    line-height: 1.3 !important;
+  }
+
+  .boot-entry .engage-command {
+    padding: 8px 0 8px 10px !important;
+    margin-bottom: 8px !important;
+    background: linear-gradient(90deg, rgba(255, 45, 37, 0.14), transparent) !important;
+  }
+
+  .boot-entry .engage-command::before {
+    display: block !important;
+  }
+
+  .boot-entry .engage-command b {
+    font-size: 11px !important;
+    line-height: 1.15 !important;
+  }
+
+  .boot-entry .engage-command small {
+    margin-top: 5px !important;
+    font-size: 6px !important;
+    line-height: 1.3 !important;
+  }
+
+  .boot-entry .engage-cursor {
+    font-size: 7px !important;
+  }
+
+  /* Join flow: connect lever flows below roles — no sticky overlap */
+  .join-hardware .role-choice-grid {
+    padding-bottom: 8px !important;
+  }
+
+  .join-hardware .role-connect {
+    position: relative !important;
+    bottom: auto !important;
+    margin: 8px 8px 4px !important;
+  }
+}
+
+/* Shared lobby: keep participant care and the waiting state on-screen on
+   compact laptops and projector windows. The lobby is a room display, so its
+   primary status should not depend on scrolling an internal console. */
+@media (min-width: 721px) and (max-width: 900px),
+       (min-width: 721px) and (max-height: 650px) {
+  .assembly-console.assembly-machine {
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    max-height: calc(100vh - 96px) !important;
+    overflow-y: hidden !important;
+  }
+
+  .assembly-machine > header {
+    min-height: 82px !important;
+    padding: 5px 12px !important;
+    grid-template-columns: 84px minmax(0, 1fr) 8px !important;
+  }
+
+  .assembly-machine > header > .game-icon {
+    width: 80px !important;
+    height: 78px !important;
+  }
+
+  .assembly-machine > header span {
+    font-size: 10px !important;
+  }
+
+  .assembly-machine > header h1 {
+    margin: 5px 0 !important;
+    font-size: 28px !important;
+  }
+
+  .assembly-machine > header p {
+    font-size: 11px !important;
+  }
+
+  .assembly-machine > header p b {
+    font-size: 14px !important;
+  }
+
+  .assembly-roster {
+    padding: 4px 8px !important;
+    gap: 2px 12px !important;
+  }
+
+  .assembly-roster article {
+    min-height: 61px !important;
+    padding: 3px 18px 3px 62px !important;
+  }
+
+  .assembly-roster article > .game-icon {
+    width: 58px !important;
+    height: 58px !important;
+  }
+
+  .assembly-roster article span em {
+    font-size: 9px !important;
+  }
+
+  .assembly-roster article span b {
+    margin-top: 3px !important;
+    font-size: 13px !important;
+  }
+
+  .assembly-roster article span small {
+    margin-top: 3px !important;
+    font-size: 9px !important;
+  }
+
+  .assembly-care {
+    min-height: 70px !important;
+    margin: 3px 8px 5px !important;
+    padding: 7px 10px 7px 48px !important;
+  }
+
+  .assembly-care > span,
+  .assembly-care > b {
+    font-size: 10px !important;
+  }
+
+  .assembly-care p {
+    margin: 4px 0 !important;
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+  }
+
+  .assembly-wait {
+    min-height: 54px !important;
+    margin: 0 8px 6px !important;
+    padding-left: 62px !important;
+  }
+
+  .assembly-wait > .game-icon {
+    width: 56px !important;
+    height: 56px !important;
+  }
+
+  .assembly-wait span b {
+    font-size: 13px !important;
+  }
+
+  .assembly-wait span small {
+    margin-top: 3px !important;
+    font-size: 9px !important;
+  }
+}
+
+@media (min-width: 721px) and (max-height: 500px) {
+  .assembly-console.assembly-machine {
+    top: 78px !important;
+    max-height: calc(100vh - 84px) !important;
+  }
+
+  .assembly-machine > header {
+    min-height: 64px !important;
+    grid-template-columns: 66px minmax(0, 1fr) 7px !important;
+  }
+
+  .assembly-machine > header > .game-icon {
+    width: 62px !important;
+    height: 60px !important;
+  }
+
+  .assembly-machine > header h1 {
+    font-size: 23px !important;
+  }
+
+  .assembly-roster article {
+    min-height: 44px !important;
+    padding-left: 46px !important;
+  }
+
+  .assembly-roster article > .game-icon {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .assembly-roster article span em,
+  .assembly-roster article span small {
+    display: none !important;
+  }
+
+  .assembly-roster article span b {
+    margin: 0 !important;
+    font-size: 12px !important;
+  }
+
+  .assembly-care {
+    min-height: 38px !important;
+    padding: 6px 10px 6px 42px !important;
+  }
+
+  .assembly-care::before {
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  .assembly-care p {
+    display: none !important;
+  }
+
+  .assembly-wait {
+    min-height: 48px !important;
+  }
+}
+
+/* Authenticated crew chat — fixed room channel with unread signaling. */
+.crew-chat-root{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:70;pointer-events:none;font-family:var(--mono)}
+.crew-chat-root>*{pointer-events:auto}
+.crew-chat-toggle{position:relative;min-width:132px;height:52px;padding:0 15px;display:flex;align-items:center;justify-content:center;gap:9px;border:1px solid rgba(255,82,73,.58);color:#eef3f4;background:linear-gradient(145deg,rgba(20,29,33,.98),rgba(4,9,12,.98));box-shadow:0 12px 34px rgba(0,0,0,.55),inset 0 -2px rgba(255,45,37,.13);font:750 10px/1 var(--mono);letter-spacing:.09em;cursor:pointer}
+.crew-chat-toggle::after{position:absolute;left:8px;right:8px;bottom:0;height:2px;content:"";background:linear-gradient(90deg,transparent,var(--alarm-red),transparent);box-shadow:0 0 9px rgba(255,45,37,.48)}
+.crew-chat-toggle:hover,.crew-chat-toggle:focus-visible{border-color:#ff6b64;color:#fff;filter:brightness(1.13)}
+.crew-chat-toggle svg{width:23px;height:23px;fill:none;stroke:#ff6d66;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.crew-chat-toggle>b{position:absolute;right:-7px;top:-8px;min-width:24px;height:24px;padding:0 5px;display:grid;place-items:center;border:2px solid #071014;border-radius:12px;color:#fff;background:var(--alarm-red);box-shadow:0 0 13px rgba(255,45,37,.7);font:800 10px/1 var(--mono);animation:chat-pulse 1.5s ease-in-out infinite}
+@keyframes chat-pulse{50%{transform:scale(1.08);box-shadow:0 0 20px rgba(255,45,37,.9)}}
+.crew-chat-panel{position:absolute;right:0;bottom:64px;width:min(390px,calc(100vw - 28px));height:min(540px,calc(100dvh - 105px));display:grid;grid-template-rows:auto minmax(0,1fr) auto;border:1px solid rgba(255,82,73,.48);color:#e8eff0;background:linear-gradient(160deg,rgba(4,11,14,.985),rgba(7,14,18,.975));box-shadow:0 22px 65px rgba(0,0,0,.72),inset 0 1px rgba(255,255,255,.035);backdrop-filter:blur(16px);overflow:hidden}
+.crew-chat-panel::before{position:absolute;left:0;top:0;width:48%;height:2px;content:"";background:linear-gradient(90deg,var(--alarm-red),transparent);box-shadow:0 0 10px rgba(255,45,37,.52)}
+.crew-chat-panel>header{min-height:64px;padding:13px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,79,69,.22);background:linear-gradient(90deg,rgba(255,45,37,.075),transparent)}
+.crew-chat-panel>header span b,.crew-chat-panel>header span small{display:block}.crew-chat-panel>header span b{color:#f3f6f7;font-size:13px;letter-spacing:.11em}.crew-chat-panel>header span small{margin-top:6px;color:#7f9297;font-size:8px;letter-spacing:.08em}.crew-chat-panel>header button{width:34px;height:34px;border:0;color:#ff7a73;background:rgba(255,55,47,.08);font:400 25px/1 var(--body);cursor:pointer}.crew-chat-panel>header button:hover{color:#fff;background:rgba(255,55,47,.18)}
+.crew-chat-messages{min-height:0;padding:13px;display:flex;flex-direction:column;gap:9px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(255,71,62,.48) transparent}
+.crew-chat-empty{margin:auto;padding:24px;color:#708287;text-align:center;font:600 11px/1.55 var(--mono)}
+.crew-chat-message{--chat-member:#9fb2b6;--chat-member-bg:rgba(131,153,159,.075);max-width:88%;padding:9px 10px 10px;align-self:flex-start;border-left:2px solid var(--chat-member);background:var(--chat-member-bg);box-shadow:inset 12px 0 24px -24px var(--chat-member)}
+.crew-chat-message.sender-lead{--chat-member:#e7b14b;--chat-member-bg:rgba(231,177,75,.105)}
+.crew-chat-message.sender-signal{--chat-member:#46c9d8;--chat-member-bg:rgba(70,201,216,.1)}
+.crew-chat-message.sender-systems{--chat-member:#a982f4;--chat-member-bg:rgba(169,130,244,.105)}
+.crew-chat-message.sender-operations{--chat-member:#62c889;--chat-member-bg:rgba(98,200,137,.1)}
+.crew-chat-message.sender-field{--chat-member:#eb70a5;--chat-member-bg:rgba(235,112,165,.1)}
+.crew-chat-message.sender-protocol{--chat-member:#65a5ed;--chat-member-bg:rgba(101,165,237,.105)}
+.crew-chat-message.sender-comms{--chat-member:#ed8b4a;--chat-member-bg:rgba(237,139,74,.105)}
+.crew-chat-message.sender-facilitator{--chat-member:#d8d56d;--chat-member-bg:rgba(216,213,109,.105)}
+.crew-chat-message.own{--chat-member:#ff655e;--chat-member-bg:rgba(255,55,47,.095);align-self:flex-end;border-left:0;border-right:2px solid var(--chat-member);box-shadow:inset -12px 0 24px -24px var(--chat-member)}
+.crew-chat-message header{display:flex;align-items:center;justify-content:space-between;gap:12px}.crew-chat-message header b{min-width:0;color:var(--chat-member);font-size:9px;line-height:1.25;letter-spacing:.06em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.crew-chat-message header b::before{width:6px;height:6px;margin-right:6px;display:inline-block;border-radius:50%;background:var(--chat-member);box-shadow:0 0 7px var(--chat-member);content:"";vertical-align:1px}.crew-chat-message time{flex:0 0 auto;color:#63767b;font-size:8px}.crew-chat-message p{margin:6px 0 0;color:#e2e9ea;font:500 12px/1.48 var(--body);white-space:pre-wrap;overflow-wrap:anywhere}
+.crew-chat-panel>form{padding:11px 12px 12px;border-top:1px solid rgba(255,79,69,.22);background:rgba(2,7,9,.82)}
+.crew-chat-panel>form label{display:block;margin-bottom:7px;color:#ff746d;font:700 9px/1 var(--mono);letter-spacing:.1em}.crew-chat-panel>form textarea{width:100%;min-height:66px;max-height:120px;padding:9px 10px;resize:vertical;border:1px solid rgba(145,169,174,.28);color:#eef3f4;background:#050c0f;font:500 14px/1.4 var(--body)}.crew-chat-panel>form textarea:focus{outline:1px solid rgba(255,88,79,.7);border-color:transparent}.crew-chat-panel>form>div{margin-top:8px;display:flex;align-items:center;justify-content:space-between;gap:10px}.crew-chat-panel>form small{color:#778a8f;font-size:8px;line-height:1.35}.crew-chat-panel>form button{min-width:92px;height:38px;border:1px solid rgba(255,78,69,.58);color:#fff;background:linear-gradient(135deg,#6c1713,#b9251e);font:750 10px/1 var(--mono);letter-spacing:.08em;cursor:pointer}.crew-chat-panel>form button:hover:not(:disabled){filter:brightness(1.18)}.crew-chat-panel>form button:disabled{opacity:.55;cursor:wait}
+.crew-chat-alert{position:absolute;right:0;bottom:64px;width:min(330px,calc(100vw - 28px));padding:12px 14px;border:1px solid rgba(255,83,74,.55);color:#edf3f4;background:linear-gradient(145deg,rgba(18,29,33,.98),rgba(5,10,13,.98));box-shadow:0 14px 42px rgba(0,0,0,.62);text-align:left;cursor:pointer;animation:chat-alert-in .22s ease-out}
+.crew-chat-alert::before{position:absolute;left:0;top:0;bottom:0;width:3px;content:"";background:var(--alarm-red);box-shadow:0 0 12px rgba(255,45,37,.7)}.crew-chat-alert b,.crew-chat-alert span{display:block}.crew-chat-alert b{color:#ff7d76;font-size:9px;letter-spacing:.08em}.crew-chat-alert span{margin-top:7px;color:#d9e3e5;font:500 12px/1.4 var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@keyframes chat-alert-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+@media(max-width:720px){
+  .crew-chat-root{right:max(9px,env(safe-area-inset-right));bottom:max(9px,env(safe-area-inset-bottom))}
+  .crew-chat-toggle{min-width:52px;width:52px;height:50px;padding:0}.crew-chat-toggle>span{display:none}.crew-chat-toggle svg{width:25px;height:25px}
+  .crew-chat-panel{right:0;bottom:60px;width:calc(100vw - 18px);height:min(620px,calc(100dvh - 82px))}
+  .crew-chat-alert{right:0;bottom:60px;width:calc(100vw - 18px)}
+  .crew-chat-panel>header{min-height:58px;padding:10px 12px}.crew-chat-messages{padding:10px}.crew-chat-message{max-width:92%}.crew-chat-message p{font-size:13px}
+  .crew-chat-panel>form{padding:9px 10px 10px}.crew-chat-panel>form textarea{min-height:60px;font-size:16px}
+}

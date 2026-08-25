@@ -11,10 +11,20 @@ const storedToken = code ? localStorage.getItem(`blackout-token-${code}`) || "" 
 const client = new GameClient({ code, token: explicitToken || storedToken });
 let content;
 let error = "";
+let reportError = "";
+let chatOpen = snapshotMode && query.get("chat") === "open";
+let chatUnread = 0;
+let chatInitialized = false;
+let lastChatMessageId = "";
+let chatDraft = "";
+let chatError = "";
+let chatAlert = null;
+let chatAlertTimer;
 const requestedEntryMode = query.get("entry");
 let entryMode = snapshotMode && ["boot", "access", "host", "join"].includes(requestedEntryMode) ? requestedEntryMode : "boot";
 let entryCrewSize = 7;
 
+const ready = () => { app.dataset.ready = "1"; };
 const e = (value = "") => String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
 const seconds = state => state.clock.running && state.clock.endAt ? Math.max(0, Math.ceil((state.clock.endAt - Date.now()) / 1000)) : state.clock.remaining;
 const time = value => `${String(Math.floor(value / 60)).padStart(2,"0")}:${String(value % 60).padStart(2,"0")}`;
@@ -24,11 +34,13 @@ const joinRole = (id, role, playerCount) => playerCount === 2
     : { ...role, short:"TECH", name:"Signal & Systems", lens:"Provenance · systems · receiver" }
   : role;
 const challengeNames = ["Challenge defaults","Allocate power","Decode signal","Run reconnaissance","Open containment","Build correction","Survive finale"];
-const brandLogo = className => `<img class="brand-logo ${className || ""}" src="./assets/images/logo2.png" alt="Blackout Ridge">`;
+const brandLogo = className => `<img class="brand-logo ${className || ""}" src="./assets/images/logo2.webp" alt="Blackout Ridge">`;
 const gameIcon = (file, alt, className = "") => `<img class="game-icon ${className}" src="./assets/images/${file}" alt="${e(alt)}">`;
-const roleAsset = id => `role-${id}.png`;
-const crewAsset = count => count === 2 ? "control-duo-terminals.png" : count === 7 ? "control-seven-terminals.png" : "control-six-terminals.png";
+const gameImage = file => `./assets/images/${e(file)}${file === "mara-venn-below.webp" ? "?v=20260825-1" : ""}`;
+const roleAsset = id => `role-${id}.webp`;
+const crewAsset = count => count === 2 ? "control-duo-terminals.webp" : count === 4 ? "control-four-terminals.webp" : count === 5 ? "control-five-terminals.webp" : count === 7 ? "control-seven-terminals.webp" : "control-six-terminals.webp";
 const crewProtocol = count => count === 2 ? "DUO PROTOCOL" : count < 6 ? "COMBINED CREW" : count === 6 ? "CORE CREW" : "FULL CREW";
+const chatIcon = () => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5h14v10H9l-4 3v-13Z"></path><path d="M8 9h8M8 12h5"></path></svg>`;
 
 function url(nextView, session = code, token = "") {
   const result = new URL(location.origin + location.pathname);
@@ -47,10 +59,10 @@ function button(text, action, kind = "primary", disabled = false) {
 }
 
 function stationAccess() {
-  if (entryMode === "boot") return `<section class="station-entry boot-entry"><button class="engage-device" data-entry-mode="access" aria-label="Engage Blackout Ridge station"><img src="./assets/images/device-station-engage.png" alt="Frozen emergency station engagement lever"><span class="engage-state"><small>RIDGE RELAY LINK</small><b><i></i>OFFLINE</b><em>MANUAL AUTH REQUIRED</em></span><span class="engage-command"><b>ENGAGE STATION</b><small>ARM NIGHT-SHIFT CHANNEL</small></span><span class="engage-cursor">INTERACT&nbsp;&nbsp;›</span></button></section>`;
-  if (entryMode === "access") return `<section class="station-entry access-entry"><header><span>AUTHORITY SELECT</span><b>CHOOSE CHANNEL</b><button data-entry-mode="boot">×</button></header><div class="authority-select"><button data-entry-mode="host">${gameIcon("control-host-authority.png","Command authority key","authority-icon")}<span><b>COMMAND AUTHORITY</b><small>Initialize a new night shift</small></span><em>HOST</em></button><button data-entry-mode="join">${gameIcon("control-crew-channel.png","Secure crew radio","authority-icon")}<span><b>CREW CHANNEL</b><small>Connect to an active station</small></span><em>JOIN</em></button></div></section>`;
-  if (entryMode === "host") return `<section class="station-entry configure-entry"><header><span>COMMAND AUTHORITY</span><b>SHIFT CONFIGURATION</b><button data-entry-mode="access">←</button></header><div class="crew-selector"><span>ACTIVE TERMINALS</span><div>${[2,4,5,6,7].map(count=>`<button class="${entryCrewSize===count?"active":""}" data-crew-size="${count}">${gameIcon(crewAsset(count),`${count} linked terminals`)}<span><i>${String(count).padStart(2,"0")}</i><small>${count===2?"DUO":"CREW"}</small></span></button>`).join("")}</div></div><button class="station-confirm illustrated-control" data-create-session>${gameIcon("control-host-authority.png","Authority key")}<span><b data-control-label>ARM NEW SESSION</b><small>GENERATE PRIVATE CREW CHANNELS</small></span><i></i></button>${error?`<p class="station-error">${e(error)}</p>`:""}</section>`;
-  return `<section class="station-entry configure-entry join-entry"><header><span>CREW CHANNEL</span><b>SESSION AUTHENTICATION</b><button data-entry-mode="access">←</button></header><form data-enter>${gameIcon("control-code-auth.png","Secure relay code lock","code-auth-icon")}<label>ENTER SIX-CHARACTER RELAY CODE<input name="code" maxlength="6" autocomplete="off" placeholder="BR2107" required autofocus></label><button class="station-confirm illustrated-control">${gameIcon("control-crew-channel.png","Crew channel radio")}<span><b>CONNECT TERMINAL</b><small>REQUEST ROLE ASSIGNMENT</small></span><i></i></button></form>${error?`<p class="station-error">${e(error)}</p>`:""}</section>`;
+  if (entryMode === "boot") return `<section class="station-entry boot-entry"><button class="engage-device" data-entry-mode="access" aria-label="Engage Blackout Ridge station"><img src="./assets/images/device-station-engage.webp" alt="Frozen emergency station engagement lever"><span class="engage-state"><small>RIDGE RELAY LINK</small><b><i></i>OFFLINE</b><em>MANUAL AUTH REQUIRED</em></span><span class="engage-command"><b>ENGAGE STATION</b><small>ARM NIGHT-SHIFT CHANNEL</small></span><span class="engage-cursor">INTERACT&nbsp;&nbsp;›</span></button></section>`;
+  if (entryMode === "access") return `<section class="station-entry access-entry"><header><span>AUTHORITY SELECT</span><b>CHOOSE CHANNEL</b><button data-entry-mode="boot">×</button></header><div class="authority-select"><button data-entry-mode="host">${gameIcon("control-host-authority.webp","Command authority key","authority-icon")}<span><b>COMMAND AUTHORITY</b><small>Initialize a new night shift</small></span><em>HOST</em></button><button data-entry-mode="join">${gameIcon("control-crew-channel.webp","Secure crew radio","authority-icon")}<span><b>CREW CHANNEL</b><small>Connect to an active station</small></span><em>JOIN</em></button></div></section>`;
+  if (entryMode === "host") return `<section class="station-entry configure-entry"><header><span>COMMAND AUTHORITY</span><b>SHIFT CONFIGURATION</b><button data-entry-mode="access">←</button></header><div class="crew-selector"><span>ACTIVE TERMINALS</span><div>${[2,4,5,6,7].map(count=>`<button class="${entryCrewSize===count?"active":""}" data-crew-size="${count}">${gameIcon(crewAsset(count),`${count} linked terminals`)}<span><i>${String(count).padStart(2,"0")}</i><small>${count===2?"DUO":"CREW"}</small></span></button>`).join("")}</div></div><button class="station-confirm illustrated-control" data-create-session>${gameIcon("control-host-authority.webp","Authority key")}<span><b data-control-label>ARM NEW SESSION</b><small>GENERATE PRIVATE CREW CHANNELS</small></span><i></i></button>${error?`<p class="station-error">${e(error)}</p>`:""}</section>`;
+  return `<section class="station-entry configure-entry join-entry"><header><span>CREW CHANNEL</span><b>SESSION AUTHENTICATION</b><button data-entry-mode="access">←</button></header><form data-enter>${gameIcon("control-code-auth.webp","Secure relay code lock","code-auth-icon")}<label>ENTER SIX-CHARACTER RELAY CODE<input name="code" maxlength="6" autocomplete="off" placeholder="BR2107" required autofocus></label><button class="station-confirm illustrated-control">${gameIcon("control-crew-channel.webp","Crew channel radio")}<span><b>CONNECT TERMINAL</b><small>REQUEST ROLE ASSIGNMENT</small></span><i></i></button></form>${error?`<p class="station-error">${e(error)}</p>`:""}</section>`;
 }
 
 function activateStartBackground() {
@@ -86,12 +98,13 @@ function activateStartBackground() {
 }
 
 function renderHome() {
+  ready();
   app.innerHTML = `<div class="game-start">
-    <img class="game-start-bg" src="./assets/images/first-screen-v2.png" alt="Blackout Ridge relay station in a violent storm">
-    ${[1,2,3,4].map((number,index)=>`<video class="start-bg-video ${index===0?"active":""}" data-start-video muted playsinline preload="auto" poster="./assets/images/first-screen-v2.png" aria-hidden="true"><source src="./assets/video/${number}.mp4" type="video/mp4"></video>`).join("")}
+    <img class="game-start-bg" src="./assets/images/first-screen-v2.webp" alt="Blackout Ridge relay station in a violent storm">
+    ${[1,2,3,4].map((number,index)=>`<video class="start-bg-video ${index===0?"active":""}" data-start-video muted playsinline preload="auto" poster="./assets/images/first-screen-v2.webp" aria-hidden="true"><source src="./assets/video/${number}.mp4" type="video/mp4"></video>`).join("")}
     <div class="game-start-grade"></div><div class="storm-flash"></div>
     <header class="start-ident"><i></i><div><b>CALDER VALE / NODE 04</b><small>EMERGENCY RELAY · NIGHT SHIFT</small></div></header>
-    <section class="start-title"><p>RIDGE EMERGENCY RELAY // NIGHT SHIFT</p>${brandLogo("start-main-logo")}<h2>OPERATIONAL DOES NOT MEAN SAFE.</h2><strong>SYSTEM STARTUP REQUIRES HUMAN CREW.</strong><small>SUPPORTED SHIFT: 02 / 04 / 05 / 06 / 07 TERMINALS</small></section>
+    <section class="start-title">${brandLogo("start-main-logo")}<h2>OPERATIONAL DOES NOT MEAN SAFE.</h2><strong>SYSTEM STARTUP REQUIRES HUMAN CREW.</strong><small>SUPPORTED SHIFT: 02 / 04 / 05 / 06 / 07 TERMINALS</small></section>
     ${stationAccess()}
     <div class="start-coordinates">CALDER VALE RELAY NETWORK / NODE 04<br>WEATHER CHANNEL: SEVERE</div>
   </div>`;
@@ -99,14 +112,15 @@ function renderHome() {
 }
 
 async function renderJoin() {
-  if (!content) content = await getContent();
+  try { if (!content) content = await getContent(); } catch (cause) { error = cause.message; return renderError(); }
   let session;
   try { session = await client.load(); } catch (cause) { error = cause.message; }
   if (!session) return renderError();
+  ready();
   const available = Object.entries(session.roles).filter(([id]) => !session.players[id]).map(([id,role])=>[id,joinRole(id,role,session.playerCount)]);
-  app.innerHTML = `<div class="game-runtime join-runtime"><div class="runtime-world"><img src="./assets/images/relay-control-room.png" alt="Blackout Ridge control room"><div class="runtime-grade"></div><div class="scan-sweep"></div></div>
+  app.innerHTML = `<div class="game-runtime join-runtime"><div class="runtime-world"><img src="./assets/images/relay-control-room.webp" alt="Blackout Ridge control room"><div class="runtime-grade"></div><div class="scan-sweep"></div></div>
     <header class="assembly-header">${brandLogo("assembly-logo")}<div><small>CREW INTAKE / PRIVATE CHANNEL</small></div><strong>SESSION ${e(code)}</strong></header>
-    <form class="join-terminal join-hardware" data-join><header>${gameIcon("control-code-auth.png","Terminal authentication lock")}<div><span>TERMINAL ASSIGNMENT</span><h1>CLAIM A RESPONSIBILITY</h1><small>One instrument. One private evidence channel.</small></div><i>AUTH // ${e(code)}</i></header><label class="callsign-control"><span>CREW IDENTIFIER</span><input name="name" maxlength="40" required placeholder="ENTER CALLSIGN"></label><div class="participant-care-mini"><b>PARTICIPANT CARE</b><span>${e(session.participantCare)}</span></div><div class="role-choice-grid">${available.map(([id,r],i) => `<label class="role-choice role-pod"><input type="radio" name="role" value="${id}" ${i===0?"checked":""}><span class="role-art color-${r.color}">${gameIcon(roleAsset(id),`${r.name} instrument`)}<i></i></span><span class="role-data"><em>${r.short}</em><b>${r.name}</b><small>${r.lens}</small></span></label>`).join("")}</div>${error ? `<p class="inline-error">${e(error)}</p>` : ""}<button class="role-connect illustrated-control" ${available.length ? "" : "disabled"}>${gameIcon("control-crew-channel.png","Secure crew radio")}<span><b>CONNECT ROLE TERMINAL</b><small>OPEN PRIVATE EVIDENCE CHANNEL</small></span><i></i></button></form>
+    <form class="join-terminal join-hardware" data-join><header>${gameIcon("control-code-auth.webp","Terminal authentication lock")}<div><span>TERMINAL ASSIGNMENT</span><h1>CLAIM A RESPONSIBILITY</h1><small>One instrument. One private evidence channel.</small></div><i>AUTH // ${e(code)}</i></header><label class="callsign-control"><span>CREW IDENTIFIER</span><input name="name" maxlength="40" required placeholder="ENTER CALLSIGN"></label><div class="participant-care-mini"><b>PARTICIPANT CARE</b><span>${e(session.participantCare)}</span></div><div class="role-choice-grid">${available.map(([id,r],i) => `<label class="role-choice role-pod"><input type="radio" name="role" value="${id}" ${i===0?"checked":""}><span class="role-art color-${r.color}">${gameIcon(roleAsset(id),`${r.name} instrument`)}<i></i></span><span class="role-data"><em>${r.short}</em><b>${r.name}</b><small>${r.lens}</small></span></label>`).join("")}</div>${error ? `<p class="inline-error">${e(error)}</p>` : ""}<button class="role-connect illustrated-control" ${available.length ? "" : "disabled"}>${gameIcon("control-crew-channel.webp","Secure crew radio")}<span><b>CONNECT ROLE TERMINAL</b><small>OPEN PRIVATE EVIDENCE CHANNEL</small></span><i></i></button></form>
     <div class="join-transmission"><span>INCOMING SHIFT</span><b>${available.length} RESPONSIBILITIES UNCLAIMED</b><small>Every crew member receives different evidence. Speak carefully.</small></div>
   </div>`;
 }
@@ -129,7 +143,7 @@ function runtimeHud(state, label, role = null) {
 }
 
 function runtimeBackground(state) {
-  return `<div class="runtime-world"><img src="./assets/images/${state.stageDefinition.image}" alt="${e(state.stageDefinition.title)}"><div class="runtime-grade"></div><div class="storm-flash"></div><div class="scan-sweep"></div></div>`;
+  return `<div class="runtime-world"><img src="${gameImage(state.stageDefinition.image)}" alt="${e(state.stageDefinition.title)}"><div class="runtime-grade"></div><div class="storm-flash"></div><div class="scan-sweep"></div></div>`;
 }
 
 function waveform(count = 46) {
@@ -168,7 +182,7 @@ function missionPlate(state) {
 function immersiveOutcome(state, facilitator = false) {
   const result=state.outcomes[state.stage]; if(!result)return "";
   const facilitatorControl=state.facilitatorCanConfirmEnding?button("Confirm final record","CONFIRM_ENDING","danger"):state.facilitatorCanAdvance?button("Continue emergency","ADVANCE_STAGE","primary"):"";
-  return `<section class="consequence-overlay ${result.quality}"><div class="consequence-scan"></div><div class="consequence-inner"><img class="consequence-scene" src="./assets/images/${state.stageDefinition.consequenceImage||state.stageDefinition.image}" alt="${e(state.stageDefinition.title)} consequence scene"><div class="consequence-shade"></div><span>STAGE ${String(state.stage).padStart(2,"0")} / CONSEQUENCE</span><h2>${e(result.headline)}</h2><p>${e(result.detail)}</p><div class="consequence-telemetry">${tracks(state)}</div>${facilitator&&facilitatorControl?facilitatorControl:`<small>${state.stage===7?"FINAL RECORD AWAITING FACILITATOR CONFIRMATION":"AWAITING FACILITATOR"}</small>`}</div></section>`;
+  return `<section class="consequence-overlay ${result.quality}"><div class="consequence-scan"></div><div class="consequence-inner"><img class="consequence-scene" src="${gameImage(state.stageDefinition.consequenceImage||state.stageDefinition.image)}" alt="${e(state.stageDefinition.title)} consequence scene"><div class="consequence-shade"></div><span>STAGE ${String(state.stage).padStart(2,"0")} / CONSEQUENCE</span><h2>${e(result.headline)}</h2><p>${e(result.detail)}</p><div class="consequence-telemetry">${tracks(state)}</div>${facilitator&&facilitatorControl?facilitatorControl:`<small>${state.stage===7?"FINAL RECORD AWAITING FACILITATOR CONFIRMATION":"AWAITING FACILITATOR"}</small>`}</div></section>`;
 }
 
 function tracks(state) {
@@ -179,7 +193,7 @@ function tracks(state) {
 function scene(state, compact = false) {
   const s = state.stageDefinition;
   if (!s) return "";
-  return `<section class="game-scene ${compact?"compact":""}"><img src="./assets/images/${s.image}" alt="${e(s.title)}"><div class="game-scene-shade"></div><div class="game-scene-copy"><p class="eyebrow">STAGE ${String(state.stage).padStart(2,"0")} / ${e(s.kicker)}</p><h1>${e(s.title)}</h1><p>${e(s.scene)}</p><strong>${e(s.objective)}</strong></div><div class="game-clock ${seconds(state)<=60?"urgent":""}"><span>${state.stageStatus.toUpperCase()}</span><b data-clock>${time(seconds(state))}</b></div></section>`;
+  return `<section class="game-scene ${compact?"compact":""}"><img src="${gameImage(s.image)}" alt="${e(s.title)}"><div class="game-scene-shade"></div><div class="game-scene-copy"><p class="eyebrow">STAGE ${String(state.stage).padStart(2,"0")} / ${e(s.kicker)}</p><h1>${e(s.title)}</h1><p>${e(s.scene)}</p><strong>${e(s.objective)}</strong></div><div class="game-clock ${seconds(state)<=60?"urgent":""}"><span>${state.stageStatus.toUpperCase()}</span><b data-clock>${time(seconds(state))}</b></div></section>`;
 }
 
 function roster(state) {
@@ -222,9 +236,9 @@ function renderShared(state) {
 
 function renderWaiting(state, label) {
   const full=Object.keys(state.players).length===state.playerCount,ready=full&&state.safetyBriefed;
-  app.innerHTML = `<div class="game-runtime assembly-runtime"><div class="runtime-world"><img src="./assets/images/station-exterior.png" alt="Blackout Ridge"><div class="runtime-grade"></div><div class="storm-flash"></div></div>
+  app.innerHTML = `<div class="game-runtime assembly-runtime"><div class="runtime-world"><img src="./assets/images/station-exterior.webp" alt="Blackout Ridge"><div class="runtime-grade"></div><div class="storm-flash"></div></div>
     <header class="assembly-header">${brandLogo("assembly-logo")}<div><small>${e(label)}</small></div><strong>SESSION ${e(state.code)}</strong></header>
-    <section class="assembly-console assembly-machine"><header>${gameIcon(crewAsset(state.playerCount),`${state.playerCount} terminal station ring`)}<div><span>SHIFT AUTHENTICATION / ${crewProtocol(state.playerCount)}</span><h1>${state.playerCount===2?"DUO CREW":state.playerCount<6?"COMBINED CREW":"NIGHT CREW"} ASSEMBLING</h1><p><b>${Object.keys(state.players).length}</b> / ${state.playerCount} TERMINALS LOCKED</p></div><i></i></header>${assemblyRoster(state)}<div class="assembly-care ${state.safetyBriefed?"confirmed":""}"><span>PARTICIPANT CARE / REQUIRED</span><p>${e(state.participantCare)}</p>${state.viewer.kind==="facilitator"&&!state.safetyBriefed?`<button data-action="ACK_SAFETY">CONFIRM BRIEF DELIVERED</button>`:`<b>${state.safetyBriefed?"BRIEF CONFIRMED":"AWAITING FACILITATOR BRIEF"}</b>`}</div>${state.viewer.kind==="facilitator"?`<div class="assembly-tools"><button data-copy-view="join">${gameIcon("control-copy-link.png","Crew link connector")}<span><b>TRANSMIT CREW LINK</b><small>COPY SECURE INTAKE ADDRESS</small></span><i></i></button><a href="${url("shared",state.code)}" target="_blank">${gameIcon("control-shared-display.png","Shared command display")}<span><b>ROOM DISPLAY</b><small>OPEN STATION WORLD VIEW</small></span><i></i></a></div><button class="assembly-start illustrated-control" data-action="START_GAME" ${ready?"":"disabled"}>${gameIcon("control-start-emergency.png","Emergency start lever")}<span><b>${!full?"AWAITING FULL CREW":!state.safetyBriefed?"CONFIRM CARE BRIEF":"INITIATE EMERGENCY"}</b><small>LOCK ROLES · START STAGE 01</small></span><i></i></button>`:`<div class="assembly-wait">${gameIcon("control-crew-channel.png","Crew radio waiting")}<span><b>CHANNEL SECURED</b><small>${state.safetyBriefed?"AWAITING COMMAND AUTHORITY":"PARTICIPANT BRIEF PENDING"}</small></span><i></i></div>`}</section>
+    <section class="assembly-console assembly-machine"><header>${gameIcon(crewAsset(state.playerCount),`${state.playerCount} terminal station ring`)}<div><span>SHIFT AUTHENTICATION / ${crewProtocol(state.playerCount)}</span><h1>${state.playerCount===2?"DUO CREW":state.playerCount<6?"COMBINED CREW":"NIGHT CREW"} ASSEMBLING</h1><p><b>${Object.keys(state.players).length}</b> / ${state.playerCount} TERMINALS LOCKED</p></div><i></i></header>${assemblyRoster(state)}<div class="assembly-care ${state.safetyBriefed?"confirmed":""}"><span>PARTICIPANT CARE / REQUIRED</span><p>${e(state.participantCare)}</p>${state.viewer.kind==="facilitator"&&!state.safetyBriefed?`<button data-action="ACK_SAFETY">CONFIRM BRIEF DELIVERED</button>`:`<b>${state.safetyBriefed?"BRIEF CONFIRMED":"AWAITING FACILITATOR BRIEF"}</b>`}</div>${state.viewer.kind==="facilitator"?`<div class="assembly-tools"><button data-copy-view="join">${gameIcon("control-copy-link.webp","Crew link connector")}<span><b>TRANSMIT CREW LINK</b><small>COPY SECURE INTAKE ADDRESS</small></span><i></i></button><a href="${url("shared",state.code)}" target="_blank">${gameIcon("control-shared-display.webp","Shared command display")}<span><b>ROOM DISPLAY</b><small>OPEN STATION WORLD VIEW</small></span><i></i></a></div><button class="assembly-start illustrated-control" data-action="START_GAME" ${ready?"":"disabled"}>${gameIcon("control-start-emergency.webp","Emergency start lever")}<span><b>${!full?"AWAITING FULL CREW":!state.safetyBriefed?"CONFIRM CARE BRIEF":"INITIATE EMERGENCY"}</b><small>LOCK ROLES · START STAGE 01</small></span><i></i></button>`:`<div class="assembly-wait">${gameIcon("control-crew-channel.webp","Crew radio waiting")}<span><b>CHANNEL SECURED</b><small>${state.safetyBriefed?"AWAITING COMMAND AUTHORITY":"PARTICIPANT BRIEF PENDING"}</small></span><i></i></div>`}</section>
   </div>`;
 }
 
@@ -247,7 +261,7 @@ function decisionControls(state) {
 
 function playerReport(state) {
   const report=state.reports[state.viewer.role];
-  return state.stageStatus==="live"?`<form class="role-report" data-report><label>YOUR RECOMMENDATION<textarea name="note" maxlength="160" placeholder="What must the crew understand?">${e(report?.note||"")}</textarea></label><button class="button secondary full">${report?"Update assessment":"Share with crew"}</button></form>`:`<p class="closed-copy">Decision window closed.</p>`;
+  return state.stageStatus==="live"?`<form class="role-report" data-report><label><span>YOUR RECOMMENDATION</span><small id="report-route">ROUTED TO STATION LEAD + FACILITATOR</small><textarea name="note" maxlength="160" placeholder="What must the crew understand?" aria-describedby="report-route report-status" required>${e(report?.note||"")}</textarea></label><button class="button secondary full" type="submit">${report?"Update recommendation":"Share with Station Lead"}</button>${reportError?`<p class="report-error" id="report-status" role="alert">${e(reportError)}</p>`:report?`<p class="report-confirm" id="report-status" role="status"><b>✓ RECOMMENDATION SHARED</b><span>Saved for this stage. You can update it until the decision closes.</span></p>`:""}</form>`:`<p class="closed-copy">Decision window closed.</p>`;
 }
 
 function fieldPlayerControl(state) {
@@ -261,7 +275,7 @@ function renderPlayer(state) {
   if (state.status === "ending") return renderEnding(state,"player");
   const role=state.roles[state.viewer.role], card=state.privateCard, isLead=state.viewer.role==="lead";
   app.innerHTML=`<div class="game-runtime player-runtime role-${role.color} ${state.playerCount===2?"duo-runtime":""}">${runtimeBackground(state)}${runtimeHud(state,"PRIVATE TERMINAL",role)}
-    <section class="role-instrument"><header><span>${e(state.viewer.name)} / ${role.lens}</span><i>${card.confidence}</i></header><div class="instrument-signal"><b>PRIVATE EVIDENCE</b><span>CHANNEL ${String(state.stage).padStart(2,"0")}.${role.short}</span></div>${waveform(34)}<h1>${e(card.title)}</h1><p>${e(card.body)}</p><div class="instrument-prompt"><span>SHARE ONLY WHAT THE CREW NEEDS TO ACT.</span><button data-download-role>ARCHIVE ROLE BRIEF</button></div></section>
+    <section class="role-instrument"><header><span>${e(state.viewer.name)} / ${role.lens}</span><i>${card.confidence}</i></header><div class="instrument-signal"><b>PRIVATE EVIDENCE</b><span>CHANNEL ${String(state.stage).padStart(2,"0")}.${role.short}</span></div>${waveform(34)}<h1>${e(card.title)}</h1><p>${e(card.body)}</p><div class="instrument-prompt"><span>${e(card.prompt || "Who needs to know this?")}</span><button data-download-role>ARCHIVE ROLE BRIEF</button></div></section>
     <aside class="role-actions"><section><header>CREW LINK <b>${Object.keys(state.reports).length}/${state.playerCount}</b></header>${playerReport(state)}</section><section><header>ROLE OVERRIDE <b>${state.viewer.role in (state.interventions||{})?"USED":"READY"}</b></header><h2>${e(card.intervention)}</h2>${state.interventionFeedback?.[state.viewer.role]?`<p class="intervention-feedback">${e(state.interventionFeedback[state.viewer.role])}</p>`:button("Execute override","INTERVENTION","secondary",state.stageStatus!=="live"||state.viewer.role in (state.interventions||{}))}</section></aside>
     ${fieldPlayerControl(state)}
     ${isLead&&state.stageStatus==="live"&&!(state.stage===4&&state.fieldRun?.active)?`<section class="lead-command"><header><span>CREW COMMITMENT / STAGE ${state.stage}</span><b>${state.stageDefinition.objective}</b></header><div class="lead-controls">${decisionControls(state)}</div>${button(state.stage===7?`Commit action round ${state.finaleRound||1}`:state.stage===6&&state.correctionAttempt===2?"Transmit correction retry":"Commit crew decision","COMMIT_STAGE","danger")}</section>`:""}
@@ -282,7 +296,7 @@ function renderFacilitator(state) {
   app.innerHTML=`<div class="game-runtime director-runtime">${runtimeBackground(state)}${runtimeHud(state,"FACILITATOR / GAME MASTER")}
     <aside class="director-left"><header>LIVE CONTROL</header><div class="director-buttons">${state.clock.running?button("Pause","PAUSE","secondary"):button("Resume","RESUME","secondary",state.stageStatus!=="live")}${button("+30 sec","ADD_TIME","secondary",state.stageStatus!=="live")}${button(state.safetyPaused?"Clear safety":"Safety pause","SAFETY","secondary")}${state.hint?button("Clear prompt","CLEAR_HINT","secondary"):button("Send prompt","HINT","secondary")}</div><div class="director-reports"><span>ROLE COMMS</span>${facReports(state)}</div>${facilitatorRoleTools(state)}</aside>
     <section class="director-center"><div class="director-mission"><span>STAGE ${String(state.stage).padStart(2,"0")} / ${state.stageDefinition.kicker}</span><h1>${e(state.stageDefinition.title)}</h1><p>${e(state.stageDefinition.objective)}</p></div><div class="director-decision"><header><span>CREW DECISION ENGINE</span><b>${state.stageStatus.toUpperCase()}</b></header>${state.stageStatus==="live"?decisionControls(state):`<h2>${e(state.outcomes[state.stage]?.headline||"")}</h2><p>${e(state.outcomes[state.stage]?.detail||"")}</p>`}${state.stageStatus==="live"&&!(state.stage===4&&state.fieldRun?.active)?button(state.stage===7?`Resolve round ${state.finaleRound||1}`:state.stage===6&&state.correctionAttempt===2?"Resolve correction retry":"Resolve decision","COMMIT_STAGE","danger"):state.facilitatorCanConfirmEnding?button("Confirm final record","CONFIRM_ENDING","danger"):state.facilitatorCanAdvance?button("Trigger next stage","ADVANCE_STAGE","primary"):""}</div></section>
-    <aside class="director-right"><header>STATION STATE</header>${tracks(state)}<div class="director-resources"><span>RESPIRATOR <b>${e(state.global.respirator.toUpperCase())}</b></span><span>LOCK KNOWLEDGE <b>${state.global.lockKnowledge}/2</b></span><span>AIR BUFFER <b>${state.resources.airHandlingBuffer}</b></span><span>SAFEGUARD <b>${state.resources.safetyGuard}</b></span></div>${environmentStrip(state,true)}${signalIntercept(state,true)}<div class="director-evidence"><span>EVIDENCE / ${state.global.evidence.length}</span>${evidence(state)}</div><div class="director-log"><span>EVENT LOG</span>${state.history.slice(-6).reverse().map(h=>`<p><b>${new Date(h.at).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}</b>${e(h.text)}</p>`).join("")}</div></aside>
+    <aside class="director-right"><div class="station-state-head">${gameIcon("runtime-telemetry-rack.webp","Station telemetry rack","station-state-icon")}<div><header>STATION STATE</header>${tracks(state)}</div></div><div class="director-resources"><span>RESPIRATOR <b>${e(state.global.respirator.toUpperCase())}</b></span><span>LOCK KNOWLEDGE <b>${state.global.lockKnowledge}/2</b></span><span>AIR BUFFER <b>${state.resources.airHandlingBuffer}</b></span><span>SAFEGUARD <b>${state.resources.safetyGuard}</b></span></div>${environmentStrip(state,true)}${signalIntercept(state,true)}<div class="director-evidence"><span>EVIDENCE / ${state.global.evidence.length}</span>${evidence(state)}</div><div class="director-log"><span>EVENT LOG</span>${state.history.slice(-6).reverse().map(h=>`<p><b>${new Date(h.at).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}</b>${e(h.text)}</p>`).join("")}</div></aside>
     ${state.stageStatus==="resolved"?immersiveOutcome(state,true):""}${safety(state)}
   </div>`;
 }
@@ -320,41 +334,100 @@ function facilitatorDebrief(state) {
 function renderEnding(state, mode) {
   const x=state.ending;
   const clean=x.title==="CLEAN RESCUE";
-  const finalImage=clean?"mara-venn-below.png":"auxiliary-relay-hold.png";
-  app.innerHTML=`<div class="game-runtime ending-runtime ${clean?"clean-rescue":"critical-ending"} ${mode==="facilitator"?"facilitator-ending":""}"><div class="runtime-world"><img src="./assets/images/${finalImage}" alt="Final Blackout Ridge outcome"><div class="runtime-grade"></div><div class="scan-sweep"></div></div>${runtimeHud(state,mode==="facilitator"?"FACILITATOR / FINAL RECORD":"FINAL TRANSMISSION")}
-    <div class="ending-stage-seal" aria-label="Stage 7 of 7 complete"><span>FINAL CHALLENGE</span><strong>07</strong><i>/ 07</i><b>${clean?"RESCUE SECURED":"FINAL RECORD"}</b></div>
+  const finalImage=clean?"mara-venn-below.webp":"auxiliary-relay-hold.webp";
+  app.innerHTML=`<div class="game-runtime ending-runtime ${clean?"clean-rescue":"critical-ending"} ${mode==="facilitator"?"facilitator-ending":""}"><div class="runtime-world"><img src="${gameImage(finalImage)}" alt="Final Blackout Ridge outcome"><div class="runtime-grade"></div><div class="scan-sweep"></div></div>${runtimeHud(state,mode==="facilitator"?"FACILITATOR / FINAL RECORD":"FINAL TRANSMISSION")}
     <section class="ending-transmission"><span>STAGE 07 / 07&nbsp;&nbsp;·&nbsp;&nbsp;FINAL OUTCOME</span><h1>${e(x.title)}</h1><p>${e(x.body)}</p><div class="ending-verdict"><i class="${x.lockControlled?"confirmed":"failed"}"><b>${x.lockControlled?"✓":"×"}</b>${x.lockControlled?"INTERLOCK CONTROLLED":"INTERLOCK FAILED"}</i><i class="${x.correctionAccepted?"confirmed":"failed"}"><b>${x.correctionAccepted?"✓":"×"}</b>${x.correctionAccepted?"CORRECTION ACCEPTED":"OUTSIDE RECORD UNCORRECTED"}</i></div></section>
-    <aside class="ending-truth"><header><span>PARALLEL STAKES</span><i>${clean?"LIVE / CONFIRMED":"FINAL / DEGRADED"}</i></header><div><span>STATUS OUTCOME</span><b>${e(x.statusOutcome||(x.correctionAccepted?"HUMAN RESCUE SITE":"OPERATIONAL / NO ACTIVE DISTRESS"))}</b></div><div><span>RESCUE / SURVIVAL</span><b>${e(x.rescueOutcome||`MARA: ${x.mara.toUpperCase().replaceAll("_"," ")}`)}</b><small>${e(x.survivalOutcome||`CREW ${x.crew.toUpperCase()}`)} · INTERLOCK ${x.lockControlled?"CONTROLLED":"FAILED"}</small></div><footer><i></i><span>${clean?"EXTRACTION CHANNEL OPEN":"OUTCOME ARCHIVED"}</span></footer></aside>
+    <div class="ending-right-stack">
+      <div class="ending-stage-seal" aria-label="Stage 7 of 7 complete"><span>FINAL CHALLENGE</span><strong>07</strong><i>/ 07</i><b>${clean?"RESCUE SECURED":"FINAL RECORD"}</b></div>
+      <aside class="ending-truth"><header><span>PARALLEL STAKES</span><i>${clean?"LIVE / CONFIRMED":"FINAL / DEGRADED"}</i></header><div><span>STATUS OUTCOME</span><b>${e(x.statusOutcome||(x.correctionAccepted?"HUMAN RESCUE SITE":"OPERATIONAL / NO ACTIVE DISTRESS"))}</b></div><div><span>RESCUE / SURVIVAL</span><b>${e(x.rescueOutcome||`MARA: ${x.mara.toUpperCase().replaceAll("_"," ")}`)}</b><small>${e(x.survivalOutcome||`CREW ${x.crew.toUpperCase()}`)} · INTERLOCK ${x.lockControlled?"CONTROLLED":"FAILED"}</small></div><footer><i></i><span>${clean?"EXTRACTION CHANNEL OPEN":"OUTCOME ARCHIVED"}</span></footer></aside>
+      ${mode==="facilitator"?facilitatorDebrief(state):""}
+    </div>
     ${debriefPanel(state,mode)}
-    ${mode==="facilitator"?facilitatorDebrief(state):""}
   </div>`;
 }
 
 function renderGallery() {
-  const assets=[["station-exterior.png","Blackout Ridge"],["relay-control-room.png","Surface relay room"],["outside-run.png","Outside Run"],["containment-hatch.png","Containment interlock"],["auxiliary-relay-hold.png","Auxiliary Relay Hold"],["mara-venn-below.png","Mara Venn below"],["calder-vale-cordon.png","Calder Vale cordon"],["lark-shift-archive.png","The Lark Shift"]];
-  app.innerHTML=`<div class="app-frame gallery-view">${topbar("CINEMATIC ASSET ARCHIVE","")}<main class="gallery-main"><section class="gallery-heading"><div><p class="eyebrow">VISUAL DIRECTION / SET 01</p><h1>The world of Blackout Ridge</h1><p>Grounded operational horror—no monsters, no evil AI, no decorative fiction.</p></div><a class="button secondary" href="${url("home","")}">Return</a></section><section class="asset-grid">${assets.map(([file,title],i)=>`<figure class="asset-card ${file.includes("lark")?"archive":""}"><img src="./assets/images/${file}" alt="${title}"><figcaption><span>${String(i+1).padStart(2,"0")}</span><div><h2>${title}</h2><p>Game environment and evidence asset</p></div></figcaption></figure>`).join("")}</section></main></div>`;
+  ready();
+  const assets=[["station-exterior.webp","Blackout Ridge"],["relay-control-room.webp","Surface relay room"],["outside-run.webp","Outside Run"],["containment-hatch.webp","Containment interlock"],["auxiliary-relay-hold.webp","Auxiliary Relay Hold"],["mara-venn-below.webp","Mara Venn below"],["calder-vale-cordon.webp","Calder Vale cordon"],["lark-shift-archive.webp","The Lark Shift"]];
+  app.innerHTML=`<div class="app-frame gallery-view">${topbar("CINEMATIC ASSET ARCHIVE","")}<main class="gallery-main"><section class="gallery-heading"><div><p class="eyebrow">VISUAL DIRECTION / SET 01</p><h1>The world of Blackout Ridge</h1><p>Grounded operational horror—no monsters, no evil AI, no decorative fiction.</p></div><a class="button secondary" href="${url("home","")}">Return</a></section><section class="asset-grid">${assets.map(([file,title],i)=>`<figure class="asset-card ${file.includes("lark")?"archive":""}"><img src="${gameImage(file)}" alt="${title}"><figcaption><span>${String(i+1).padStart(2,"0")}</span><div><h2>${title}</h2><p>Game environment and evidence asset</p></div></figcaption></figure>`).join("")}</section></main></div>`;
 }
 
-function renderError() { app.innerHTML=`<div class="app-frame">${topbar("CONNECTION ERROR")}<main class="error-main"><p class="eyebrow">UNABLE TO CONTINUE</p><h1>${e(error||"Session unavailable")}</h1><a class="button secondary" href="${url("home","")}">Return home</a></main></div>`; }
+function renderError() { ready(); app.innerHTML=`<div class="app-frame">${topbar("CONNECTION ERROR")}<main class="error-main"><p class="eyebrow">UNABLE TO CONTINUE</p><h1>${e(error||"Session unavailable")}</h1><a class="button secondary" href="${url("home","")}">Return home</a></main></div>`; }
+
+function chatMessageIsMine(state,message){return state.viewer.kind==="facilitator"?message.senderKind==="facilitator":message.senderKind==="player"&&message.senderRole===state.viewer.role;}
+
+function updateChatNotifications(state){
+  if(state.viewer.kind!=="player"&&state.viewer.kind!=="facilitator")return;
+  const messages=state.chatMessages||[],latest=messages.at(-1);
+  if(!chatInitialized){chatInitialized=true;lastChatMessageId=latest?.id||"";return;}
+  const previous=lastChatMessageId?messages.findIndex(message=>message.id===lastChatMessageId):-1;
+  const incoming=messages.slice(previous>=0?previous+1:0).filter(message=>!chatMessageIsMine(state,message));
+  lastChatMessageId=latest?.id||lastChatMessageId;
+  if(!incoming.length)return;
+  stationAudio.cue("confirm");
+  if(chatOpen)return;
+  chatUnread+=incoming.length;chatAlert=incoming.at(-1);
+  clearTimeout(chatAlertTimer);chatAlertTimer=setTimeout(()=>{chatAlert=null;renderChat(client.state);},6500);
+}
+
+function chatMessageMarkup(state,message){
+  const own=chatMessageIsMine(state,message),role=message.senderRole&&state.roles?.[message.senderRole];
+  const senderCode=message.senderKind==="facilitator"?"FAC":role?.short||"CREW";
+  const senderColor=message.senderKind==="facilitator"?"facilitator":(["lead","signal","systems","operations","field","protocol","comms"].includes(message.senderRole)?message.senderRole:"crew");
+  const sentAt=new Date(message.at).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
+  return `<article class="crew-chat-message sender-${senderColor} ${own?"own":""}"><header><b>${e(senderCode)} / ${e(message.senderName)}</b><time>${e(sentAt)}</time></header><p>${e(message.text)}</p></article>`;
+}
+
+function renderChat(state){
+  document.querySelector(".crew-chat-root")?.remove();
+  if(!state||(state.viewer.kind!=="player"&&state.viewer.kind!=="facilitator"))return;
+  const messages=state.chatMessages||[];
+  const markup=`<section class="crew-chat-root ${chatOpen?"open":""}">
+    ${chatAlert&&!chatOpen?`<button class="crew-chat-alert" data-chat-open><b>NEW MESSAGE / ${e(chatAlert.senderName)}</b><span>${e(chatAlert.text)}</span></button>`:""}
+    ${chatOpen?`<aside class="crew-chat-panel" role="dialog" aria-label="Crew chat"><header><span><b>CREW CHAT</b><small>${messages.length} MESSAGE${messages.length===1?"":"S"} / AUTHENTICATED CHANNEL</small></span><button type="button" data-chat-toggle aria-label="Close crew chat">×</button></header><div class="crew-chat-messages" data-chat-log aria-live="polite">${messages.length?messages.map(message=>chatMessageMarkup(state,message)).join(""):`<p class="crew-chat-empty">No messages yet. Start the crew discussion.</p>`}</div><form data-chat-form><label for="crew-chat-input">MESSAGE ALL MEMBERS</label><textarea id="crew-chat-input" name="message" maxlength="500" rows="2" placeholder="Type a message…" required>${e(chatDraft)}</textarea><div><small>${chatError?e(chatError):"Players and facilitator only"}</small><button type="submit">SEND</button></div></form></aside>`:""}
+    <button class="crew-chat-toggle" type="button" data-chat-toggle aria-label="${chatOpen?"Close":"Open"} crew chat" aria-expanded="${chatOpen}">${chatIcon()}<span>CREW CHAT</span>${chatUnread?`<b>${chatUnread>99?"99+":chatUnread}</b>`:""}</button>
+  </section>`;
+  app.insertAdjacentHTML("beforeend",markup);
+  if(chatOpen)requestAnimationFrame(()=>{const log=document.querySelector("[data-chat-log]");if(log)log.scrollTop=log.scrollHeight;});
+}
 
 function render(state) {
   if (!state) return;
+  ready();
+  updateChatNotifications(state);
   if (view==="shared") renderShared(state); else if (view==="player") renderPlayer(state); else if (view==="facilitator") renderFacilitator(state);
+  renderChat(state);
 }
 
 app.addEventListener("submit",async event=>{
   event.preventDefault(); error="";
   try {
+    if(event.target.matches("[data-chat-form]")){
+      chatError="";const data=new FormData(event.target),message=String(data.get("message")||"").trim(),submit=event.target.querySelector('button[type="submit"]');
+      if(submit){submit.disabled=true;submit.textContent="SENDING…";}
+      await client.action("CHAT_MESSAGE",{message});chatDraft="";stationAudio.cue("confirm");return;
+    }
     if (event.target.matches("[data-create]")) { const data=new FormData(event.target), result=await client.create(Number(data.get("playerCount"))); localStorage.setItem(`blackout-token-${result.code}`,result.facilitatorToken); location.href=url("facilitator",result.code,result.facilitatorToken); }
     if (event.target.matches("[data-enter]")) { const data=new FormData(event.target); location.href=url("join",String(data.get("code")).toUpperCase()); }
     if (event.target.matches("[data-join]")) { const data=new FormData(event.target),result=await client.join(data.get("name"),data.get("role")); localStorage.setItem(`blackout-token-${code}`,result.playerToken); location.href=url("player",code,result.playerToken); }
-    if (event.target.matches("[data-report]")) { const data=new FormData(event.target); await client.action("REPORT",{note:data.get("note"),recommendation:"shared"}); }
+    if (event.target.matches("[data-report]")) {
+      reportError="";
+      const data=new FormData(event.target), submit=event.target.querySelector('button[type="submit"]');
+      if(submit){submit.disabled=true;submit.textContent=client.state?.reports?.[client.state.viewer.role]?"UPDATING…":"SHARING…";}
+      await client.action("REPORT",{note:data.get("note"),recommendation:"shared"});
+      stationAudio.cue("confirm");
+    }
     if (event.target.matches("[data-guidance]")) { const data=new FormData(event.target); await client.action("FIELD_GUIDANCE",{message:data.get("message")}); }
     if (event.target.matches("[data-reassign]")) { const data=new FormData(event.target); await client.action("REASSIGN_PLAYER",{from:data.get("from"),to:data.get("to")}); }
     if (event.target.matches("[data-debrief-note]")) { const data=new FormData(event.target); await client.action("SAVE_DEBRIEF_NOTE",{step:Number(data.get("step")),note:data.get("note")}); }
     if (event.target.matches("[data-first-step]")) { const data=new FormData(event.target); await client.action("SAVE_FIRST_STEP",{note:data.get("note")}); }
     if (event.target.matches("[data-playtest]")) { const data=new FormData(event.target),ratings={};for(const item of client.state.playtest?.criteria||[]){const value=data.get(`rating_${item.id}`);if(value)ratings[item.id]=Number(value);}await client.action("SAVE_PLAYTEST",{ratings,disposition:data.get("disposition"),notes:data.get("notes")}); }
-  } catch(cause) { error=cause.message; if(view==="join") renderJoin(); else if(view==="home") renderHome(); else renderError(); }
+  } catch(cause) {
+    error=cause.message;
+    if(event.target.matches("[data-chat-form]")){chatError=error;stationAudio.cue("error");renderChat(client.state);}
+    else if(event.target.matches("[data-report]")){reportError=error;stationAudio.cue("error");render(client.state);}
+    else if(view==="join") renderJoin(); else if(view==="home") renderHome(); else renderError();
+  }
 });
 
 app.addEventListener("change",async event=>{
@@ -365,7 +438,13 @@ app.addEventListener("change",async event=>{
   }catch(cause){error=cause.message;render(client.state);}
 });
 
+app.addEventListener("input",event=>{if(event.target.matches("#crew-chat-input"))chatDraft=event.target.value;});
+
 app.addEventListener("click",async event=>{
+  const chatToggle=event.target.closest("[data-chat-toggle]");
+  if(chatToggle){chatOpen=!chatOpen;chatUnread=0;chatAlert=null;clearTimeout(chatAlertTimer);renderChat(client.state);if(chatOpen)requestAnimationFrame(()=>document.querySelector("#crew-chat-input")?.focus());return;}
+  const chatOpenButton=event.target.closest("[data-chat-open]");
+  if(chatOpenButton){chatOpen=true;chatUnread=0;chatAlert=null;clearTimeout(chatAlertTimer);renderChat(client.state);requestAnimationFrame(()=>document.querySelector("#crew-chat-input")?.focus());return;}
   const entry=event.target.closest("[data-entry-mode]");
   if(entry){entryMode=entry.dataset.entryMode;error="";renderHome();return;}
   const crew=event.target.closest("[data-crew-size]");
@@ -393,10 +472,12 @@ app.addEventListener("click",async event=>{
   const roleDownload=event.target.closest("[data-download-role]");
   if(roleDownload){const state=client.state,card=state.privateCard,role=state.roles[state.viewer.role],body=["BLACKOUT RIDGE / PRIVATE ROLE BRIEF",`SESSION: ${state.code}`,`STAGE: ${String(state.stage).padStart(2,"0")} / ${state.stageDefinition.kicker}`,`ROLE: ${role.name}`,`LENS: ${role.lens}`,`CONFIDENCE: ${card.confidence}`,"",card.title,card.body,"",`ROLE OVERRIDE: ${card.intervention}`,"",state.participantCare].join("\n"),blob=new Blob([body],{type:"text/plain"}),href=URL.createObjectURL(blob),anchor=document.createElement("a");anchor.href=href;anchor.download=`blackout-ridge-${state.code}-${state.viewer.role}-stage-${state.stage}.txt`;anchor.click();setTimeout(()=>URL.revokeObjectURL(href),500);return;}
   const download=event.target.closest("[data-download-summary]");
-  if(download){const state=client.state,payload={session:state.code,ending:state.ending,metrics:state.metrics,decisions:state.decisions,debrief:state.debrief,playtest:state.playtest,environment:state.environment,officialStatus:state.officialStatus,history:state.history};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}),href=URL.createObjectURL(blob),anchor=document.createElement("a");anchor.href=href;anchor.download=`blackout-ridge-${state.code}-session-record.json`;anchor.click();setTimeout(()=>URL.revokeObjectURL(href),500);return;}
+  if(download){const state=client.state,payload={session:state.code,ending:state.ending,metrics:state.metrics,decisions:state.decisions,debrief:state.debrief,playtest:state.playtest,environment:state.environment,officialStatus:state.officialStatus,chatMessages:state.chatMessages,history:state.history};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}),href=URL.createObjectURL(blob),anchor=document.createElement("a");anchor.href=href;anchor.download=`blackout-ridge-${state.code}-session-record.json`;anchor.click();setTimeout(()=>URL.revokeObjectURL(href),500);return;}
   const target=event.target.closest("[data-action]");if(!target||target.disabled)return;
   try{await client.action(target.dataset.action);stationAudio.cue(target.dataset.action==="COMMIT_STAGE"?"commit":"confirm");}catch(cause){error=cause.message;stationAudio.cue("error");alert(error);}
 });
+
+app.addEventListener("keydown",event=>{if(event.key==="Escape"&&chatOpen){chatOpen=false;renderChat(client.state);}});
 
 function tick(){const state=client.state;if(!state)return;document.querySelectorAll("[data-clock]").forEach(node=>node.textContent=time(seconds(state)));}
 setInterval(tick,250);

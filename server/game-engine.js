@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import { ACTIONS, DEBRIEF_STEPS, PARTICIPANT_CARE, PLAYTEST_CRITERIA, READINESS_PROFILES, ROLES, SIGNAL_TRANSMISSIONS, STAGES, roleCard, roleIdsForCount, roleMapForCount, rolesForCount } from "./game-content.js";
+import { ACTIONS, DEBRIEF_STEPS, INFORMATION_JOINS, PARTICIPANT_CARE, PLAYTEST_CRITERIA, READINESS_PROFILES, ROLES, SIGNAL_TRANSMISSIONS, STAGES, roleCard, roleIdsForCount, roleMapForCount, rolesForCount } from "./game-content.js";
 
 const codeChars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const STAGE_HINTS = {
@@ -32,7 +32,7 @@ export function createSession({ code = createCode(), playerCount = 7 } = {}) {
     code, facilitatorToken: token(), revision: 0, playerCount: [2, 4, 5, 6, 7].includes(playerCount) ? playerCount : 7,
     status: "lobby", stage: 0, stageStatus: "briefing", players: {},
     clock: { duration: 0, remaining: 0, running: false, endAt: null },
-    reports: {}, draft: {}, hint: null, safetyPaused: false, finaleRound: 1, finalePlans: [], fieldRun: null, correctionAttempt: 1, correctionDrafts: [],
+    reports: {}, chatMessages: [], draft: {}, hint: null, safetyPaused: false, finaleRound: 1, finalePlans: [], fieldRun: null, correctionAttempt: 1, correctionDrafts: [],
     global: { upperAir: 0, trust: 0, official: 0, systems: [], respirator: "partial", evidence: [], lockKnowledge: 0, mara: "missing", correction: "none", lockRisk: false },
     resources: { airHandlingBuffer: 0, safetyGuard: 0, interlockOverride: "available" },
     flags: { assumptions: {}, signal: {}, physical: {}, human: { mara_missing: true }, system: {}, correction: {} },
@@ -48,7 +48,7 @@ function ensureSession(session) {
   session.resources.airHandlingBuffer ??= 0; session.resources.safetyGuard ??= 0; session.resources.interlockOverride ||= "available";
   session.flags ||= { assumptions: {}, signal: {}, physical: {}, human: {}, system: {}, correction: {} };
   for (const group of ["assumptions","signal","physical","human","system","correction"]) session.flags[group] ||= {};
-  session.interventionFeedback ||= {}; session.absentRoles ||= {}; session.decisions ||= {}; session.finalePlans ||= [];
+  session.interventionFeedback ||= {}; session.absentRoles ||= {}; session.decisions ||= {}; session.finalePlans ||= []; session.chatMessages ||= [];
   session.fieldRun ??= null; session.correctionAttempt ||= 1; session.correctionDrafts ||= []; session.pendingEnding ??= null;
   session.safetyBriefed ??= false; session.debrief ||= { currentStep: 1, notes: {}, firstSteps: {}, profileSignals: [] }; session.debrief.notes ||= {}; session.debrief.firstSteps ||= {}; session.debrief.profileSignals ||= []; session.debrief.currentStep ||= 1;
   session.playtest ||= { ratings: {}, notes: "", disposition: "unreviewed", updatedAt: null }; session.playtest.ratings ||= {}; session.playtest.notes ||= ""; session.playtest.disposition ||= "unreviewed"; session.playtest.updatedAt ??= null;
@@ -70,7 +70,8 @@ export function addPlayer(session, { name, role }) {
 const remaining = (clock, now = Date.now()) => clock.running && clock.endAt ? Math.max(0, Math.ceil((clock.endAt - now) / 1000)) : clock.remaining;
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 const addEvidence = (session, ...items) => { for (const item of items) if (item && !session.global.evidence.includes(item)) session.global.evidence.push(item); };
-const bump = (session, text) => { session.revision += 1; session.updatedAt = Date.now(); session.history.push({ at: Date.now(), stage: session.stage, text }); };
+const touch = session => { session.revision += 1; session.updatedAt = Date.now(); };
+const bump = (session, text) => { touch(session); session.history.push({ at: Date.now(), stage: session.stage, text }); };
 const setFlag = (session, group, key, value = true) => { ensureSession(session).flags[group][key] = value; };
 const advanceOfficial = (session, amount = 1) => { session.global.official = clamp(session.global.official + amount, 0, 3); };
 function advanceAir(session, reason = "Air pressure worsened") {
@@ -80,7 +81,7 @@ function advanceAir(session, reason = "Air pressure worsened") {
   session.global.upperAir = clamp(session.global.upperAir + 1, 0, 3); return true;
 }
 
-function signalTransmission(session) {
+function signalTransmission(session, viewer = { kind: "public" }) {
   if (!session.stage) return null;
   const base = SIGNAL_TRANSMISSIONS[session.stage];
   if (!base) return null;
@@ -100,7 +101,23 @@ function signalTransmission(session) {
     instruction = `${base.instruction} / TWO SOURCES AGREE`;
   }
   if (session.global.mara === "located" && session.stage >= 5) integrity = Math.max(integrity, 76);
-  return { ...base, transcript, integrity, instruction, preserved: retainedEarly, quality };
+
+  // Shared / non-analyst views stay ambiguous until the buried-station join lands.
+  // Signal / Systems / Comms / facilitator get the reconstructed private clarity.
+  const analystRoles = new Set(["signal", "systems", "comms"]);
+  const canSeePrivateClarity = viewer.kind === "facilitator" || analystRoles.has(viewer.role);
+  if (!canSeePrivateClarity && session.stage < 5) {
+    return {
+      source: base.source,
+      integrity: Math.min(integrity, session.stage < 3 ? 18 : 28),
+      transcript: session.stage < 3 ? "…[sub-carrier]…[unresolved]…" : "…lower… route… [context incomplete]…",
+      instruction: "PUBLIC INTERCEPT / PRIVATE ROLE RECONSTRUCTION REQUIRED",
+      preserved: retainedEarly,
+      quality,
+      privateClarity: false,
+    };
+  }
+  return { ...base, transcript, integrity, instruction, preserved: retainedEarly, quality, privateClarity: canSeePrivateClarity };
 }
 
 function environmentState(session) {
@@ -380,11 +397,28 @@ export function authorize(session, suppliedToken) {
 
 export function applyAction(session, viewer, type, payload = {}) {
   ensureSession(session);
-  if(viewer.kind==="player"&&session.absentRoles[viewer.role])throw new Error("This role is temporarily in observer mode");
+  if(viewer.kind==="player"&&session.absentRoles[viewer.role]&&type!=="CHAT_MESSAGE")throw new Error("This role is temporarily in observer mode");
   if (type === "ACK_SAFETY" && viewer.kind === "facilitator" && session.stage === 0) { session.safetyBriefed = true; bump(session,"Participant-care briefing confirmed"); }
   else if (type === "START_GAME" && viewer.kind === "facilitator" && session.stage === 0) { if(Object.keys(session.players).length!==session.playerCount)throw new Error(`Connect all ${session.playerCount} crew terminals before starting`);if(!session.safetyBriefed)throw new Error("Confirm the participant-care briefing before starting");session.metrics.startedAt=Date.now();startStage(session, 1); }
   else if (type === "ADVANCE_STAGE" && viewer.kind === "facilitator" && session.stageStatus === "resolved" && session.stage < 7) startStage(session, session.stage + 1);
-  else if (type === "REPORT" && viewer.kind === "player" && session.stageStatus === "live") { const first=!session.reports[viewer.role];session.reports[viewer.role] = { recommendation: String(payload.recommendation || "").slice(0, 80), note: String(payload.note || "").slice(0, 160) };if(first)recordContribution(session,viewer.role,"reports"); bump(session, `${ROLES[viewer.role].name} shared an assessment`); }
+  else if (type === "CHAT_MESSAGE" && (viewer.kind === "player" || viewer.kind === "facilitator")) {
+    const text = String(payload.message || "").trim().slice(0, 500);
+    if (!text) throw new Error("Enter a message before sending it");
+    const senderRole = viewer.kind === "player" ? viewer.role : null;
+    const senderName = viewer.kind === "player" ? session.players[viewer.role]?.name || ROLES[viewer.role]?.name : "Facilitator";
+    session.chatMessages.push({ id: crypto.randomUUID(), at: Date.now(), senderKind: viewer.kind, senderRole, senderName, text });
+    if (session.chatMessages.length > 100) session.chatMessages.splice(0, session.chatMessages.length - 100);
+    touch(session);
+  }
+  else if (type === "REPORT" && viewer.kind === "player" && session.stageStatus === "live") {
+    const note = String(payload.note || "").trim().slice(0, 160);
+    if (!note) throw new Error("Enter a recommendation before sharing it");
+    const recommendation = String(payload.recommendation || "shared").trim().slice(0, 80) || "shared";
+    const first = !session.reports[viewer.role];
+    session.reports[viewer.role] = { recommendation, note };
+    if (first) recordContribution(session, viewer.role, "reports");
+    bump(session, `${ROLES[viewer.role].name} shared an assessment`);
+  }
   else if (type === "UPDATE_DRAFT" && canLead(session, viewer) && session.stageStatus === "live") { session.draft = validateDraftUpdate(session,payload); bump(session, "Crew plan updated"); }
   else if (type === "COMMIT_STAGE" && canLead(session, viewer) && session.stageStatus === "live") {
     if (session.stage === 1 && (session.draft.holds?.length || 0) !== 3) throw new Error("Select exactly three audit holds");
@@ -463,10 +497,16 @@ export function publicState(session, viewer) {
     status: session.status, stage: session.stage, stageStatus: session.stageStatus,
     clock: { ...session.clock, remaining: remaining(session.clock) }, safetyPaused: session.safetyPaused,
     players: Object.fromEntries(Object.entries(session.players).map(([role, p]) => [role, { role, name: p.name, joinedAt: p.joinedAt }])),
-    reports: viewer.kind === "facilitator" || viewer.role === "lead" ? session.reports : Object.fromEntries(Object.keys(session.reports).map(role => [role, { submitted: true }])),
+    reports: viewer.kind === "facilitator" || viewer.role === "lead"
+      ? session.reports
+      : Object.fromEntries(Object.entries(session.reports).map(([role, report]) => [
+          role,
+          viewer.kind === "player" && role === viewer.role ? { ...report } : { submitted: true },
+        ])),
+    chatMessages: viewer.kind === "player" || viewer.kind === "facilitator" ? session.chatMessages.map(message => ({ ...message })) : [],
     draft: canLead(session, viewer) || session.stageStatus === "resolved" ? session.draft : {},
     hint: session.hint, global: session.global, resources: session.resources, environment: environmentState(session), officialStatus: officialStatus(session), flags: viewer.kind==="facilitator"?session.flags:undefined, interventions: session.interventions, interventionFeedback: session.interventionFeedback, absentRoles: session.absentRoles, outcomes: session.outcomes, ending: session.ending,
-    safetyBriefed: session.safetyBriefed, participantCare: PARTICIPANT_CARE, signalTransmission: signalTransmission(session),
+    safetyBriefed: session.safetyBriefed, participantCare: PARTICIPANT_CARE, signalTransmission: signalTransmission(session, viewer),
     debrief: { currentStep: session.debrief.currentStep, steps: DEBRIEF_STEPS, notes: viewer.kind==="facilitator"?session.debrief.notes:undefined, firstSteps: session.debrief.firstSteps, profileSignals: session.debrief.profileSignals, roleMap: roleMapForCount(session.playerCount), readinessProfiles: READINESS_PROFILES },
     playtest: viewer.kind==="facilitator"&&session.status==="ending" ? { ...session.playtest, criteria: PLAYTEST_CRITERIA, needsReframe: session.playtest.disposition==="kill_reframe"||Number(session.playtest.ratings.ai_alignment||5)<=2 } : undefined,
     metrics: viewer.kind==="facilitator"||session.status==="ending" ? { ...session.metrics, durationSeconds } : undefined,
@@ -476,6 +516,7 @@ export function publicState(session, viewer) {
     history: viewer.kind === "facilitator" || session.status === "ending" ? session.history : session.history.slice(-3),
     stageDefinition: stage, viewer: { ...viewer, name: player?.name || viewer.name },
     privateCard: viewer.kind === "player" && session.stage ? roleCard(session.stage, viewer.role, session.playerCount) : null,
+    informationJoins: viewer.kind === "facilitator" ? INFORMATION_JOINS : undefined,
     roles: rolesForCount(session.playerCount), actions: ACTIONS,
     facilitatorCanAdvance: viewer.kind === "facilitator" && session.stageStatus === "resolved" && session.stage < 7,
     facilitatorCanConfirmEnding: viewer.kind==="facilitator"&&session.stage===7&&session.stageStatus==="resolved"&&Boolean(session.pendingEnding),

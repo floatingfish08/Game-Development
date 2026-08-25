@@ -7,24 +7,25 @@
     <meta name="description" content="Blackout Ridge multiplayer UX prototype" />
     <title>Blackout Ridge — Relay Console</title>
     <link rel="icon" href="./favicon.ico" sizes="any" />
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="./assets/images/favicon-192.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260825-1" />
   </head>
   <body>
     <div class="weather" aria-hidden="true"></div>
     <div id="app"></div>
     <noscript>Blackout Ridge requires JavaScript for synchronized prototype state.</noscript>
     <script>
+      function showBootError(title, message) {
+        var app = document.querySelector("#app");
+        if (!app || app.dataset.ready === "1") return;
+        app.innerHTML = '<main class="error-main"><p class="eyebrow">' + title + '</p><h1>' + String(message) + '</h1></main>';
+      }
       window.addEventListener("error", function (event) {
-        document.querySelector("#app").innerHTML = '<main class="error-main"><p class="eyebrow">CLIENT ERROR</p><h1>' + String(event.message) + '</h1></main>';
+        showBootError("CLIENT ERROR", event.message);
       });
       window.addEventListener("unhandledrejection", function (event) {
-        document.querySelector("#app").innerHTML = '<main class="error-main"><p class="eyebrow">CONNECTION ERROR</p><h1>' + String(event.reason && event.reason.message || event.reason) + '</h1></main>';
+        showBootError("CONNECTION ERROR", event.reason && event.reason.message || event.reason);
       });
     </script>
-    <script type="module" src="./full-app.js"></script>
+    <script type="module" src="./full-app.js?v=20260825-1"></script>
   </body>
 </html>
