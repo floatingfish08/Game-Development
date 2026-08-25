@@ -64,8 +64,8 @@ The automated suite exercises strong and weak complete-game paths, role privacy,
 authority rules, timer expiry, intervention limits, and the WebP-only raster
 asset policy.
 
-Milestone design documents remain in [`docs/milestone-1`](docs/milestone-1) and
-[`docs/milestone-2`](docs/milestone-2). The implemented runtime is documented in
+Milestone summaries and evidence are consolidated in
+[`docs/reports`](docs/reports). The implemented runtime is documented in
 [`docs/full-system/README.md`](docs/full-system/README.md), with a practical
 [`facilitator guide`](docs/full-system/FACILITATOR-GUIDE.md) and
 [`playbook coverage matrix`](docs/full-system/PLAYBOOK-COVERAGE.md).

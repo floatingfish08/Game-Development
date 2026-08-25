@@ -6,9 +6,7 @@ The documentation tree is organized by audience and lifecycle:
 |---|---|
 | `client-guide/` | Current client-facing Word guide and its reusable screenshots |
 | `full-system/` | Current runtime, facilitator, and playbook-coverage references |
-| `milestone-1/` | Approved architecture, narrative, roles, state, and operations design |
-| `milestone-2/` | Browser UX milestone handoff and representative captures |
-| `reports/` | Individual milestone completion reports and the source captures used to regenerate them |
+| `reports/` | Consolidated milestone completion reports and the source captures used to regenerate them |
 
 ## Visual asset policy
 

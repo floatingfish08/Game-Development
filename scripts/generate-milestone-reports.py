@@ -162,8 +162,8 @@ def build_milestone_1() -> Path:
     para(
         doc,
         "This milestone is complete. All design documents are written, internally consistent, and approved "
-        "as the baseline for implementation. Section 4–5 of this report document the full narrative "
-        "connection between stages; the source package lives in docs/milestone-1/.",
+        "as the baseline for implementation. Sections 4–5 of this report document the full narrative "
+        "connection between stages; the approved material is consolidated in this report.",
     )
 
     h1(doc, "2. Scope and deliverables")
@@ -581,7 +581,7 @@ def build_milestone_1() -> Path:
         "Milestone 3 (core multiplayer build) were implemented against this package. Changes that "
         "add a new persistent track, stage, role, or primary mechanic require explicit scope review.",
     )
-    para(doc, "Full source documents: docs/milestone-1/ in the project repository.")
+    para(doc, "The approved Milestone 1 material is consolidated in this completion report.")
 
     out = OUT / "Blackout_Ridge_Milestone_1_Completion_Report.docx"
     doc.save(out)
