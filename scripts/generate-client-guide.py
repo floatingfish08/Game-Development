@@ -490,7 +490,13 @@ def build() -> Path:
         ["Private role terminal", "One participant", "Role-specific evidence, recommendation, intervention, lead decision tools", "Yes"],
         ["Facilitator console", "Facilitator only", "Pacing, decisions, all reports, safety, recovery, ending preview, debrief", "Yes—keep private"],
     ], small=True)
-    callout(doc, "Core loop", "Signal → Share → Decide → Consequence. The shared screen creates the problem, private terminals add unequal evidence, players discuss and recommend, the Station Lead or facilitator commits one decision, and the system stores the consequence.", "success")
+    callout(doc, "Core loop", "Story pressure → Private evidence → Crew discussion → Decision preview → Commitment → Cause-and-effect reveal. Every stage begins from the previous consequence, so the crew always knows why the new emergency is happening and what its current decision may preserve or put at risk.", "success")
+    h2(doc, "1.5 The escalating story arc")
+    table(doc, ["Act", "Stages", "Escalation"], [
+        ["Doubt the handover", "1–2", "Mara is absent; weak human evidence conflicts with calm defaults; lightning then forces the crew to sacrifice future capabilities."],
+        ["Follow the contradiction", "3–5", "The disputed signal points away from the road, an exposed field test locates a route beneath the station, and the crew discovers Mara inside a legacy hold."],
+        ["Correct and survive", "6–7", "The crew must replace the false outside record with actionable truth while simultaneously controlling the interlock, carrier, Mara's rescue, and its own air."],
+    ], small=True)
 
     chapter(doc, "2", "Quick start and technical setup", "Everything a host needs to move from a stopped server to a ready room.")
     h2(doc, "2.1 Minimum setup")
@@ -563,11 +569,11 @@ def build() -> Path:
     ], small=True)
     callout(doc, "Combined roles", "Two-player games use Command & Field plus Signal & Systems. Four- and five-player games combine selected responsibilities. The story and all seven decisions remain intact; each combined card includes the necessary evidence lenses.", "info")
     h2(doc, "3.3 What to do in every stage")
-    screenshot(doc, "04b-player-lead-stage1.webp", "A player terminal combines a private brief, confidence label, recommendation channel, role override, and—when applicable—decision controls.", ["Read the private evidence and confidence label.", "Tell the crew what matters; secrecy is not required.", "Share a concise recommendation to the Station Lead and facilitator."])
+    screenshot(doc, "04b-player-lead-stage1.webp", "A player terminal now turns each private brief into four plain-language actions: understand the evidence, interpret its confidence, say what matters aloud, and make a recommendation.", ["WHAT YOU KNOW separates evidence from interpretation.", "WHY IT MATTERS connects that evidence to the current crew decision.", "WHAT TO SAY OUT LOUD gives a direct discussion prompt.", "The consequence preview names what the proposed decision preserves, costs, and still leaves unresolved."])
     bullets(doc, [
         ("Read. ", "Identify what your evidence actually proves and what remains an assumption."),
         ("Speak. ", "Share the evidence aloud or in Crew Chat. State its confidence: confirmed, likely, stale, unknown, or contradicted."),
-        ("Recommend. ", "Write what the crew must understand, then choose Share with Station Lead. A visible confirmation shows it was routed."),
+        ("Recommend. ", "Complete the sentence: Because [evidence], we should [action], otherwise [risk]. Then choose Share with Station Lead. A visible confirmation shows it was routed."),
         ("Question. ", "Ask which source produced a clean label and what that source is authorized to claim."),
         ("Commit. ", "The Station Lead summarizes and submits the crew decision. The facilitator can also resolve when necessary."),
         ("Observe consequence. ", "Read what changed; earlier choices affect later clarity, safety, trust, and options."),
@@ -589,7 +595,7 @@ def build() -> Path:
         "Do not use chat for sensitive personal disclosures; it is included in the facilitator’s exported record.",
     ])
     h2(doc, "3.6 Mobile use")
-    two_screens(doc, "09b-player-signal-mobile.webp", "Live private terminal on a phone.", "19-debrief-player-mobile.webp", "The six-step debrief on a phone.")
+    two_screens(doc, "04d-player-lead-mobile.webp", "Structured participant note and decision preview on a phone.", "09b-player-signal-mobile.webp", "Live private Signal terminal on a phone.")
     bullets(doc, [
         "Use portrait orientation for reading and chat; landscape can help with dense stage controls.",
         "Scroll within the page when the current control is below the evidence card.",
@@ -608,6 +614,14 @@ def build() -> Path:
     ])
     h2(doc, "4.2 Private role terminal")
     screenshot(doc, "08-player-signal-stage3.webp", "Signal Analyst sees a role-specific brief during the degraded-signal stage.", ["Private evidence is deliberately incomplete.", "The confidence label describes evidence quality, not whether the player is correct.", "Archive Role Brief downloads a text copy for remote or accessibility use."])
+    h3(doc, "How to read a Participant Note")
+    table(doc, ["Block", "Meaning", "Participant action"], [
+        ["What you know", "The role's private observation or record", "Separate the evidence from your preferred action"],
+        ["Confidence", "Why the evidence is confirmed, likely, stale, contradicted, or unknown", "Say the confidence level when sharing it"],
+        ["Why it matters", "The connection to this stage's exact decision", "Name what changes if the crew ignores it"],
+        ["What to say out loud", "A direct question or sentence starter", "Use it to bring the evidence into discussion"],
+        ["Your recommendation", "A private summary routed to Lead and facilitator", "Link evidence, action, and risk in one concise statement"],
+    ], small=True)
     h2(doc, "4.3 Facilitator console")
     screenshot(doc, "04c-facilitator-stage1.webp", "The facilitator console combines live control, all role submissions, decision controls, station state, signal, evidence, and event history.", ["Left: pace, safety, prompts, reports, and recovery.", "Center: current crew decision; facilitator can resolve if needed.", "Right: authoritative state, evidence, signal integrity, and audit history."])
     h3(doc, "Controls and correct use")
@@ -622,7 +636,8 @@ def build() -> Path:
         ["Resolve Decision", "Facilitator is authorized to commit or recover the stage", "Silently replace the crew’s actual choice"],
     ], small=True)
     h2(doc, "4.4 Consequence screens")
-    screenshot(doc, "05-shared-stage2.webp", "Stage 2 shared view: power allocation changes which later systems and evidence paths remain available.", ["The current decision remains visible until committed.", "A consequence freezes the timer and names what changed.", "Only the facilitator advances to the next emergency after the room has read it."])
+    screenshot(doc, "04e-stage1-consequence-mobile.webp", "Every commitment opens a cause-and-effect reveal before the next stage can begin.", ["THE CREW COMMITTED repeats the exact choice.", "WHAT CHANGED NOW names immediate gains and costs.", "Persistent tracks show the updated pressure.", "WHY THE NEXT STAGE HAPPENS provides the narrative bridge into the escalating emergency."] , width=Inches(3.6))
+    screenshot(doc, "05-shared-stage2.webp", "Stage 2 shared view: power allocation changes which later systems and evidence paths remain available.", ["Before commitment, the preview separates preserved capabilities from costs and warnings.", "After commitment, the consequence freezes the timer and names what changed.", "Only the facilitator advances after the room can explain the cause-and-effect link."])
 
     chapter(doc, "5", "Facilitator runbook", "A practical, safe, and repeatable 70-minute delivery sequence.")
     h2(doc, "5.1 Recommended timing")
@@ -958,7 +973,7 @@ def build() -> Path:
     ])
 
     h2(doc, "Appendix E — Screenshot index")
-    para(doc, f"This guide contains {FIGURE} illustrated figures drawn from 25 current runtime screenshots captured during a complete isolated six-player session. Source images are stored beside this document in docs/client-guide/screenshots/ for client presentation reuse.")
+    para(doc, f"This guide contains {FIGURE} illustrated figures drawn from 27 current runtime screenshots captured during a complete isolated six-player session. Source images are stored beside this document in docs/client-guide/screenshots/ for client presentation reuse.")
     table(doc, ["Coverage", "Figures included"], [
         ["Onboarding", "Boot, host configuration, join flow, assembly lobby"],
         ["Core interfaces", "Shared station, private player terminal, facilitator console, mobile views"],

@@ -25,6 +25,12 @@ chooses one unclaimed role.
 
 - Seven playable stages with server-authoritative decisions and fail-forward
   consequences.
+- An escalating narrative spine: each consequence explains why the next
+  emergency happens instead of presenting stages as disconnected puzzles.
+- Live decision previews that separate preserved capabilities, costs, warnings,
+  and commit readiness before the crew locks in a choice.
+- Plain-language Participant Notes structured as what you know, confidence,
+  why it matters, and what to say aloud.
 - A playable three-move Outside Run with an assigned runner, three private
   guidance bursts, exposure, abort, findings, and respirator consequences.
 - A two-attempt structured emergency correction, including the shortened,

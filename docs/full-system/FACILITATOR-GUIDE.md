@@ -7,6 +7,12 @@ Players communicate by voice in the room or on a call while the browser runtime
 supplies unequal private evidence, a shared station picture, timed decisions,
 consequences, and the facilitator console.
 
+The live build makes the story connection explicit at every transition. Before
+a commitment, ask the room to read the decision preview: what the draft keeps,
+what it costs, and which warning remains. After commitment, pause on the
+cause-and-effect reveal until participants can name (1) what they chose, (2)
+what changed now, and (3) why the next emergency follows.
+
 Allow 70 minutes: roughly 43 minutes for the seven-stage game and 20–25 minutes
 for the debrief. Use one facilitator, one shared room display, and one private
 browser per participant. Headphones are optional; station audio is opt-in.

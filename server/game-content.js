@@ -159,7 +159,14 @@ export const STAGES = {
     title: "Challenge the handover", kicker: "AUTO-HANDOVER", duration: 240,
     image: "relay-control-room.webp", mechanic: "holds",
     objective: "Place three human audit holds before the remaining defaults become working facts.",
-    scene: "The outgoing crew left in a hurry. Mara is absent. The station is calmly filling gaps.",
+    scene: "21:14. The outgoing crew has evacuated after a mast strike. Mara Venn misses handover, but the station is already filling her absence with confident defaults.",
+    story: {
+      chapter: "A PERSON BECOMES A STATUS",
+      arrival: "Mara should be standing at the console. Instead, automation is turning old feeds and missing data into an official account of where she is.",
+      pressure: "Anything the crew does not pause will become the baseline for every later search and rescue decision.",
+      next: "Before the crew can investigate, lightning hits the mast again. The audit now collides with an emergency power choice.",
+    },
+    participantGoal: "The crew must pause three unsafe handover claims. Explain which claim your evidence challenges and why leaving it unchallenged could misdirect the search.",
     options: [
       ["event", "LOCAL SERVICE FAULT"], ["public", "NO WIDER RISK CONFIRMED"],
       ["mara", "VENN ON LOWER ROUTE FIELD CHECK"], ["road", "ROAD FEED HAS PRIORITY"],
@@ -170,42 +177,84 @@ export const STAGES = {
     title: "Keep the station alive", kicker: "DEGRADED POWER", duration: 300,
     image: "station-exterior.webp", mechanic: "power",
     objective: "Power three optional circuits. What you preserve changes what the station can prove later.",
-    scene: "Lightning damages the mast. Main Relay survives, but capacity does not.",
+    scene: "21:18. A second strike tears through the mast. Main Relay survives, but the station can keep only three optional circuits alive.",
+    story: {
+      chapter: "THE STATION CANNOT SAVE EVERYTHING",
+      arrival: "The crew's handover doubts are still open when half the control room goes dark. Evidence, clean air, outside trust, and lock control now compete for the same power.",
+      pressure: "Every circuit cut now removes a capability the crew may desperately need later.",
+      next: "As the last circuits settle, three transmissions arrive together: a clean bulletin, a correction code, and something that sounds human.",
+    },
+    participantGoal: "The crew can keep three optional circuits. State what capability your evidence protects and what the crew will lose if that circuit goes dark.",
     options: [["buffer","SIGNAL BUFFER"],["military","MILITARY CHANNEL"],["road","ROAD FEED"],["lower","LOWER ROUTE FEED"],["lock","LOCK CONTROL"],["air","AIR HANDLING"]],
   },
   3: {
     title: "Decide what to trust", kicker: "BAD SIGNAL", duration: 360,
     image: "relay-control-room.webp", mechanic: "signals",
     objective: "Allocate three reconstruction slots across clean and degraded traffic.",
-    scene: "Official traffic, correction codes, and a human cadence overlap beneath the storm.",
+    scene: "21:23. The powered receivers catch three overlapping sources: an official all-clear, a legacy correction burst, and a broken human cadence saying ‘lower’ and ‘not.’",
+    story: {
+      chapter: "THE CLEANEST SIGNAL MAY BE WRONG",
+      arrival: "The power choice has decided which evidence can still be examined. Now the station offers a fluent official story beside two damaged sources that contradict it.",
+      pressure: "The crew has only three reconstruction slots. Discarded source material cannot guide the physical search.",
+      next: "The surviving fragments point toward the foundations—not the flooded road. Cordon grants one short external movement window to test that contradiction.",
+    },
+    participantGoal: "The crew has three reconstruction slots. Recommend which source to preserve, rebuild, quarantine, or discard—and name the evidence behind your recommendation.",
     options: [["voice","RX-04 / UNIDENTIFIED VOICE"],["bulletin","CV-PUBLIC / OFFICIAL BULLETIN"],["correction","AUX-04 / CORRECTION BURST"]],
   },
   4: {
     title: "Test Lower Route", kicker: "OUTSIDE RUN", duration: 360,
     image: "outside-run.webp", mechanic: "outside",
     objective: "Use one respirator window to test the most dangerous assumption with a clear abort rule.",
-    scene: "The lower road is flooding. Cordon Control allows one short external movement window.",
+    scene: "21:29. The lower road is flooding and surface air is deteriorating. Cordon Control permits one short movement outside before the perimeter closes.",
+    story: {
+      chapter: "TEST THE ASSUMPTION, NOT THE WHOLE WORLD",
+      arrival: "The signal says LOWER ROUTE may not be a road. The crew gets one respirator window to ask a single physical question without sacrificing another person.",
+      pressure: "A vague search wastes the window; a run without a hard abort rule can turn the runner into a second casualty.",
+      next: "The field evidence converges beneath rack B. Back inside, a legacy containment controller wakes and reports an occupied hold as OPERATIONAL.",
+    },
+    participantGoal: "The crew must choose one destination, one runner, and one clear stop rule. Explain which assumption the run should test and what would make the runner withdraw.",
     options: [["gate","LOWER ROAD GATE"],["repeater","EXTERNAL REPEATER"],["conduit","MAST CONDUIT"],["inside","STAY INSIDE"]],
   },
   5: {
     title: "Open the buried station", kicker: "HATCH & HOLD", duration: 420,
     image: "containment-hatch.webp", consequenceImage: "auxiliary-relay-hold.webp", mechanic: "hatch",
     objective: "Verify Mara without letting the containment interlock turn the hold into a trap.",
-    scene: "The conduit ends beneath rack B. Upper Air worsens. The old controller recommends the hold as refuge.",
+    scene: "21:35. The traced conduit ends at a sealed hatch beneath rack B. A current voice warns, ‘Do not come down blind,’ while upper air continues to worsen.",
+    story: {
+      chapter: "OPERATIONAL DOES NOT MEAN OCCUPANTS SAFE",
+      arrival: "The physical trail has found a buried workplace. Its controller calls the hold operational, but old masks, an open crew roster, and Mara's voice tell a different story.",
+      pressure: "Opening too aggressively can seal the hold or trap the surface crew; waiting gives the false official status more time to harden.",
+      next: "The hatch proves the central failure: OPERATIONAL describes the relay, not the people. Cordon Control still needs a correction it can act on.",
+    },
+    participantGoal: "The crew must choose a hatch procedure, respirator use, and upper watcher. Explain how your evidence protects Mara without creating more trapped people.",
     options: [["remote","REMOTE INSPECT"],["controlled","CONTROLLED CRACK + WATCHER"],["descent","FULL OVERRIDE + DESCENT"],["delay","DELAY"]],
   },
   6: {
     title: "Build the truth", kicker: "EMERGENCY CORRECTION", duration: 360,
     image: "calder-vale-cordon.webp", mechanic: "correction",
     objective: "Construct a specific, corroborated correction strong enough for Cordon Control to act.",
-    scene: "Ridge is live but unverified. The outside authority needs evidence, not volume.",
+    scene: "21:42. Mara is below and the old status is false, but Cordon Control still sees a functioning relay with no verified human emergency.",
+    story: {
+      chapter: "CHANGE THE OUTSIDE WORLD'S DECISION",
+      arrival: "The crew now knows what happened. Knowing is not enough: the rescue authority needs a precise correction that names the false status, the person, the hazard, the proof, and the requested action.",
+      pressure: "An incomplete transmission burns time and leaves the finale dependent on one last degraded carrier.",
+      next: "Cordon's response arrives as the hold starts sealing and surface air approaches critical. Physical rescue and official truth must now survive together.",
+    },
+    participantGoal: "The crew must build a five-part correction. Say which exact fact belongs in the message and how it helps the receiver take a specific rescue action.",
     options: [],
   },
   7: {
     title: "Survive the correction", kicker: "FINALE", duration: 540,
     image: "mara-venn-below.webp", mechanic: "finale",
     objective: "Assign the crew across Lock, Signal, and People. Control the physical truth and the official truth.",
-    scene: "The hold is sealing. The surface is failing. The final status is beginning to file.",
+    scene: "21:48. The hold begins its seal cycle, upper air fails, and the network starts filing its final status. Mara and the truth can still be saved—but not by one action.",
+    story: {
+      chapter: "TWO TRUTHS MUST SURVIVE",
+      arrival: "Every earlier decision now returns as a dependency. Lock control protects the route, the carrier changes the outside record, and the people lane keeps Mara and the crew alive.",
+      pressure: "Each lane needs an owner and two coordinated action rounds. Saving Mara without controlling the lock can trap the rescuers; controlling the hold without correcting the record leaves rescue blind.",
+      next: "The final record will show whether the crew protected the physical truth, the official truth, both, or neither.",
+    },
+    participantGoal: "The crew must coordinate Lock, Signal, and People across two rounds. Name the lane your evidence supports, the action it requires, and the dependency that could make it fail.",
     options: [],
   },
 };
@@ -299,6 +348,14 @@ function formatCardLine(roleId, entry) {
   return { roleId, title, body, confidence: confidence || "UNKNOWN", prompt: prompt || "Who needs to know this?" };
 }
 
+const CONFIDENCE_MEANING = {
+  CONFIRMED: "Verified by a current source or a clear operating rule.",
+  LIKELY: "Supported by evidence, but still needs another source or physical check.",
+  STALE: "Once reliable, but too old to describe the current situation safely.",
+  CONTRADICTED: "Another verified fact directly conflicts with this claim.",
+  UNKNOWN: "Not enough evidence yet. Treat it as an open question, not a fact.",
+};
+
 export function roleCard(stage, role, playerCount = 7) {
   const configuration = rolesForCount(playerCount);
   const bundle = CARD_BUNDLES[playerCount]?.[role];
@@ -326,6 +383,14 @@ export function roleCard(stage, role, playerCount = 7) {
     body,
     confidence,
     prompt: primary.prompt,
+    confidenceMeaning: CONFIDENCE_MEANING[confidence],
+    participantGoal: STAGES[stage]?.participantGoal || "Explain what you know, why it matters, and what the crew should do next.",
+    notes: lines.map(line => ({
+      ...line,
+      roleName: ROLES[line.roleId]?.name || line.roleId,
+      confidenceMeaning: CONFIDENCE_MEANING[line.confidence] || CONFIDENCE_MEANING.UNKNOWN,
+      sharePrompt: `Ask the crew: ${line.prompt}`,
+    })),
     intervention: configuration[role]?.intervention || ROLES[role]?.intervention,
   };
 }

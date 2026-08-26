@@ -1256,7 +1256,16 @@ def build_milestone_4() -> Path:
     )
 
     h2(doc, "12.5 How each stage works")
-    para(doc, "Every stage follows the same loop: shared incident → private evidence → voice discussion → one crew commit → visible consequence.")
+    para(doc, "Every stage follows the same legible loop: escalating story pressure → structured private evidence → voice/chat discussion → live consequence preview → one crew commit → cause-and-effect reveal → explicit narrative bridge to the next emergency.")
+    table(
+        doc,
+        ["Interface cue", "What it clarifies"],
+        [
+            ["Participant Note", "What the role knows, what its confidence label means, why it matters now, and what to say aloud"],
+            ["Decision preview", "What the current draft preserves/enables, what it costs/exposes, unresolved warnings, and whether it is legal to commit"],
+            ["Cause → Effect reveal", "The exact commitment, immediate changes, updated persistent tracks, and why the following stage happens"],
+        ],
+    )
     table(
         doc,
         ["Stage", "Time", "The problem", "Team decision"],
@@ -1362,18 +1371,20 @@ def build_milestone_4() -> Path:
     screenshot(doc, M4_SHOTS / "02-host-config.webp", "Figure 2 — Host shift configuration with distinct crew-size icons")
     screenshot(doc, M4_SHOTS / "03-join-flow.webp", "Figure 3 — Crew join flow with role instruments and participant care")
     screenshot(doc, M4_SHOTS / "04-assembly-lobby.webp", "Figure 4 — Facilitator assembly lobby before shift start")
-    screenshot(doc, M4_SHOTS / "05-shared-stage2.webp", "Figure 5 — Shared station during Stage 2 (Degraded Power)")
-    screenshot(doc, M4_SHOTS / "07-shared-stage3.webp", "Figure 6 — Shared station during Stage 3 (Decide What to Trust)")
-    screenshot(doc, M4_SHOTS / "08-player-signal-stage3.webp", "Figure 7 — Private Signal Analyst terminal with unequal-information card")
-    screenshot(doc, M4_SHOTS / "09-facilitator-stage3.webp", "Figure 8 — Facilitator console with live decision engine")
-    screenshot(doc, M4_SHOTS / "10-outside-run-runner.webp", "Figure 9 — Stage 4 Outside Run runner view with air meter")
-    screenshot(doc, M4_SHOTS / "12-hatch-stage5.webp", "Figure 10 — Stage 5 shared station (Hatch & Hold)")
-    screenshot(doc, M4_SHOTS / "14-correction-stage6.webp", "Figure 11 — Stage 6 emergency correction builder")
-    screenshot(doc, M4_SHOTS / "15-finale-stage7.webp", "Figure 12 — Stage 7 finale on shared station")
-    screenshot(doc, M4_SHOTS / "17-ending-clean-rescue.webp", "Figure 13 — Clean Rescue ending screen")
-    screenshot(doc, M4_SHOTS / "18-debrief-facilitator.webp", "Figure 14 — Facilitator debrief console (six-step guide)")
-    screenshot(doc, M4_SHOTS / "19-debrief-player-mobile.webp", "Figure 15 — Player debrief with first-step commitment (mobile)", width=Inches(3.8))
-    screenshot(doc, M4_SHOTS / "20-playtest-record.webp", "Figure 16 — Prototype playtest record after pilot session")
+    screenshot(doc, M4_SHOTS / "04b-player-lead-stage1.webp", "Figure 5 — Structured Participant Note and consequence preview on the Station Lead terminal")
+    screenshot(doc, M4_SHOTS / "04e-stage1-consequence-mobile.webp", "Figure 6 — Mobile cause-and-effect reveal with narrative bridge", width=Inches(3.8))
+    screenshot(doc, M4_SHOTS / "05-shared-stage2.webp", "Figure 7 — Shared station during Stage 2 (Degraded Power)")
+    screenshot(doc, M4_SHOTS / "07-shared-stage3.webp", "Figure 8 — Shared station during Stage 3 (Decide What to Trust)")
+    screenshot(doc, M4_SHOTS / "08-player-signal-stage3.webp", "Figure 9 — Private Signal Analyst terminal with unequal-information card")
+    screenshot(doc, M4_SHOTS / "09-facilitator-stage3.webp", "Figure 10 — Facilitator console with live decision engine")
+    screenshot(doc, M4_SHOTS / "10-outside-run-runner.webp", "Figure 11 — Stage 4 Outside Run runner view with air meter")
+    screenshot(doc, M4_SHOTS / "12-hatch-stage5.webp", "Figure 12 — Stage 5 shared station (Hatch & Hold)")
+    screenshot(doc, M4_SHOTS / "14-correction-stage6.webp", "Figure 13 — Stage 6 emergency correction builder")
+    screenshot(doc, M4_SHOTS / "15-finale-stage7.webp", "Figure 14 — Stage 7 finale on shared station")
+    screenshot(doc, M4_SHOTS / "17-ending-clean-rescue.webp", "Figure 15 — Clean Rescue ending screen")
+    screenshot(doc, M4_SHOTS / "18-debrief-facilitator.webp", "Figure 16 — Facilitator debrief console (six-step guide)")
+    screenshot(doc, M4_SHOTS / "19-debrief-player-mobile.webp", "Figure 17 — Player debrief with first-step commitment (mobile)", width=Inches(3.8))
+    screenshot(doc, M4_SHOTS / "20-playtest-record.webp", "Figure 18 — Prototype playtest record after pilot session")
 
     h1(doc, "14. Milestone 4 acceptance checklist")
     checklist(
@@ -1390,7 +1401,10 @@ def build_milestone_4() -> Path:
             ["Six-step debrief synchronized across all clients", "Complete"],
             ["Session JSON export with decisions, debrief, and playtest data", "Complete"],
             ["Unequal information enforced in server logic and tests", "Complete"],
-            ["Automated test suite passes (34/34)", "Complete"],
+            ["Escalating stage-to-stage narrative bridges", "Complete"],
+            ["Pre-commit previews and post-commit cause/effect explanations", "Complete"],
+            ["Plain-language structured Participant Notes", "Complete"],
+            ["Automated test suite passes", "Complete"],
         ],
     )
 

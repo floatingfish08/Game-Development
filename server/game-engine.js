@@ -174,11 +174,116 @@ function correctionScore(session, draft = session.draft) {
   return {score,evidenceValid};
 }
 
+const optionLabel = (entries, id) => entries.find(([value]) => value === id)?.[1] || String(id || "NOT SET").toUpperCase();
+const roleName = (session, id) => session.players[id]?.name || rolesForCount(session.playerCount)[id]?.name || String(id || "UNASSIGNED").toUpperCase();
+
+export function decisionPreview(session) {
+  ensureSession(session);
+  const stage = session.stage, d = session.draft || {}, g = session.global;
+  const preview = { summary: "Review the plan before committing.", keeps: [], costs: [], warnings: [], ready: true };
+  if (stage === 1) {
+    const held = d.holds || [], open = STAGES[1].options.filter(([id]) => !held.includes(id));
+    preview.summary = `${held.length} of 3 handover claims paused for human review.`;
+    preview.keeps = held.map(id => ({
+      mara: "Mara remains officially missing; the search cannot assume she went to the road.",
+      voice: "The damaged voice remains available for later reconstruction.",
+      road: "The old GREEN road image cannot automatically control the search.",
+      event: "The mast incident remains open to causes beyond a local service fault.",
+      public: "The station cannot yet file NO WIDER RISK as fact.",
+    }[id]));
+    preview.costs = open.map(([id]) => ({
+      mara: "Mara's inferred field-check location becomes a working fact.",
+      voice: "The voice will be treated as weather interference unless recovered later.",
+      road: "The stale road feed keeps automatic search priority.",
+      event: "LOCAL SERVICE FAULT becomes the working cause.",
+      public: "NO WIDER RISK remains in the official baseline.",
+    }[id]));
+    preview.ready = held.length === 3;
+    if (!preview.ready) preview.warnings.push(`Choose exactly 3 holds; ${3 - held.length} selection${3 - held.length === 1 ? " is" : "s are"} still required.`);
+  } else if (stage === 2) {
+    const powered = d.powered || [], cut = STAGES[2].options.filter(([id]) => !powered.includes(id));
+    const liveEffect = {
+      buffer: "Signal Buffer: damaged voice can be replayed and reconstructed.", military: "Military Channel: Cordon can hear and read back a later correction.",
+      road: "Road Feed: the old road picture remains available, but may reinforce a stale assumption.", lower: "Lower Route Feed: a missing legacy route tag may be recovered.",
+      lock: "Lock Control: remote interlock telemetry remains available for the buried hold.", air: "Air Handling: absorbs one later rise in surface contamination.",
+    };
+    const lostEffect = {
+      buffer: "Without Signal Buffer, damaged traffic can be heard only once.", military: "Without Military Channel, a later correction needs stronger proof.",
+      road: "Without Road Feed, the crew loses the camera but avoids relying on its stale GREEN label.", lower: "Without Lower Route Feed, the legacy route must be found another way.",
+      lock: "Without Lock Control, the finale may require a physical interlock hold.", air: "Without Air Handling, the next contamination rise reaches the crew directly.",
+    };
+    preview.summary = `${powered.length} of 3 optional circuits selected; every other circuit goes dark.`;
+    preview.keeps = powered.map(id => liveEffect[id]); preview.costs = cut.map(([id]) => lostEffect[id]);
+    preview.ready = powered.length === 3;
+    if (!preview.ready) preview.warnings.push(`Choose exactly 3 optional circuits; ${3 - powered.length} selection${3 - powered.length === 1 ? " is" : "s are"} still required.`);
+  } else if (stage === 3) {
+    const cost = signalCost(d), actionText = id => `${optionLabel(STAGES[3].options,id)} — ${ACTIONS.signalActions[d[id]]?.[0] || "NOT SET"}`;
+    preview.summary = `${cost} of 3 reconstruction slots allocated. Priority: ${optionLabel(STAGES[3].options,d.priority)}.`;
+    preview.keeps = ["voice","bulletin","correction"].filter(id => d[id] !== "discard").map(actionText);
+    preview.costs = ["voice","bulletin","correction"].filter(id => d[id] === "discard").map(id => `${optionLabel(STAGES[3].options,id)} will not contribute evidence later.`);
+    preview.ready = cost === 3;
+    if (cost > 3) preview.warnings.push(`Plan exceeds capacity by ${cost - 3} slot${cost - 3 === 1 ? "" : "s"}.`);
+    if (cost < 3) preview.warnings.push(`${3 - cost} reconstruction slot${3 - cost === 1 ? " remains" : "s remain"} unused.`);
+    if (d.voice === "discard" && d.correction === "discard") preview.warnings.push("Both damaged sources are discarded; the clean official bulletin will dominate the search.");
+  } else if (stage === 4) {
+    if (session.fieldRun?.active) {
+      preview.summary = `${roleName(session,session.fieldRun.runner)} is testing ${optionLabel(STAGES[4].options,session.fieldRun.destination)}.`;
+      preview.keeps = [`Abort rule: ${session.fieldRun.abort}`, `Air meter: ${session.fieldRun.meterPpm} / ${session.fieldRun.meterLimit} ppm`, `${session.fieldRun.findings.length} of 3 field findings transmitted.`];
+      preview.costs = [`Exposure accepted: ${session.fieldRun.exposure}.`];
+    } else {
+      preview.summary = `${roleName(session,d.runner)} will test ${optionLabel(STAGES[4].options,d.destination)}.`;
+      preview.keeps = [`The run asks one bounded physical question.`, `Abort rule: ${d.abort || "NOT SET"}.`];
+      preview.costs = [d.destination === "inside" ? "Staying inside protects the respirator but allows the false outside picture to harden." : "Leaving the cabin exposes one runner to rising contamination."];
+      preview.ready = activeRoleIds(session.playerCount).includes(d.runner) && optionIds(STAGES[4].options).has(d.destination) && String(d.abort || "").trim().length >= 8;
+      if (!preview.ready) preview.warnings.push("Assign an available runner, destination, and specific abort condition before starting the run.");
+    }
+  } else if (stage === 5) {
+    preview.summary = `${optionLabel(STAGES[5].options,d.procedure)} with ${roleName(session,d.watcher)} watching above.`;
+    const procedures = {
+      remote: g.systems.includes("lock") ? "Remote inspection can locate Mara and map the interlock without opening the hatch." : "Remote inspection lacks powered Lock Control and may not verify the interlock.",
+      controlled: "A controlled crack can verify Mara and the lock rule while the upper watcher protects withdrawal.",
+      descent: "A full descent reaches Mara quickly but consumes the override and can destabilise the interlock.",
+      delay: "Delay avoids immediate hatch exposure but worsens air and lets the false official status advance.",
+    };
+    preview.keeps = [procedures[d.procedure], `Respirator plan: ${optionLabel(ACTIONS.hatchResources,d.respirator)}.`];
+    preview.costs = [d.procedure === "descent" ? "More crew may become trapped below." : d.procedure === "delay" ? "Mara remains unverified and the rescue window narrows." : "The hatch opens only as far as the selected safeguard allows."];
+    preview.ready = optionIds(STAGES[5].options).has(d.procedure) && optionIds(ACTIONS.hatchResources).has(d.respirator) && activeRoleIds(session.playerCount).includes(d.watcher);
+    if (d.procedure === "descent") preview.warnings.push("Full descent is a high-risk commitment: the respirator is not permission to ignore the interlock.");
+  } else if (stage === 6) {
+    const { score, evidenceValid } = correctionScore(session,d);
+    preview.summary = `Cordon can currently verify ${score} of 6 receiver requirements.`;
+    preview.keeps = [
+      `False status: ${optionLabel(ACTIONS.correction.invalid,d.invalid)}.`, `Person and place: ${optionLabel(ACTIONS.correction.human,d.human)}.`,
+      `Current hazard: ${optionLabel(ACTIONS.correction.hazard,d.hazard)}.`, `Evidence: ${optionLabel(ACTIONS.correction.evidence,d.evidence)}.`,
+      `Requested action: ${optionLabel(ACTIONS.correction.request,d.request)}.`,
+    ];
+    preview.costs = [score >= 5 ? "Likely result: Cordon can reclassify Ridge as a human rescue site." : score >= 3 ? "Likely result: Cordon will demand final corroboration during the finale." : "Likely result: rejection, 90 seconds lost, and one shortened retry."];
+    if (!evidenceValid) preview.warnings.push("The selected evidence is not currently supported by the crew's verified evidence ledger.");
+    if (g.trust === 0 && !g.systems.includes("military")) preview.warnings.push("No trusted readback channel is active; the correction needs stronger internal proof.");
+  } else if (stage === 7) {
+    const assignments = [d.lockLead,d.signalLead,d.peopleLead], unique = new Set(assignments.filter(Boolean));
+    preview.summary = `Round ${session.finaleRound || 1}/2: Lock, Signal, and People actions are assigned.`;
+    preview.keeps = [
+      `Lock — ${optionLabel(ACTIONS.finale.lock,d.lock)} / ${roleName(session,d.lockLead)}.`,
+      `Signal — ${optionLabel(ACTIONS.finale.signal,d.signal)} / ${roleName(session,d.signalLead)}.`,
+      `People — ${optionLabel(ACTIONS.finale.people,d.people)} / ${roleName(session,d.peopleLead)}.`,
+    ];
+    preview.costs = ["The final outcome uses both rounds. A lane left unsupported can undo a strong action elsewhere."];
+    preview.ready = assignments.every(id => activeRoleIds(session.playerCount).includes(id)) && unique.size >= (session.playerCount === 2 ? 2 : 3);
+    if (!preview.ready) preview.warnings.push(session.playerCount === 2 ? "Both operators must own at least one lane." : "Use three different available owners so no one controls every final safeguard.");
+    if (d.lock === "stabilise" && !g.systems.includes("lock")) preview.warnings.push("REMOTE STABILISE requires powered Lock Control.");
+    if (d.lock === "hold" && g.lockKnowledge < 2) preview.warnings.push("PHYSICAL HOLD needs complete interlock knowledge and an upper watcher.");
+    if (d.signal === "transmit" && g.correction !== "accepted") preview.warnings.push("The correction is not accepted yet; final proof may be more useful than retransmission.");
+  }
+  preview.keeps = preview.keeps.filter(Boolean); preview.costs = preview.costs.filter(Boolean);
+  return preview;
+}
+
 function resolveStage(session, expired = false) {
   if (session.stageStatus !== "live") return;
   ensureSession(session);
   const stage = session.stage, d = session.draft, g = session.global;
-  let headline = "Decision recorded", detail = "The station updates its working model.", quality = "mixed";
+  let headline = "Decision recorded", detail = "The station updates its working model.", quality = "mixed", impacts = [], decision = decisionPreview(session).summary;
 
   if (stage === 1) {
     const holds = (d.holds || []).slice(0, 3);
@@ -195,6 +300,7 @@ function resolveStage(session, expired = false) {
     headline = `${holds.length} defaults held for human review`;
     detail = holds.includes("mara") && holds.includes("voice") ? "Mara and the weak signal remain visible." : "At least one dangerous default is now shaping the search.";
     quality = holds.includes("mara") && holds.includes("voice") ? "strong" : "costly";
+    impacts = [`Held for review: ${holds.map(id=>optionLabel(STAGES[1].options,id)).join(", ")}.`, `Now treated as working facts: ${unheld.map(id=>optionLabel(STAGES[1].options,id)).join(", ")}.`];
   } else if (stage === 2) {
     g.systems = [...(d.powered || []).slice(0, 3)];
     if (g.systems.includes("air")) { addEvidence(session, "Air handling retained"); session.resources.airHandlingBuffer = 1; setFlag(session,"system","air_handling_available"); }
@@ -206,6 +312,7 @@ function resolveStage(session, expired = false) {
     headline = `${g.systems.length} optional circuits remain live`;
     detail = `The crew protected ${g.systems.map(x => STAGES[2].options.find(o => o[0] === x)?.[1]).join(", ") || "no optional systems"}.`;
     quality = g.systems.length === 3 ? "strong" : "costly";
+    impacts = [`Still available: ${g.systems.map(id=>optionLabel(STAGES[2].options,id)).join(", ")}.`, `Cut and unavailable: ${STAGES[2].options.filter(([id])=>!g.systems.includes(id)).map(([,label])=>label).join(", ")}.`];
   } else if (stage === 3) {
     const voiceSafe = d.voice !== "discard", correctionSafe = d.correction !== "discard";
     let q = voiceSafe || correctionSafe ? 1 : 0;
@@ -224,6 +331,7 @@ function resolveStage(session, expired = false) {
     headline = ["The clean bulletin wins", "A trace survives", "Two weak sources agree", "The road interpretation breaks"][q];
     detail = ["Only a structured checksum remains.", "LOWER ROUTE survives without context.", "The voice says NOT ROAD… UNDER.", "Mara may be beneath the station, not downhill."][q];
     quality = q >= 2 ? "strong" : "costly";
+    impacts = [`Reconstruction quality: ${q}/3 — ${detail}`, `Decision priority: ${optionLabel(STAGES[3].options,d.priority)}.`, `Slots used: ${signalCost(d)}/3.`];
     session.outcomes.signalQuality = q;
   } else if (stage === 4) {
     const findings = session.fieldRun?.findings || [];
@@ -238,6 +346,7 @@ function resolveStage(session, expired = false) {
     headline = d.destination === "inside" ? "The crew keeps the mask—and the assumption" : "The physical route contradicts the map";
     detail = findings.length >= 3 && d.destination!=="inside" ? "No tracks. Untouched repeater. The conduit returns beneath Blackout Ridge." : "The crew reaches a costlier contradiction, but Lower Route no longer means the flooded road.";
     quality = findings.length >= 3 && d.destination!=="inside" ? "strong" : "mixed";
+    impacts = [`Field question: ${optionLabel(STAGES[4].options,d.destination)}.`, `Findings: ${findings.length ? findings.join(" · ") : "No external findings; indoor evidence carried the contradiction."}`, `Respirator: ${String(g.respirator).replaceAll("_"," ").toUpperCase()}.`];
   } else if (stage === 5) {
     if (d.procedure === "remote" && g.systems.includes("lock")) { g.lockKnowledge = 2; g.mara = "located"; }
     else if (d.procedure === "controlled") { g.lockKnowledge = 2; g.mara = "located"; }
@@ -251,6 +360,7 @@ function resolveStage(session, expired = false) {
     headline = "OPERATIONAL was measuring the wrong thing";
     detail = g.mara === "located" ? "Beyond the hatch is an old workplace—relay desks, bunks, used masks and the Lark status log. Mara is verified below; the containment rule can protect or trap the occupied hold." : "Beyond the hatch, an old relay workplace and Lark status log prove the hold was occupied. A current voice is below, but the crew delayed physical verification.";
     quality = g.lockKnowledge === 2 ? "strong" : "costly";
+    impacts = [`Mara: ${g.mara === "located" ? "located and verified below" : "heard below, not physically verified"}.`, `Interlock knowledge: ${g.lockKnowledge}/2.`, `Respirator: ${String(g.respirator).replaceAll("_"," ").toUpperCase()}.`];
   } else if (stage === 6) {
     const {score,evidenceValid}=correctionScore(session,d);
     g.correction = score >= 5 ? "accepted" : score >= 3 ? "conditional" : "rejected";
@@ -259,6 +369,7 @@ function resolveStage(session, expired = false) {
     headline = { accepted: "Correction accepted", conditional: "Cordon requests final proof", rejected: "Ridge traffic remains unverified" }[g.correction];
     detail = { accepted: "Blackout Ridge is reclassified as a human rescue site.", conditional: "The finale Signal lane must supply one corroboration.", rejected: "One last carrier remains before NO ACTIVE DISTRESS files." }[g.correction];
     quality = g.correction === "accepted" ? "strong" : "costly";
+    impacts = [`Receiver result: ${g.correction.toUpperCase()}.`, `Correction strength: ${score}/6 receiver requirements.`, g.correction === "accepted" ? "Cordon now recognises a human rescue site." : "The Signal lane must change the outside record during the finale."];
   } else if (stage === 7) {
     const first = session.finalePlans[0] || d, second = session.finalePlans[1] || d;
     const assignmentsValid = plan => {
@@ -274,7 +385,7 @@ function resolveStage(session, expired = false) {
     const lock = assigned && ((lockAction.includes("stabilise") && g.systems.includes("lock") && g.lockKnowledge >= 1) || (lockAction.includes("hold") && g.lockKnowledge >= 2) || (lockAction.includes("override") && !g.lockRisk && session.resources.interlockOverride !== "damaged"));
     const signal = assigned && (g.correction === "accepted" && signalAction.some(x=>["transmit","maintain","corroborate"].includes(x)) || g.correction === "conditional" && signalAction.includes("corroborate") || g.correction === "rejected" && signalAction.includes("corroborate") && g.evidence.length >= 5 && g.official < 3);
     const mara = peopleAction.includes("extract") && lock ? "extracted" : peopleAction.some(x => ["supply", "verify"].includes(x)) ? "rescue_path" : "trapped";
-    let crew = peopleAction.includes("evacuate") ? "safe" : lock ? (g.upperAir >= 3 ? "compromised" : "safe") : "trapped";
+    let crew = peopleAction.includes("evacuate") ? "safe" : lock ? (g.upperAir >= 3 && !peopleAction.some(x=>["supply","extract"].includes(x)) ? "compromised" : "safe") : "trapped";
     if (g.upperAir >= 3 && !peopleAction.some(x=>["supply","extract","evacuate"].includes(x))) crew = "incapacitated";
     const endingKey = `${lock ? 1 : 0}${signal ? 1 : 0}`;
     const endings = {
@@ -292,6 +403,7 @@ function resolveStage(session, expired = false) {
     const statusOutcome = signal ? "HUMAN RESCUE STATUS ACCEPTED" : "OPERATIONAL / NO ACTIVE DISTRESS";
     session.pendingEnding = { title, body, lockControlled: lock, correctionAccepted: signal, mara, crew, rescueOutcome, survivalOutcome, statusOutcome };
     headline = title; detail = body; quality = lock && signal ? "strong" : "costly";
+    impacts = [`Physical truth: ${lock ? "interlock controlled" : "interlock not controlled"}.`, `Official truth: ${signal ? "human rescue status accepted" : "false operational status remains"}.`, `${rescueOutcome}; ${survivalOutcome}.`];
   }
 
   session.global.upperAir = clamp(session.global.upperAir, 0, 3);
@@ -299,7 +411,8 @@ function resolveStage(session, expired = false) {
   session.global.official = clamp(session.global.official + (expired ? 1 : 0), 0, 3);
   session.decisions[stage] = stage===7 ? session.finalePlans.map(plan=>({...plan})) : stage===6 ? {attempts:[...session.correctionDrafts.map(item=>({...item})),{...d}]} : stage===4 ? {...d,run:{moves:[...(session.fieldRun?.moves||[])],findings:[...(session.fieldRun?.findings||[])],guidance:(session.fieldRun?.guidance||[]).length,exposure:session.fieldRun?.exposure||0,meterPpm:session.fieldRun?.meterPpm||0,meterLimit:session.fieldRun?.meterLimit||18,forcedAbort:Boolean(session.fieldRun?.forcedAbort)}} : { ...d };
   session.stageStatus = "resolved"; session.clock.remaining = remaining(session.clock); session.clock.running = false; session.clock.endAt = null;
-  session.outcomes[stage] = { headline, detail, quality, expired, at: Date.now() };
+  if (expired) impacts.unshift("Time expired: official pressure advanced before the plan resolved.");
+  session.outcomes[stage] = { headline, detail, quality, expired, decision, impacts, next: STAGES[stage]?.story?.next || "The incident continues.", at: Date.now() };
   bump(session, `Stage ${stage} resolved: ${headline}`);
 }
 
@@ -505,7 +618,7 @@ export function publicState(session, viewer) {
         ])),
     chatMessages: viewer.kind === "player" || viewer.kind === "facilitator" ? session.chatMessages.map(message => ({ ...message })) : [],
     draft: canLead(session, viewer) || session.stageStatus === "resolved" ? session.draft : {},
-    hint: session.hint, global: session.global, resources: session.resources, environment: environmentState(session), officialStatus: officialStatus(session), flags: viewer.kind==="facilitator"?session.flags:undefined, interventions: session.interventions, interventionFeedback: session.interventionFeedback, absentRoles: session.absentRoles, outcomes: session.outcomes, ending: session.ending,
+    hint: session.hint, global: session.global, resources: session.resources, environment: environmentState(session), officialStatus: officialStatus(session), decisionPreview: session.stageStatus === "live" ? decisionPreview(session) : null, flags: viewer.kind==="facilitator"?session.flags:undefined, interventions: session.interventions, interventionFeedback: session.interventionFeedback, absentRoles: session.absentRoles, outcomes: session.outcomes, ending: session.ending,
     safetyBriefed: session.safetyBriefed, participantCare: PARTICIPANT_CARE, signalTransmission: signalTransmission(session, viewer),
     debrief: { currentStep: session.debrief.currentStep, steps: DEBRIEF_STEPS, notes: viewer.kind==="facilitator"?session.debrief.notes:undefined, firstSteps: session.debrief.firstSteps, profileSignals: session.debrief.profileSignals, roleMap: roleMapForCount(session.playerCount), readinessProfiles: READINESS_PROFILES },
     playtest: viewer.kind==="facilitator"&&session.status==="ending" ? { ...session.playtest, criteria: PLAYTEST_CRITERIA, needsReframe: session.playtest.disposition==="kill_reframe"||Number(session.playtest.ratings.ai_alignment||5)<=2 } : undefined,

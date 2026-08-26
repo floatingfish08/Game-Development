@@ -32,6 +32,23 @@ function chromeBin() {
   throw new Error("No headless Chrome found (google-chrome-stable or chromium).");
 }
 
+function convertCapture(source, destination) {
+  const imageMagick = spawnSync("which", ["convert"], { stdio: "ignore" });
+  if (imageMagick.status === 0) {
+    execFileSync("convert", [source, "-quality", "82", "-define", "webp:method=6", destination], {
+      stdio: "pipe",
+      timeout: 45000,
+    });
+    return;
+  }
+  execFileSync("python3", [
+    "-c",
+    "from PIL import Image; import sys; image=Image.open(sys.argv[1]); image.save(sys.argv[2], 'WEBP', quality=82, method=6)",
+    source,
+    destination,
+  ], { stdio: "pipe", timeout: 45000 });
+}
+
 async function api(pathname, { method = "GET", token, body, retries = 3 } = {}) {
   let lastError;
   for (let attempt = 0; attempt < retries; attempt++) {
@@ -83,10 +100,7 @@ function shot(chrome, name, url, { width = 1440, height = 900, skipIfExists = fa
     { stdio: "pipe", timeout: 45000 },
   );
   if (captureFile !== file) {
-    execFileSync("convert", [captureFile, "-quality", "82", "-define", "webp:method=6", file], {
-      stdio: "pipe",
-      timeout: 45000,
-    });
+    convertCapture(captureFile, file);
     fs.unlinkSync(captureFile);
   }
   if (!fs.existsSync(file) || fs.statSync(file).size < 5000) {
@@ -248,9 +262,11 @@ async function main() {
   shot(chrome, "04a-shared-stage1.webp", page("shared", code));
   shot(chrome, "04b-player-lead-stage1.webp", page("player", code, tokens.lead));
   shot(chrome, "04c-facilitator-stage1.webp", page("facilitator", code, tokens.facilitator));
+  shot(chrome, "04d-player-lead-mobile.webp", page("player", code, tokens.lead), { width: 390, height: 844 });
 
   await action(code, tokens.facilitator, "UPDATE_DRAFT", { holds: ["mara", "voice", "road"] });
   await action(code, tokens.facilitator, "COMMIT_STAGE");
+  shot(chrome, "04e-stage1-consequence-mobile.webp", page("player", code, tokens.lead), { width: 390, height: 844 });
   await action(code, tokens.facilitator, "ADVANCE_STAGE");
   shot(chrome, "05-shared-stage2.webp", page("shared", code));
   shot(chrome, "06-facilitator-stage2.webp", page("facilitator", code, tokens.facilitator));

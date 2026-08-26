@@ -96,13 +96,22 @@ as a text file for remote or accessibility workflows.
 6. The Station Lead or facilitator commits each decision.
 7. During Stage 4, the named runner completes three field moves while the crew
    uses its three guidance bursts.
-8. The facilitator advances after each consequence reveal and confirms the
+8. Everyone reads the synchronized cause-and-effect reveal: the exact
+   commitment, what changed, updated tracks, and why the next stage happens.
+9. The facilitator advances after each consequence reveal and confirms the
    calculated final record after Stage 7.
-9. Use the synchronized six-step debrief to reconstruct status failures, map
+10. Use the synchronized six-step debrief to reconstruct status failures, map
    roles, diagnose hesitation, bridge to AI-enabled work, and capture one bounded
    first step from every participant. Export the complete session record as JSON.
-10. After a pilot, open the prototype playtest record, rate all seven playbook
+11. After a pilot, open the prototype playtest record, rate all seven playbook
     criteria, record observations, and choose proceed, revise, or stop/reframe.
+
+Before commitment, player, shared, and facilitator views show a decision
+preview. It names what the current draft preserves or enables, what it costs or
+exposes, any unresolved warning, and whether the draft is ready. Private
+Participant Notes use the same plain-language sequence in every role: **What
+you know → Confidence → Why it matters → What to say out loud → Your
+recommendation**.
 
 The audio control is deliberately opt-in because browsers block autoplay and
 workshop participants may need reduced stimulation.

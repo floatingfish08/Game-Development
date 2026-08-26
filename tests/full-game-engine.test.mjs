@@ -91,6 +91,38 @@ test("complete strong path reaches Clean Rescue with accepted correction", () =>
   assert.equal(session.ending.title, "CLEAN RESCUE");
   assert.equal(session.ending.lockControlled, true);
   assert.equal(session.ending.correctionAccepted, true);
+  for (let stage = 1; stage <= 7; stage++) {
+    const result = session.outcomes[stage];
+    assert.ok(result.decision.length > 15, `stage ${stage} missing committed-decision explanation`);
+    assert.ok(result.impacts.length >= 2, `stage ${stage} missing explicit impacts`);
+    assert.ok(result.next.length > 20, `stage ${stage} missing narrative bridge`);
+  }
+});
+
+test("decision previews explain benefits, tradeoffs, warnings, and readiness before commit", () => {
+  const session = createSession({ code: "CLEAR1", playerCount: 7 });
+  connectCrew(session); startShift(session);
+
+  let state = publicState(session, authorize(session, session.players.lead.token));
+  assert.equal(state.decisionPreview.ready, false);
+  assert.match(state.decisionPreview.summary, /0 of 3/);
+  assert.match(state.decisionPreview.warnings.join(" "), /exactly 3/i);
+  assert.ok(state.decisionPreview.costs.some(item => /Mara|voice|road/i.test(item)));
+
+  update(session, { holds: ["mara", "voice", "road"] });
+  state = publicState(session, authorize(session, session.players.lead.token));
+  assert.equal(state.decisionPreview.ready, true);
+  assert.ok(state.decisionPreview.keeps.some(item => /officially missing/i.test(item)));
+  applyAction(session, facilitator, "COMMIT_STAGE");
+  assert.match(session.outcomes[1].decision, /3 of 3/);
+  assert.ok(session.outcomes[1].impacts.some(item => /Held for review/i.test(item)));
+
+  applyAction(session, facilitator, "ADVANCE_STAGE");
+  update(session, { powered: ["buffer", "military", "lock"] });
+  state = publicState(session, facilitator);
+  assert.equal(state.decisionPreview.ready, true);
+  assert.ok(state.decisionPreview.keeps.some(item => /replayed and reconstructed/i.test(item)));
+  assert.ok(state.decisionPreview.costs.some(item => /Air Handling/i.test(item)));
 });
 
 test("weak decisions still fail forward through every stage", () => {
@@ -498,6 +530,13 @@ test("information matrix covers every stage and core role", () => {
       assert.ok(card.body.length > 20, `empty card ${stage}/${role}`);
       assert.match(card.confidence, /CONFIRMED|LIKELY|STALE|UNKNOWN|CONTRADICTED/);
       assert.ok(card.prompt, `missing speak prompt ${stage}/${role}`);
+      assert.ok(card.participantGoal.length > 40, `unclear participant goal ${stage}/${role}`);
+      assert.ok(card.notes.length >= 1, `missing structured participant notes ${stage}/${role}`);
+      for (const note of card.notes) {
+        assert.ok(note.body.length > 20, `empty structured note ${stage}/${role}`);
+        assert.match(note.confidenceMeaning, /Verified|Supported|old|conflicts|evidence/i);
+        assert.match(note.sharePrompt, /^Ask the crew:/);
+      }
     }
   }
   assert.equal(INFORMATION_JOINS.length >= 7, true);
